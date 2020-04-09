@@ -6,26 +6,26 @@ import javax.persistence.*;
 @Table(name = "AuthorProposal", schema = "dbo", catalog = "conference")
 @IdClass(AuthorProposalEntityPK.class)
 public class AuthorProposalEntity {
-    private Integer proposalId;
-    private Integer authorId;
+    private int proposalId;
+    private int authorId;
 
     @Id
-    @Column(name = "ProposalID")
-    public Integer getProposalId() {
+    @Column(name = "ProposalID", nullable = false)
+    public int getProposalId() {
         return proposalId;
     }
 
-    public void setProposalId(Integer proposalId) {
+    public void setProposalId(int proposalId) {
         this.proposalId = proposalId;
     }
 
     @Id
-    @Column(name = "AuthorID")
-    public Integer getAuthorId() {
+    @Column(name = "AuthorID", nullable = false)
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
@@ -36,16 +36,16 @@ public class AuthorProposalEntity {
 
         AuthorProposalEntity that = (AuthorProposalEntity) o;
 
-        if (proposalId != null ? !proposalId.equals(that.proposalId) : that.proposalId != null) return false;
-        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        if (proposalId != that.proposalId) return false;
+        if (authorId != that.authorId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = proposalId != null ? proposalId.hashCode() : 0;
-        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
+        int result = proposalId;
+        result = 31 * result + authorId;
         return result;
     }
 }

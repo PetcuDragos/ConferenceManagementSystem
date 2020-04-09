@@ -5,8 +5,14 @@
 <hibernate-mapping>
 
     <class name="domain.PresentationEntity" table="Presentation" schema="dbo" catalog="conference">
-        <id name="presentationId" column="PresentationID"/>
-        <property name="section" column="Section"/>
-        <property name="time" column="Time"/>
+        <id name="presentationId">
+            <column name="PresentationID" sql-type="int"/>
+        </id>
+        <property name="section">
+            <column name="Section" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="time">
+            <column name="Time" sql-type="time" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

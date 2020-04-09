@@ -5,10 +5,20 @@
 <hibernate-mapping>
 
     <class name="domain.ProposalEntity" table="Proposal" schema="dbo" catalog="conference">
-        <id name="proposalId" column="ProposalID"/>
-        <property name="keywords" column="Keywords"/>
-        <property name="topic" column="Topic"/>
-        <property name="abstractPaper" column="Abstract"/>
-        <property name="fullPaper" column="FullPaper"/>
+        <id name="proposalId">
+            <column name="ProposalID" sql-type="int"/>
+        </id>
+        <property name="keywords">
+            <column name="Keywords" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="topic">
+            <column name="Topic" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="abstractPaper">
+            <column name="Abstract" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="fullPaper">
+            <column name="FullPaper" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

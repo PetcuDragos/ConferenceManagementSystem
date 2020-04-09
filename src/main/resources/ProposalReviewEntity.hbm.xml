@@ -6,9 +6,15 @@
 
     <class name="domain.ProposalReviewEntity" table="ProposalReview" schema="dbo" catalog="conference">
         <composite-id mapped="true" class="domain.ProposalReviewEntityPK">
-            <key-property name="pcMemberId" column="PCMemberID"/>
-            <key-property name="proposalId" column="ProposalID"/>
+            <key-property name="pcMemberId">
+                <column name="PCMemberID" sql-type="int"/>
+            </key-property>
+            <key-property name="proposalId">
+                <column name="ProposalID" sql-type="int"/>
+            </key-property>
         </composite-id>
-        <property name="status" column="Status"/>
+        <property name="status">
+            <column name="Status" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

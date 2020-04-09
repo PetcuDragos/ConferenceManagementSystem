@@ -5,24 +5,24 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Proposal", schema = "dbo", catalog = "conference")
 public class ProposalEntity {
-    private Integer proposalId;
+    private int proposalId;
     private String keywords;
     private String topic;
     private String abstractPaper;
     private String fullPaper;
 
     @Id
-    @Column(name = "ProposalID")
-    public Integer getProposalId() {
+    @Column(name = "ProposalID", nullable = false)
+    public int getProposalId() {
         return proposalId;
     }
 
-    public void setProposalId(Integer proposalId) {
+    public void setProposalId(int proposalId) {
         this.proposalId = proposalId;
     }
 
     @Basic
-    @Column(name = "Keywords")
+    @Column(name = "Keywords", nullable = true, length = 50)
     public String getKeywords() {
         return keywords;
     }
@@ -32,7 +32,7 @@ public class ProposalEntity {
     }
 
     @Basic
-    @Column(name = "Topic")
+    @Column(name = "Topic", nullable = true, length = 50)
     public String getTopic() {
         return topic;
     }
@@ -42,7 +42,7 @@ public class ProposalEntity {
     }
 
     @Basic
-    @Column(name = "Abstract")
+    @Column(name = "Abstract", nullable = true, length = 50)
     public String getAbstractPaper() {
         return abstractPaper;
     }
@@ -52,7 +52,7 @@ public class ProposalEntity {
     }
 
     @Basic
-    @Column(name = "FullPaper")
+    @Column(name = "FullPaper", nullable = true, length = 50)
     public String getFullPaper() {
         return fullPaper;
     }
@@ -68,7 +68,7 @@ public class ProposalEntity {
 
         ProposalEntity that = (ProposalEntity) o;
 
-        if (proposalId != null ? !proposalId.equals(that.proposalId) : that.proposalId != null) return false;
+        if (proposalId != that.proposalId) return false;
         if (keywords != null ? !keywords.equals(that.keywords) : that.keywords != null) return false;
         if (topic != null ? !topic.equals(that.topic) : that.topic != null) return false;
         if (abstractPaper != null ? !abstractPaper.equals(that.abstractPaper) : that.abstractPaper != null)
@@ -80,7 +80,7 @@ public class ProposalEntity {
 
     @Override
     public int hashCode() {
-        int result = proposalId != null ? proposalId.hashCode() : 0;
+        int result = proposalId;
         result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
         result = 31 * result + (topic != null ? topic.hashCode() : 0);
         result = 31 * result + (abstractPaper != null ? abstractPaper.hashCode() : 0);

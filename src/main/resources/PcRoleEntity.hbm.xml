@@ -5,7 +5,11 @@
 <hibernate-mapping>
 
     <class name="domain.PcRoleEntity" table="PCRole" schema="dbo" catalog="conference">
-        <id name="pcRoleId" column="PCRoleID"/>
-        <property name="description" column="Description"/>
+        <id name="pcRoleId">
+            <column name="PCRoleID" sql-type="int"/>
+        </id>
+        <property name="description">
+            <column name="Description" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

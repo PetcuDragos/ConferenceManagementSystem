@@ -5,22 +5,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Presentation", schema = "dbo", catalog = "conference")
 public class PresentationEntity {
-    private Integer presentationId;
+    private int presentationId;
     private String section;
     private Object time;
 
     @Id
-    @Column(name = "PresentationID")
-    public Integer getPresentationId() {
+    @Column(name = "PresentationID", nullable = false)
+    public int getPresentationId() {
         return presentationId;
     }
 
-    public void setPresentationId(Integer presentationId) {
+    public void setPresentationId(int presentationId) {
         this.presentationId = presentationId;
     }
 
     @Basic
-    @Column(name = "Section")
+    @Column(name = "Section", nullable = true, length = 50)
     public String getSection() {
         return section;
     }
@@ -30,7 +30,7 @@ public class PresentationEntity {
     }
 
     @Basic
-    @Column(name = "Time")
+    @Column(name = "Time", nullable = true)
     public Object getTime() {
         return time;
     }
@@ -46,8 +46,7 @@ public class PresentationEntity {
 
         PresentationEntity that = (PresentationEntity) o;
 
-        if (presentationId != null ? !presentationId.equals(that.presentationId) : that.presentationId != null)
-            return false;
+        if (presentationId != that.presentationId) return false;
         if (section != null ? !section.equals(that.section) : that.section != null) return false;
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
 
@@ -56,7 +55,7 @@ public class PresentationEntity {
 
     @Override
     public int hashCode() {
-        int result = presentationId != null ? presentationId.hashCode() : 0;
+        int result = presentationId;
         result = 31 * result + (section != null ? section.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         return result;

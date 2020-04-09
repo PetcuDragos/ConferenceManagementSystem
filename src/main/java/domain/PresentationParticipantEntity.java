@@ -6,37 +6,37 @@ import javax.persistence.*;
 @Table(name = "PresentationParticipant", schema = "dbo", catalog = "conference")
 @IdClass(PresentationParticipantEntityPK.class)
 public class PresentationParticipantEntity {
-    private Integer participantId;
-    private Integer presentationId;
-    private Integer prRoleId;
+    private int participantId;
+    private int presentationId;
+    private int prRoleId;
 
     @Id
-    @Column(name = "ParticipantID")
-    public Integer getParticipantId() {
+    @Column(name = "ParticipantID", nullable = false)
+    public int getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(Integer participantId) {
+    public void setParticipantId(int participantId) {
         this.participantId = participantId;
     }
 
     @Id
-    @Column(name = "PresentationID")
-    public Integer getPresentationId() {
+    @Column(name = "PresentationID", nullable = false)
+    public int getPresentationId() {
         return presentationId;
     }
 
-    public void setPresentationId(Integer presentationId) {
+    public void setPresentationId(int presentationId) {
         this.presentationId = presentationId;
     }
 
     @Id
-    @Column(name = "PrRoleID")
-    public Integer getPrRoleId() {
+    @Column(name = "PrRoleID", nullable = false)
+    public int getPrRoleId() {
         return prRoleId;
     }
 
-    public void setPrRoleId(Integer prRoleId) {
+    public void setPrRoleId(int prRoleId) {
         this.prRoleId = prRoleId;
     }
 
@@ -47,20 +47,18 @@ public class PresentationParticipantEntity {
 
         PresentationParticipantEntity that = (PresentationParticipantEntity) o;
 
-        if (participantId != null ? !participantId.equals(that.participantId) : that.participantId != null)
-            return false;
-        if (presentationId != null ? !presentationId.equals(that.presentationId) : that.presentationId != null)
-            return false;
-        if (prRoleId != null ? !prRoleId.equals(that.prRoleId) : that.prRoleId != null) return false;
+        if (participantId != that.participantId) return false;
+        if (presentationId != that.presentationId) return false;
+        if (prRoleId != that.prRoleId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = participantId != null ? participantId.hashCode() : 0;
-        result = 31 * result + (presentationId != null ? presentationId.hashCode() : 0);
-        result = 31 * result + (prRoleId != null ? prRoleId.hashCode() : 0);
+        int result = participantId;
+        result = 31 * result + presentationId;
+        result = 31 * result + prRoleId;
         return result;
     }
 }

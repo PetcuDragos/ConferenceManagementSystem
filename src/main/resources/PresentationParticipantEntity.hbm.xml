@@ -7,9 +7,15 @@
     <class name="domain.PresentationParticipantEntity" table="PresentationParticipant" schema="dbo"
            catalog="conference">
         <composite-id mapped="true" class="domain.PresentationParticipantEntityPK">
-            <key-property name="participantId" column="ParticipantID"/>
-            <key-property name="presentationId" column="PresentationID"/>
-            <key-property name="prRoleId" column="PrRoleID"/>
+            <key-property name="participantId">
+                <column name="ParticipantID" sql-type="int"/>
+            </key-property>
+            <key-property name="presentationId">
+                <column name="PresentationID" sql-type="int"/>
+            </key-property>
+            <key-property name="prRoleId">
+                <column name="PrRoleID" sql-type="int"/>
+            </key-property>
         </composite-id>
     </class>
 </hibernate-mapping>

@@ -5,6 +5,8 @@
 <hibernate-mapping>
 
     <class name="domain.ParticipantEntity" table="Participant" schema="dbo" catalog="conference">
-        <id name="participantId" column="ParticipantID"/>
+        <id name="participantId">
+            <column name="ParticipantID" sql-type="int"/>
+        </id>
     </class>
 </hibernate-mapping>

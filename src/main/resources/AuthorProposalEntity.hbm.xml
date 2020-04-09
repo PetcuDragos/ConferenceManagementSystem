@@ -6,8 +6,12 @@
 
     <class name="domain.AuthorProposalEntity" table="AuthorProposal" schema="dbo" catalog="conference">
         <composite-id mapped="true" class="domain.AuthorProposalEntityPK">
-            <key-property name="proposalId" column="ProposalID"/>
-            <key-property name="authorId" column="AuthorID"/>
+            <key-property name="proposalId">
+                <column name="ProposalID" sql-type="int"/>
+            </key-property>
+            <key-property name="authorId">
+                <column name="AuthorID" sql-type="int"/>
+            </key-property>
         </composite-id>
     </class>
 </hibernate-mapping>

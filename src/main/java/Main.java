@@ -15,11 +15,8 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hi");
-        /*
-        SessionFactory sessionFactory;
-        Configuration configuration = new Configuration();
-        configuration.configure();
 
+<<<<<<< Updated upstream
         sessionFactory=configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -53,5 +50,7 @@ public class Main {
         for (AuthorEntity a: authorEntities) {
             System.out.println(a);
         }
+=======
+>>>>>>> Stashed changes
     }
 }

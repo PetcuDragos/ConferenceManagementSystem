@@ -5,26 +5,26 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class AuthorProposalEntityPK implements Serializable {
-    private Integer proposalId;
-    private Integer authorId;
+    private int proposalId;
+    private int authorId;
 
-    @Column(name = "ProposalID")
+    @Column(name = "ProposalID", nullable = false)
     @Id
-    public Integer getProposalId() {
+    public int getProposalId() {
         return proposalId;
     }
 
-    public void setProposalId(Integer proposalId) {
+    public void setProposalId(int proposalId) {
         this.proposalId = proposalId;
     }
 
-    @Column(name = "AuthorID")
+    @Column(name = "AuthorID", nullable = false)
     @Id
-    public Integer getAuthorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
@@ -35,16 +35,16 @@ public class AuthorProposalEntityPK implements Serializable {
 
         AuthorProposalEntityPK that = (AuthorProposalEntityPK) o;
 
-        if (proposalId != null ? !proposalId.equals(that.proposalId) : that.proposalId != null) return false;
-        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        if (proposalId != that.proposalId) return false;
+        if (authorId != that.authorId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = proposalId != null ? proposalId.hashCode() : 0;
-        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
+        int result = proposalId;
+        result = 31 * result + authorId;
         return result;
     }
 }

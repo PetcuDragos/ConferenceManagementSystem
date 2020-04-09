@@ -8,15 +8,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Participant", schema = "dbo", catalog = "conference")
 public class ParticipantEntity {
-    private Integer participantId;
+    private int participantId;
 
     @Id
-    @Column(name = "ParticipantID")
-    public Integer getParticipantId() {
+    @Column(name = "ParticipantID", nullable = false)
+    public int getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(Integer participantId) {
+    public void setParticipantId(int participantId) {
         this.participantId = participantId;
     }
 
@@ -27,14 +27,13 @@ public class ParticipantEntity {
 
         ParticipantEntity that = (ParticipantEntity) o;
 
-        if (participantId != null ? !participantId.equals(that.participantId) : that.participantId != null)
-            return false;
+        if (participantId != that.participantId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return participantId != null ? participantId.hashCode() : 0;
+        return participantId;
     }
 }

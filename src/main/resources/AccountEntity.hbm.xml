@@ -5,11 +5,23 @@
 <hibernate-mapping>
 
     <class name="domain.AccountEntity" table="Account" schema="dbo" catalog="conference">
-        <id name="accountId" column="AccountID"/>
-        <property name="fullName" column="FullName"/>
-        <property name="affiliation" column="Affiliation"/>
-        <property name="email" column="Email"/>
-        <property name="username" column="Username"/>
-        <property name="password" column="Password"/>
+        <id name="accountId">
+            <column name="AccountID" sql-type="int"/>
+        </id>
+        <property name="fullName">
+            <column name="FullName" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="affiliation">
+            <column name="Affiliation" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="Email" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="username">
+            <column name="Username" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="Password" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

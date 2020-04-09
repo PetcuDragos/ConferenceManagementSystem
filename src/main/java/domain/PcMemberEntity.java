@@ -5,21 +5,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "PCMember", schema = "dbo", catalog = "conference")
 public class PcMemberEntity {
-    private Integer pcMemberId;
+    private int pcMemberId;
     private String website;
 
     @Id
-    @Column(name = "PCMemberID")
-    public Integer getPcMemberId() {
+    @Column(name = "PCMemberID", nullable = false)
+    public int getPcMemberId() {
         return pcMemberId;
     }
 
-    public void setPcMemberId(Integer pcMemberId) {
+    public void setPcMemberId(int pcMemberId) {
         this.pcMemberId = pcMemberId;
     }
 
     @Basic
-    @Column(name = "Website")
+    @Column(name = "Website", nullable = true, length = 50)
     public String getWebsite() {
         return website;
     }
@@ -35,7 +35,7 @@ public class PcMemberEntity {
 
         PcMemberEntity that = (PcMemberEntity) o;
 
-        if (pcMemberId != null ? !pcMemberId.equals(that.pcMemberId) : that.pcMemberId != null) return false;
+        if (pcMemberId != that.pcMemberId) return false;
         if (website != null ? !website.equals(that.website) : that.website != null) return false;
 
         return true;
@@ -43,7 +43,7 @@ public class PcMemberEntity {
 
     @Override
     public int hashCode() {
-        int result = pcMemberId != null ? pcMemberId.hashCode() : 0;
+        int result = pcMemberId;
         result = 31 * result + (website != null ? website.hashCode() : 0);
         return result;
     }

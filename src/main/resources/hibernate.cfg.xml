@@ -4,10 +4,11 @@
             org.hibernate.dialect.SQLServerDialect
         </property>
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://localhost;database=conference;IntegratedSecurity=true</property>
-        <mapping resource = "AuthorEntity.hbm.xml"/>
+        <property name="hibernate.connection.url">jdbc:sqlserver://localhost;database=conference;IntegratedSecurity=true;</property>
         <mapping resource="AccountEntity.hbm.xml"/>
         <mapping class="domain.AccountEntity"/>
+        <mapping resource="AuthorEntity.hbm.xml"/>
+        <mapping class="domain.AuthorEntity"/>
         <mapping resource="AuthorProposalEntity.hbm.xml"/>
         <mapping class="domain.AuthorProposalEntity"/>
         <mapping resource="PcMemberEntity.hbm.xml"/>
@@ -20,8 +21,8 @@
         <mapping class="domain.PresentationEntity"/>
         <mapping resource="PresentationParticipantEntity.hbm.xml"/>
         <mapping class="domain.PresentationParticipantEntity"/>
-        <mapping resource="PresentationRoleEntity.hbm.xml"/>
         <mapping class="domain.PresentationRoleEntity"/>
+        <mapping resource="PresentationRoleEntity.hbm.xml"/>
         <mapping resource="ProposalEntity.hbm.xml"/>
         <mapping class="domain.ProposalEntity"/>
         <mapping resource="ProposalReviewEntity.hbm.xml"/>

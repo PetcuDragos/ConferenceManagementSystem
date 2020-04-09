@@ -6,32 +6,32 @@ import javax.persistence.*;
 @Table(name = "ProposalReview", schema = "dbo", catalog = "conference")
 @IdClass(ProposalReviewEntityPK.class)
 public class ProposalReviewEntity {
-    private Integer pcMemberId;
-    private Integer proposalId;
+    private int pcMemberId;
+    private int proposalId;
     private String status;
 
     @Id
-    @Column(name = "PCMemberID")
-    public Integer getPcMemberId() {
+    @Column(name = "PCMemberID", nullable = false)
+    public int getPcMemberId() {
         return pcMemberId;
     }
 
-    public void setPcMemberId(Integer pcMemberId) {
+    public void setPcMemberId(int pcMemberId) {
         this.pcMemberId = pcMemberId;
     }
 
     @Id
-    @Column(name = "ProposalID")
-    public Integer getProposalId() {
+    @Column(name = "ProposalID", nullable = false)
+    public int getProposalId() {
         return proposalId;
     }
 
-    public void setProposalId(Integer proposalId) {
+    public void setProposalId(int proposalId) {
         this.proposalId = proposalId;
     }
 
     @Basic
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = true, length = 50)
     public String getStatus() {
         return status;
     }
@@ -47,8 +47,8 @@ public class ProposalReviewEntity {
 
         ProposalReviewEntity that = (ProposalReviewEntity) o;
 
-        if (pcMemberId != null ? !pcMemberId.equals(that.pcMemberId) : that.pcMemberId != null) return false;
-        if (proposalId != null ? !proposalId.equals(that.proposalId) : that.proposalId != null) return false;
+        if (pcMemberId != that.pcMemberId) return false;
+        if (proposalId != that.proposalId) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
         return true;
@@ -56,8 +56,8 @@ public class ProposalReviewEntity {
 
     @Override
     public int hashCode() {
-        int result = pcMemberId != null ? pcMemberId.hashCode() : 0;
-        result = 31 * result + (proposalId != null ? proposalId.hashCode() : 0);
+        int result = pcMemberId;
+        result = 31 * result + proposalId;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
