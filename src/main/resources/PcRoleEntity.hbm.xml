@@ -7,6 +7,7 @@
     <class name="domain.PcRoleEntity" table="PCRole" schema="dbo" catalog="conference">
         <id name="pcRoleId">
             <column name="PCRoleID" sql-type="int"/>
+            <generator class="identity"></generator>
         </id>
         <property name="description">
             <column name="Description" sql-type="varchar(50)" length="50" not-null="true"/>

@@ -7,6 +7,7 @@
     <class name="domain.ProposalEntity" table="Proposal" schema="dbo" catalog="conference">
         <id name="proposalId">
             <column name="ProposalID" sql-type="int"/>
+            <generator class="identity"></generator>
         </id>
         <property name="keywords">
             <column name="Keywords" sql-type="varchar(50)" length="50" not-null="true"/>

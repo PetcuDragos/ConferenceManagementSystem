@@ -7,6 +7,7 @@
     <class name="domain.ParticipantEntity" table="Participant" schema="dbo" catalog="conference">
         <id name="participantId">
             <column name="ParticipantID" sql-type="int"/>
+            <generator class="identity"></generator>
         </id>
     </class>
 </hibernate-mapping>

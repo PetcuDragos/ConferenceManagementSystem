@@ -1,6 +1,7 @@
 package repository;
 
-import domain.AuthorEntity;
+import domain.ParticipantEntity;
+import domain.PcMemberEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
@@ -8,57 +9,57 @@ import utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RepositoryAuthor implements RepositoryInterface<AuthorEntity, Integer> {
-
-    public RepositoryAuthor() {}
+public class RepositoryPcMember implements RepositoryInterface<PcMemberEntity, Integer> {
+    public RepositoryPcMember() {
+    }
 
     @Override
-    public ArrayList<AuthorEntity> findAll(){
+    public ArrayList<PcMemberEntity> findAll() {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity ");
+        Query query =  session.createQuery("from PcMemberEntity ");
         Object[] objects = query.list().toArray();
-        ArrayList<AuthorEntity> authors = new ArrayList<>();
+        ArrayList<PcMemberEntity> pcMemberEntities = new ArrayList<>();
         for (Object object : objects) {
-            authors.add((AuthorEntity) object);
+            pcMemberEntities.add((PcMemberEntity) object);
         }
         session.close();
-        return authors;
+        return pcMemberEntities;
     }
 
     @Override
-    public Optional<AuthorEntity> findOne(Integer id) {
+    public Optional<PcMemberEntity> findOne(Integer primaryKey) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity A where A.authorId="+id);
+        Query query =  session.createQuery("from PcMemberEntity A where A.pcMemberId="+primaryKey);
         Object object = query.getSingleResult();
-        return Optional.of( (AuthorEntity) object);
+        return Optional.of( (PcMemberEntity) object);
     }
 
     @Override
-    public void save(AuthorEntity authorEntity){
+    public void save(PcMemberEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.save(authorEntity);
+        session.save(entity);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer primaryKey) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.delete((AuthorEntity)this.findOne(id).get());
+        session.delete((PcMemberEntity)this.findOne(primaryKey).get());
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void update(AuthorEntity entity) {
+    public void update(PcMemberEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();

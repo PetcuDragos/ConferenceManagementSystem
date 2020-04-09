@@ -1,5 +1,6 @@
 package repository;
 
+import domain.AccountEntity;
 import domain.AuthorEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -8,41 +9,41 @@ import utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RepositoryAuthor implements RepositoryInterface<AuthorEntity, Integer> {
-
-    public RepositoryAuthor() {}
+public class RepositoryAccount implements RepositoryInterface<AccountEntity, Integer> {
+    public RepositoryAccount() {
+    }
 
     @Override
-    public ArrayList<AuthorEntity> findAll(){
+    public ArrayList<AccountEntity> findAll() {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity ");
+        Query query =  session.createQuery("from AccountEntity ");
         Object[] objects = query.list().toArray();
-        ArrayList<AuthorEntity> authors = new ArrayList<>();
+        ArrayList<AccountEntity> accounts = new ArrayList<>();
         for (Object object : objects) {
-            authors.add((AuthorEntity) object);
+            accounts.add((AccountEntity) object);
         }
         session.close();
-        return authors;
+        return accounts;
     }
 
     @Override
-    public Optional<AuthorEntity> findOne(Integer id) {
+    public Optional<AccountEntity> findOne(Integer id) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity A where A.authorId="+id);
+        Query query =  session.createQuery("from AccountEntity A where A.accountId="+id);
         Object object = query.getSingleResult();
-        return Optional.of( (AuthorEntity) object);
+        return Optional.of( (AccountEntity) object);
     }
 
     @Override
-    public void save(AuthorEntity authorEntity){
+    public void save(AccountEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.save(authorEntity);
+        session.save(entity);
         session.getTransaction().commit();
         session.close();
     }
@@ -52,13 +53,13 @@ public class RepositoryAuthor implements RepositoryInterface<AuthorEntity, Integ
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.delete((AuthorEntity)this.findOne(id).get());
+        session.delete((AccountEntity)this.findOne(id).get());
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void update(AuthorEntity entity) {
+    public void update(AccountEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();

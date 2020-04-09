@@ -7,6 +7,7 @@
     <class name="domain.AccountEntity" table="Account" schema="dbo" catalog="conference">
         <id name="accountId">
             <column name="AccountID" sql-type="int"/>
+            <generator class="identity"></generator>
         </id>
         <property name="fullName">
             <column name="FullName" sql-type="varchar(50)" length="50" not-null="true"/>

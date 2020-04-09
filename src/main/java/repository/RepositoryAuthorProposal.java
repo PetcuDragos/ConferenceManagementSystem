@@ -1,6 +1,9 @@
 package repository;
 
+import domain.AccountEntity;
 import domain.AuthorEntity;
+import domain.AuthorProposalEntity;
+import domain.AuthorProposalEntityPK;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
@@ -8,57 +11,57 @@ import utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RepositoryAuthor implements RepositoryInterface<AuthorEntity, Integer> {
-
-    public RepositoryAuthor() {}
+public class RepositoryAuthorProposal implements RepositoryInterface<AuthorProposalEntity, AuthorProposalEntityPK> {
+    public RepositoryAuthorProposal() {
+    }
 
     @Override
-    public ArrayList<AuthorEntity> findAll(){
+    public ArrayList<AuthorProposalEntity> findAll() {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity ");
+        Query query =  session.createQuery("from AuthorProposalEntity ");
         Object[] objects = query.list().toArray();
-        ArrayList<AuthorEntity> authors = new ArrayList<>();
+        ArrayList<AuthorProposalEntity> authorProposalEntities = new ArrayList<>();
         for (Object object : objects) {
-            authors.add((AuthorEntity) object);
+            authorProposalEntities.add((AuthorProposalEntity) object);
         }
         session.close();
-        return authors;
+        return authorProposalEntities;
     }
 
     @Override
-    public Optional<AuthorEntity> findOne(Integer id) {
+    public Optional<AuthorProposalEntity> findOne(AuthorProposalEntityPK id) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity A where A.authorId="+id);
+        Query query =  session.createQuery("from AuthorProposalEntity A where A.proposalId="+id.getProposalId()+" and A.authorId="+id.getAuthorId());
         Object object = query.getSingleResult();
-        return Optional.of( (AuthorEntity) object);
+        return Optional.of( (AuthorProposalEntity) object);
     }
 
     @Override
-    public void save(AuthorEntity authorEntity){
+    public void save(AuthorProposalEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.save(authorEntity);
+        session.save(entity);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(AuthorProposalEntityPK id) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.delete((AuthorEntity)this.findOne(id).get());
+        session.delete((AuthorProposalEntity)this.findOne(id).get());
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void update(AuthorEntity entity) {
+    public void update(AuthorProposalEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();

@@ -1,6 +1,7 @@
 package repository;
 
 import domain.AuthorEntity;
+import domain.ParticipantEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
@@ -8,57 +9,57 @@ import utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RepositoryAuthor implements RepositoryInterface<AuthorEntity, Integer> {
-
-    public RepositoryAuthor() {}
+public class RepositoryParticipant implements RepositoryInterface<ParticipantEntity, Integer> {
+    public RepositoryParticipant() {
+    }
 
     @Override
-    public ArrayList<AuthorEntity> findAll(){
+    public ArrayList<ParticipantEntity> findAll() {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity ");
+        Query query =  session.createQuery("from ParticipantEntity ");
         Object[] objects = query.list().toArray();
-        ArrayList<AuthorEntity> authors = new ArrayList<>();
+        ArrayList<ParticipantEntity> participantEntities = new ArrayList<>();
         for (Object object : objects) {
-            authors.add((AuthorEntity) object);
+            participantEntities.add((ParticipantEntity) object);
         }
         session.close();
-        return authors;
+        return participantEntities;
     }
 
     @Override
-    public Optional<AuthorEntity> findOne(Integer id) {
+    public Optional<ParticipantEntity> findOne(Integer primaryKey) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        Query query =  session.createQuery("from AuthorEntity A where A.authorId="+id);
+        Query query =  session.createQuery("from ParticipantEntity A where A.participantId="+primaryKey);
         Object object = query.getSingleResult();
-        return Optional.of( (AuthorEntity) object);
+        return Optional.of( (ParticipantEntity) object);
     }
 
     @Override
-    public void save(AuthorEntity authorEntity){
+    public void save(ParticipantEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.save(authorEntity);
+        session.save(entity);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer primaryKey) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
-        session.delete((AuthorEntity)this.findOne(id).get());
+        session.delete((ParticipantEntity)this.findOne(primaryKey).get());
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void update(AuthorEntity entity) {
+    public void update(ParticipantEntity entity) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Session session = hibernateUtils.getSession();
         session.beginTransaction();
