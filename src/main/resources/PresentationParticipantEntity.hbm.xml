@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="domain.PresentationParticipantEntity" table="PresentationParticipant" schema="dbo"
+           catalog="conference">
+        <composite-id mapped="true" class="domain.PresentationParticipantEntityPK">
+            <key-property name="participantId" column="ParticipantID"/>
+            <key-property name="presentationId" column="PresentationID"/>
+            <key-property name="prRoleId" column="PrRoleID"/>
+        </composite-id>
+    </class>
+</hibernate-mapping>

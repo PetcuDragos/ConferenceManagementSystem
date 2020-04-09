@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="domain.ProposalEntity" table="Proposal" schema="dbo" catalog="conference">
+        <id name="proposalId" column="ProposalID"/>
+        <property name="keywords" column="Keywords"/>
+        <property name="topic" column="Topic"/>
+        <property name="abstractPaper" column="Abstract"/>
+        <property name="fullPaper" column="FullPaper"/>
+    </class>
+</hibernate-mapping>

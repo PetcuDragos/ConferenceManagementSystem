@@ -6,5 +6,25 @@
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
         <property name="hibernate.connection.url">jdbc:sqlserver://localhost;database=conference;IntegratedSecurity=true</property>
         <mapping resource = "AuthorEntity.hbm.xml"/>
+        <mapping resource="AccountEntity.hbm.xml"/>
+        <mapping class="domain.AccountEntity"/>
+        <mapping resource="AuthorProposalEntity.hbm.xml"/>
+        <mapping class="domain.AuthorProposalEntity"/>
+        <mapping resource="PcMemberEntity.hbm.xml"/>
+        <mapping class="domain.PcMemberEntity"/>
+        <mapping resource="PcRoleEntity.hbm.xml"/>
+        <mapping class="domain.PcRoleEntity"/>
+        <mapping resource="ParticipantEntity.hbm.xml"/>
+        <mapping class="domain.ParticipantEntity"/>
+        <mapping resource="PresentationEntity.hbm.xml"/>
+        <mapping class="domain.PresentationEntity"/>
+        <mapping resource="PresentationParticipantEntity.hbm.xml"/>
+        <mapping class="domain.PresentationParticipantEntity"/>
+        <mapping resource="PresentationRoleEntity.hbm.xml"/>
+        <mapping class="domain.PresentationRoleEntity"/>
+        <mapping resource="ProposalEntity.hbm.xml"/>
+        <mapping class="domain.ProposalEntity"/>
+        <mapping resource="ProposalReviewEntity.hbm.xml"/>
+        <mapping class="domain.ProposalReviewEntity"/>
     </session-factory>
 </hibernate-configuration>

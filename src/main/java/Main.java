@@ -47,7 +47,7 @@ public class Main {
         author.setFullName("Iuliana");
         author.setAffiliation("FMI");
         author.setEmail("iuliana@scs.ro");
-        repositoryAuthor.delete(3);
+        repositoryAuthor.save(author);
 
         ArrayList<AuthorEntity> authorEntities = (ArrayList<AuthorEntity>) repositoryAuthor.findAll();
         for (AuthorEntity a: authorEntities) {
