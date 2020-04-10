@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEDVision</title>
+    <style>
+        body{
+            font-family:"Open Sans",Arial,sans-serif!important;
+            background:#eee;
+            font-size:14px;
+            line-height:22px;
+            margin:0px;
+            padding:0px;
+            overflow-x:hidden;
+        }
+        html, body, input, textarea, button{
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        .menu-top{
+            display: flex;
+            justify-content: space-evenly;
+            height:6%;
+            width: 100%;
+            background-color: #213821;
+            border-bottom-color: #001100;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;
+            position: absolute;
+            top: 0;
+        }
+
+        .container{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+        }
+        .current{
+            background-color: white;
+            padding: 5%;
+            margin: 5%;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #001100;
+        }
+        .sidebar{
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #213821;
+            border-right-color: #001100;
+            border-right-style: solid;
+            border-right-width: 2px;
+            overflow-x: hidden;
+            padding-top: 20px;
+
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #001100;
+            background-color: #6cea44;
+            border: none;
+            height: 1cm;
+            width: fit-content;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .search{
+            background-color: whitesmoke;
+            color: white;
+            height: 0.95cm;
+            padding-left: 5%;
+            border: none;
+        }
+        .svg-icon {
+            width: 1em;
+            height: 1em;
+        }
+
+        .svg-icon path,
+        .svg-icon polygon,
+        .svg-icon rect {
+            fill: #4691f6;
+        }
+
+        .svg-icon circle {
+            stroke: #4691f6;
+            stroke-width: 1;
+        }
+        .title{
+            font-size: 33px;
+            color: #ffffff;
+        }
+        .user{
+            padding: 8px 0px 8px 5px;
+
+            font-size: 28px;
+            color: #ffffff;
+        }
+
+
+        .chair{
+            padding: 2px 0px 3px 110px;
+            border-bottom-style: solid;
+            border-bottom-color: #001100;
+            border-bottom-width: 2px;
+            font-size: 28px;
+            color: #6cea44;
+        }
+
+        .sidebar a {
+            border-bottom-style: solid;
+            border-bottom-color: #001100;
+            border-bottom-width: 2px;
+            padding: 8px 10px 8px 32px;
+            text-decoration: none;
+            font-size: 23px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .menu-middle{
+            margin-left: 200px;
+        }
+        </style>
+</head>
+<body>
+<header class="menu-top">
+    <div></div>
+    <div></div>
+
+    <div class="container">
+        <span class="title">Les Croissants<span>
+    </div>
+    <form class="container">
+        <input class="search" type="text" placeholder="Search...">
+        <button class="button"><svg class="svg-icon" viewBox="0 0 20 20">
+            <path d="M18.125,15.804l-4.038-4.037c0.675-1.079,1.012-2.308,1.01-3.534C15.089,4.62,12.199,1.75,8.584,1.75C4.815,1.75,1.982,4.726,2,8.286c0.021,3.577,2.908,6.549,6.578,6.549c1.241,0,2.417-0.347,3.44-0.985l4.032,4.026c0.167,0.166,0.43,0.166,0.596,0l1.479-1.478C18.292,16.234,18.292,15.968,18.125,15.804 M8.578,13.99c-3.198,0-5.716-2.593-5.733-5.71c-0.017-3.084,2.438-5.686,5.74-5.686c3.197,0,5.625,2.493,5.64,5.624C14.242,11.548,11.621,13.99,8.578,13.99 M16.349,16.981l-3.637-3.635c0.131-0.11,0.721-0.695,0.876-0.884l3.642,3.639L16.349,16.981z"></path>
+        </svg></button>
+    </form>
+    <div class="container">
+        <button class="button">Log out</button>
+    </div>
+</header>
+
+<div class="sidebar">
+    <div class="user">Haloandrei</div>
+    <div class="chair">Chair</div>
+    <a href="#">My Papers</a>
+    <a href="#">Room Schedules</a>
+    <a href="#">Review Paper</a>
+    <a href="#">Presentation Schedules</a>
+
+</div>
+
+<div class="menu-middle">
+    <div class="current">
+        <div class="chair">Paper1</div>
+        <div class="current">here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+        </div>
+    </div>
+    <div class="current">
+        <div class="chair">Paper2</div>
+        <div class="current">here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+        </div>
+    </div>
+    <div class="current">
+        <div class="chair">Paper3</div>
+        <div class="current">here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
