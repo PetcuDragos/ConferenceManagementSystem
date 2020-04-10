@@ -1,13 +1,14 @@
 package domain;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @Table(name = "Presentation", schema = "dbo", catalog = "conference")
 public class PresentationEntity {
     private int presentationId;
     private String section;
-    private Object time;
+    private Time time;
 
     @Id
     @Column(name = "PresentationID", nullable = false)
@@ -31,11 +32,11 @@ public class PresentationEntity {
 
     @Basic
     @Column(name = "Time", nullable = true)
-    public Object getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(Object time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 

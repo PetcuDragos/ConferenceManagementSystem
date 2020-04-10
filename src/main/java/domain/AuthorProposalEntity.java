@@ -6,29 +6,31 @@ import javax.persistence.*;
 @Table(name = "AuthorProposal", schema = "dbo", catalog = "conference")
 @IdClass(AuthorProposalEntityPK.class)
 public class AuthorProposalEntity {
-    private int proposalId;
-    private int authorId;
+    private AuthorProposalEntityPK primaryKey;
+    //private int proposalId;
+    //private int authorId;
 
     @Id
     @Column(name = "ProposalID", nullable = false)
     public int getProposalId() {
-        return proposalId;
+        return primaryKey.getProposalId();//proposalId;
     }
 
     public void setProposalId(int proposalId) {
-        this.proposalId = proposalId;
+        this.primaryKey.setProposalId(proposalId);
     }
 
     @Id
     @Column(name = "AuthorID", nullable = false)
     public int getAuthorId() {
-        return authorId;
+        return primaryKey.getAuthorId();//authorId;
     }
 
     public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+        this.primaryKey.setAuthorId(authorId);// = authorId;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,4 +50,5 @@ public class AuthorProposalEntity {
         result = 31 * result + authorId;
         return result;
     }
+     */
 }
