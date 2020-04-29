@@ -1,14 +1,12 @@
 package repository;
 
-import org.hibernate.type.EntityType;
+import domain.BaseEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.io.Serializable;
 
-public interface RepositoryInterface<T,K> {
-    ArrayList<T> findAll();
-    Optional<T> findOne(K primaryKey);
-    void save(T entity);
-    void delete(K primaryKey);
-    void update(T entity);
+@NoRepositoryBean
+public interface RepositoryInterface<T extends BaseEntity<ID>, ID extends Serializable>
+        extends JpaRepository<T, ID> {
 }
