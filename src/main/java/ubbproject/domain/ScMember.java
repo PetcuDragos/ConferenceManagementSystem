@@ -1,18 +1,18 @@
 package ubbproject.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
-public class PcMember extends BaseEntity<Long>{
+public class ScMember extends BaseEntity<Long> {
     private Long conference_id;
     private Long user_id;
 
-    public PcMember() {
-    }
-
-    public PcMember(Long user_id, Long conference_id){
+    public ScMember(Long conference_id, Long user_id) {
         this.conference_id = conference_id;
         this.user_id = user_id;
+    }
+
+    public ScMember() {
     }
 
     public Long getConference_id() {
@@ -33,7 +33,7 @@ public class PcMember extends BaseEntity<Long>{
 
     @Override
     public String toString() {
-        return "PcMember{" +
+        return "ScMember{" +
                 "conference_id=" + conference_id +
                 ", user_id=" + user_id +
                 '}';

@@ -2,46 +2,27 @@ package ubbproject.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ubbproject.domain.Author;
-import ubbproject.service.*;
-
-import java.util.List;
+import ubbproject.service.ConferenceService;
+import ubbproject.service.EvaluationService;
+import ubbproject.service.MemberService;
+import ubbproject.service.PaperService;
 
 @Component
 public class Console {
+
     @Autowired
-    private ServiceAccountInterface serviceAccount;
+    private ConferenceService conferenceService;
     @Autowired
-    private ServiceAuthorInterface serviceAuthor;
+    private EvaluationService evaluationService;
     @Autowired
-    private ServiceAuthorProposalInterface serviceAuthorProposal;
+    private MemberService memberService;
     @Autowired
-    private ServiceParticipantInterface serviceParticipant;
-    @Autowired
-    private ServicePcMemberInterface servicePcMember;
-    @Autowired
-    private ServicePcRoleInterface servicePcRole;
-    @Autowired
-    private ServicePresentationInterface servicePresentation;
-    @Autowired
-    private ServicePresentationParticipantInterface servicePresentationParticipant;
-    @Autowired
-    private ServicePresentationRoleInterface servicePresentationRole;
-    @Autowired
-    private ServiceProposalInterface serviceProposal;
-    @Autowired
-    private ServiceProposalReviewInterface serviceProposalReview;
+    private PaperService paperService;
 
     public Console() {
     }
 
-    public void run() {
-        serviceAuthor.addAuthor(new Author("Radu Ninicu", "UBB", "radu@scs"));
-        List<Author> authors = serviceAuthor.getAllAuthors();
-        for (Author author : authors) {
-            System.out.println(author);
-        }
+    public void run(){
+        System.out.println("hello");
     }
-
-
 }

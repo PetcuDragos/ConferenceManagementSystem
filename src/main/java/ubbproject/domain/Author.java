@@ -3,58 +3,39 @@ package ubbproject.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class Author extends BaseEntity<Integer>{
-    private String fullName;
-    private String affiliation;
-    private String email;
-
-    public Author(String fullName, String affiliation, String email) {
-        this.fullName = fullName;
-        this.affiliation = affiliation;
-        this.email = email;
-    }
+public class Author extends BaseEntity<Long>{
+    private Long conference_id;
+    private Long user_id;
 
     public Author() {
     }
 
-    public Author(int id, String fullName, String affiliation, String email) {
-        this.fullName = fullName;
-        this.affiliation = affiliation;
-        this.email = email;
-        this.setId(id);
+    public Author(Long user_id,Long conference_id){
+        this.conference_id = conference_id;
+        this.user_id = user_id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public Long getConference_id() {
+        return conference_id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setConference_id(Long conference_id) {
+        this.conference_id = conference_id;
     }
 
-    public String getAffiliation() {
-        return affiliation;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setAffiliation(String affiliation) {
-        this.affiliation = affiliation;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     @Override
     public String toString() {
         return "Author{" +
-                "id='" + this.getId() + '\'' +
-                "fullName='" + fullName + '\'' +
-                ", affiliation='" + affiliation + '\'' +
-                ", email='" + email + '\'' +
+                "conference_id=" + conference_id +
+                ", user_id=" + user_id +
                 '}';
     }
 }
