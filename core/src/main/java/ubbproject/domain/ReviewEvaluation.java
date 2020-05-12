@@ -8,15 +8,25 @@ public class ReviewEvaluation extends BaseEntity<Long> {
     private Long paper_id;
     private int result;
     private Date date;
+    private String content;
 
     public ReviewEvaluation() {
     }
 
-    public ReviewEvaluation(Long pc_id, Long paper_id, int result, Date date) {
+    public ReviewEvaluation(Long pc_id, Long paper_id, int result, Date date, String content) {
         this.pc_id = pc_id;
         this.paper_id = paper_id;
         this.result = result;
         this.date = date;
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Long getPc_id() {

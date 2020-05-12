@@ -1,2 +1,5 @@
 rootProject.name = 'Project'
+include 'webserver'
+include 'core'
+include 'core'
 

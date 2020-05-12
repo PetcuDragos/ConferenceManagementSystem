@@ -10,17 +10,27 @@ public class Abstract extends BaseEntity<Long>{
     private String additionalAuthors;
     private String content;
     private Long author_id;
+    private Long conference_id;
 
     public Abstract() {
     }
 
-    public Abstract(String keywords, String topics, String name, String additionalAuthors, String content, Long author_id) {
+    public Abstract(String keywords, String topics, String name, String additionalAuthors, String content, Long author_id, Long conference_id) {
         this.keywords = keywords;
         this.topics = topics;
         this.name = name;
         this.additionalAuthors = additionalAuthors;
         this.content = content;
         this.author_id = author_id;
+        this.conference_id = conference_id;
+    }
+
+    public Long getConference_id() {
+        return conference_id;
+    }
+
+    public void setConference_id(Long conference_id) {
+        this.conference_id = conference_id;
     }
 
     public String getKeywords() {
