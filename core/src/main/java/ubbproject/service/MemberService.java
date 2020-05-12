@@ -1,11 +1,19 @@
 package ubbproject.service;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ubbproject.domain.MyUser;
 import ubbproject.repository.*;
+
+import java.util.List;
 
 @Component
 public class MemberService {
+
+    public static final Logger log = LoggerFactory.getLogger(MemberService.class);
 
     @Autowired
     private MyUserRepository myUserRepository;
@@ -23,5 +31,14 @@ public class MemberService {
     private ConferenceRepository conferenceRepository;
 
     public MemberService() {
+    }
+
+    public MyUser login(String username, String password){
+        log.trace("login function - entered");
+        List<MyUser> users = this.myUserRepository.findAll();
+        for(MyUser user : users)
+            if(user.getUsername().equals(username) && user.getPassword().equals(password))
+                return user;
+        return null;
     }
 }

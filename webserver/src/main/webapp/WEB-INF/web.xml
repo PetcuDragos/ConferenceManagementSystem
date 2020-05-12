@@ -8,9 +8,17 @@
         <servlet-name>Member</servlet-name>
         <servlet-class>controllers.MemberController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controllers.LoginController</servlet-class>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>Member</servlet-name>
         <url-pattern>/member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -167,14 +167,25 @@ header {
     line-height: 10px;
 }
 
-.login, .register{
+.logout {
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid;
+    border-radius:3px;
+    height: 10px;
+    line-height: 10px;
+}
+
+.login, .register, .logout{
     border-color:dodgerblue;
     transition-duration: 1s;
     transition: background-color 2s;
     /*background: radial-gradient(blue 5%,#603CFF 85%);*/
     background: linear-gradient(0deg, rgba(70,160,250,0.9), rgba(70,160,250,1) 20%, rgba(70,160,250,0.9));
 }
-.login:hover, .register:hover{
+.login:hover, .register:hover, .logout:hover{
     transition-duration: 1s;
     transition: background-color 2s;
     background: linear-gradient(0deg, rgba(65,155,250,0.9), rgba(65,155,250,1) 20%, rgba(65,155,250,0.9));
