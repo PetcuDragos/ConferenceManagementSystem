@@ -8,9 +8,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./login-page/shared/service";
-import {Globals} from "./globals";
 import {RegisterService} from "./register-page/shared/service";
-import { ProfilePageComponent } from './profile-page/profile-page.component';
+import {ProfilePageComponent} from "./profile-page/profile-page.component";
 
 @NgModule({
   declarations: [
@@ -18,14 +17,14 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     MainPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [LoginService, Globals, RegisterService],
+  providers: [LoginService, RegisterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

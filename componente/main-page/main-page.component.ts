@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {Globals} from "../globals";
 
 @Component({
   selector: 'app-main-page',
@@ -9,7 +8,7 @@ import {Globals} from "../globals";
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(private router: Router, private globals : Globals) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,19 +22,22 @@ export class MainPageComponent implements OnInit {
   }
 
   logout(){
-      this.globals.state = false;
-      this.globals.username = "";
+    localStorage.removeItem("username");
+    localStorage.setItem("state", "false");
+    localStorage.clear();
   }
 
   isAuthenticated(): boolean{
-    return this.globals.state;
+    if(localStorage.getItem("state")=="true")
+      return true;
+    return false;
   }
 
   getUsername(): string{
-    return this.globals.username;
+    return localStorage.getItem("username");
   }
 
-  profile() : void {
-    this.router.navigate(['profile']);
+  profile(): void{
+    this.router.navigate(["profile"]);
   }
 }
