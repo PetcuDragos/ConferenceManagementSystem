@@ -34,4 +34,8 @@ export class MainPageComponent implements OnInit {
   getUsername(): string{
     return this.globals.username;
   }
+
+  profile() : void {
+    this.router.navigate(['profile']);
+  }
 }

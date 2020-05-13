@@ -10,13 +10,15 @@ import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./login-page/shared/service";
 import {Globals} from "./globals";
 import {RegisterService} from "./register-page/shared/service";
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
