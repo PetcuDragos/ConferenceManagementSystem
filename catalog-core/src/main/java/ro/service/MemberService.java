@@ -11,6 +11,7 @@ import ro.repository.*;
 import ro.utils.Message;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MemberService {
@@ -60,5 +61,9 @@ public class MemberService {
         MyUser user = new MyUser(username,password,email);
         this.myUserRepository.save(user);
         return new Message<MyUser>(user, "");
+    }
+
+    public List<MyUser> getAllMembers(){
+        return this.myUserRepository.findAll();
     }
 }
