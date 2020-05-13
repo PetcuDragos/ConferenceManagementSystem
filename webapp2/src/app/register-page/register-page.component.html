@@ -1,0 +1,9 @@
+<p>login-page works!</p>
+
+<form action = "">
+  <br> Username <input #username type="text" >
+  <br> Password <input #password type="text" >
+  <br> Email <input #email type="text" >
+  <br> <input type="button" (click)="register(username.value, password.value, email.value)" value="Sign in">
+</form>
+<div> {{error}}</div>
