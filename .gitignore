@@ -30,3 +30,51 @@ node_modules
 
 #diagrams
 .Diagrams
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+webapp/dist
+webapp/tmp
+webapp/out-tsc
+# Only exists if Bazel was run
+webapp/bazel-out
+
+# dependencies
+webapp/node_modules
+
+# profiling files
+webapp/chrome-profiler-events*.json
+webapp/speed-measure-plugin*.json
+
+# IDEs and editors
+webapp/.idea
+webapp/.project
+webapp/.classpath
+webapp/.c9/
+webapp/*.launch
+webapp/.settings/
+webapp/*.sublime-workspace
+
+# IDE - VSCode
+webapp/.vscode/*
+webapp/!.vscode/settings.json
+webapp/!.vscode/tasks.json
+webapp/!.vscode/launch.json
+webapp/!.vscode/extensions.json
+webapp/.history/*
+
+# misc
+webapp/.sass-cache
+webapp/connect.lock
+webapp/coverage
+webapp/libpeerconnection.log
+webapp/npm-debug.log
+webapp/yarn-error.log
+webapp/testem.log
+webapp/typings
+
+# System Files
+webapp/.DS_Store
+webapp/Thumbs.db
