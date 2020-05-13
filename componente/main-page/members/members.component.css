@@ -215,6 +215,7 @@ header {
   margin-left:40px;
   display:inline-block;
   min-width:200px;
+  width:80%;
   max-width: 90%;
 }
 
@@ -346,6 +347,7 @@ header {
 
 .panel {
   max-width: 95%;
+  width:90%;
   min-width:400px;
   box-shadow: 2px 3px 3px -2px dodgerblue;
   border: 1px solid #202020;

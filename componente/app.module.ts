@@ -10,6 +10,12 @@ import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./login-page/shared/service";
 import {RegisterService} from "./register-page/shared/service";
 import {ProfilePageComponent} from "./profile-page/profile-page.component";
+import { AbstractsComponent } from './main-page/abstracts/abstracts.component';
+import { ConferencesComponent } from './main-page/conferences/conferences.component';
+import { PapersComponent } from './main-page/papers/papers.component';
+import { MembersComponent } from './main-page/members/members.component';
+import {MemberService} from "./main-page/members/shared/service";
+import {PaperService} from "./main-page/papers/shared/service";
 
 @NgModule({
   declarations: [
@@ -18,13 +24,17 @@ import {ProfilePageComponent} from "./profile-page/profile-page.component";
     LoginPageComponent,
     RegisterPageComponent,
     ProfilePageComponent,
+    AbstractsComponent,
+    ConferencesComponent,
+    PapersComponent,
+    MembersComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [LoginService, RegisterService],
+  providers: [LoginService, RegisterService, MemberService, PaperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

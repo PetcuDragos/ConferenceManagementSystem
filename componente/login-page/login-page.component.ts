@@ -33,4 +33,8 @@ export class LoginPageComponent implements OnInit {
 
   }
 
+  mainpage():void{
+    this.router.navigate(['']);
+  }
+
 }
