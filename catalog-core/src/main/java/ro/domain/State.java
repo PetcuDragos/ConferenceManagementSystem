@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class State extends BaseEntity<Long> {
+public class State extends BaseEntity {
     private Long account_id;
 
     public State(Long account_id) {

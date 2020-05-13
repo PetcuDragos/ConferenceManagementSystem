@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.*;
 
 @Entity
-public class Abstract extends BaseEntity<Long>{
+public class Abstract extends BaseEntity{
     private String keywords;
     private String topics;
     private String name;

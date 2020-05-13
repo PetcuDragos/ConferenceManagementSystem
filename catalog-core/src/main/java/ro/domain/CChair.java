@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class CChair extends BaseEntity<Long>{
+public class CChair extends BaseEntity{
     private Long pc_id;
 
     public CChair(Long pc_id) {

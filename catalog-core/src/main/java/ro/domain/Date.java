@@ -2,7 +2,7 @@ package ro.domain;
 
 import java.time.LocalDateTime;
 
-public class Date extends BaseEntity<Long> {
+public class Date extends BaseEntity {
     private Integer day;
     private Integer month;
     private Integer year;

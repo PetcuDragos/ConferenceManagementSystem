@@ -7,7 +7,7 @@ import ro.dto.BaseDto;
  * Created by radu.
  */
 
-public interface Converter<Model extends BaseEntity<Long>, Dto extends BaseDto> {
+public interface Converter<Model extends BaseEntity, Dto extends BaseDto> {
 
     Model convertDtoToModel(Dto dto);
 

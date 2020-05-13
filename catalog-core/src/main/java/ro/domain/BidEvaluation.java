@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.*;
 
 @Entity
-public class BidEvaluation extends BaseEntity<Long>{
+public class BidEvaluation extends BaseEntity{
 
     private Long pc_id;
     private Long abstract_id;

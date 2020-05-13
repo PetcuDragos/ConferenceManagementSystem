@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Created by radu.
  */
 
-public abstract class BaseConverter<Model extends BaseEntity<Long>, Dto extends BaseDto> implements Converter<Model, Dto> {
+public abstract class BaseConverter<Model extends BaseEntity, Dto extends BaseDto> implements Converter<Model, Dto> {
 
     public Set<Long> convertModelsToIDs(Set<Model> models) {
         return models.stream()

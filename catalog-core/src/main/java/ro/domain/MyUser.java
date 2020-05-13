@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class MyUser extends BaseEntity<Long> {
+public class MyUser extends BaseEntity {
 
     private String fullName;
     private String affiliation;

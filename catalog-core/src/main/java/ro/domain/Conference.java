@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class Conference extends BaseEntity<Long>{
+public class Conference extends BaseEntity{
 
     private String name;
     private Date abstractDeadline;

@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class ReviewEvaluation extends BaseEntity<Long> {
+public class ReviewEvaluation extends BaseEntity {
     private Long pc_id;
     private Long paper_id;
     private int result;

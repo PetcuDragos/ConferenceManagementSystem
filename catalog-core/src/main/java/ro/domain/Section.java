@@ -3,7 +3,7 @@ package ro.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class Section extends BaseEntity<Long> {
+public class Section extends BaseEntity {
     private Long sc_id;
     private Long conference_id;
 
