@@ -29,8 +29,6 @@ public class MemberService {
     @Autowired
     private CChairRepository cChairRepository;
     @Autowired
-    private StateRepository stateRepository;
-    @Autowired
     private ConferenceRepository conferenceRepository;
 
     public MemberService() {
