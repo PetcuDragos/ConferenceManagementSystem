@@ -22,4 +22,8 @@ export class ProfilePageComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  mainpage():void{
+    this.router.navigate(['']);
+  }
+
 }

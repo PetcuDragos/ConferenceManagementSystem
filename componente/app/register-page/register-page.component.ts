@@ -35,5 +35,8 @@ export class RegisterPageComponent implements OnInit {
   back() :void{
     this.router.navigate(['']);
 }
+mainpage():void{
+  this.router.navigate(['']);
+}
 
 }

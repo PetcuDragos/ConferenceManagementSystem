@@ -13,10 +13,10 @@
     <div class="top">
 
       <div class="brand">
-        <a href="index.html">Logo</a>
+        <img src="assets/logo.png"(click)="mainpage()">
       </div>
 
-      <div class="searchbox">
+      <div class="searchbox" (click)="mainpage()">
         <input type="search">
         <button type="submit" id="buton_cautare">
           <svg width="24" style="stroke:#fff;stroke-width:0;vertical-align:bottom" height="24"
@@ -27,18 +27,13 @@
         </button>
       </div>
 
-
-
-
       <div class="top_bar_buttons">
         <div class="back"(click)="back()">
           <span> Back </span>
         </div>
       </div>
-
     </div>
   </div>
-
 </header>
   <h1 class="registerText">Create an account</h1>
   <br>
@@ -59,8 +54,8 @@
       <h3 class="registerText">Website</h3>
       <input placeholder="Website" #userWebsite type="text" required/>
       <br><br>
-      <input type="button" (click)="register(username.value, password.value, verifyPassword.value,
-      email.value, fullName.value, affiliation.value,userWebsite.value)" value="Sign up">
+      <div class="registerButton" (click)="register(username.value, password.value, verifyPassword.value,
+      email.value, fullName.value, affiliation.value,userWebsite.value)"> Sign up</div>
       <br><br><br>
     </form>
   </div>

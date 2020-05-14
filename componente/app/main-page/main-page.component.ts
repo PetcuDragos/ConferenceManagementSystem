@@ -28,7 +28,7 @@ export class MainPageComponent implements OnInit {
   }
 
   mainpage():void{
-    this.router.navigate(['']);
+    this.option = 1;
   }
 
     login(){
