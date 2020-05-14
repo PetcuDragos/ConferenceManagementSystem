@@ -85,11 +85,19 @@
 
         <li>
           <select id="group_list">
+<<<<<<< HEAD
+            <optgroup label="Chair" disabled> <option value="Conference 1">Managements Conference</option>
+            </optgroup>
+            <optgroup label="PC-Member" disabled><option value="Conference 2">New Conference</option>
+            </optgroup>
+            <optgroup label="Member" disabled><option value="Conference 3">Car Conference</option>
+=======
             <optgroup label="Chair"> <option value="Conference 1">Managements Conference</option>
             </optgroup>
             <optgroup label="PC-Member"><option value="Conference 2">New Conference</option>
             </optgroup>
             <optgroup label="Member"><option value="Conference 3">Car Conference</option>
+>>>>>>> 427ff3c55ddf2693ed5ebb6155975af4a5e8e597
             </optgroup>
           </select>
         </li>

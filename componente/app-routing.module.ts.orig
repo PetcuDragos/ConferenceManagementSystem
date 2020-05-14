@@ -14,10 +14,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
+<<<<<<< HEAD
+  imports: [RouterModule.forRoot(routes)],
+=======
   imports: [RouterModule.forRoot(routes, {
     onSameUrlNavigation: 'reload',
     scrollPositionRestoration: 'top'
   })],
+>>>>>>> 427ff3c55ddf2693ed5ebb6155975af4a5e8e597
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
