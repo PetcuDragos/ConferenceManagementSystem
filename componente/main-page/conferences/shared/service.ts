@@ -13,7 +13,10 @@ export class ConferenceService {
     return this.httpClient.get<Array<Conference>>("http://localhost:8080/api/conferences");
   }
   getConferencesFromUser(): Observable<ConferenceUser[]> {
-    let user = localStorage.getItem("username");
-    return this.httpClient.post<Array<ConferenceUser>>("http://localhost:8080/api/conferences/",user);
+    if(localStorage.getItem("username") != null) {
+      let user = localStorage.getItem("username");
+      return this.httpClient.post<Array<ConferenceUser>>("http://localhost:8080/api/conferences/", user);
+    }
+    return null;
   }
 }
