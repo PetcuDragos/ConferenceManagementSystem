@@ -26,7 +26,7 @@ export class LoginPageComponent implements OnInit {
       }
       else{
         localStorage.setItem("state", "false");
-        this.error = t.error;
+        alert(t.error);
       }
 
     });
@@ -36,5 +36,7 @@ export class LoginPageComponent implements OnInit {
   mainpage():void{
     this.router.navigate(['']);
   }
-
+  back() :void {
+    this.router.navigate(['']);
+  }
 }
