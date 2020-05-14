@@ -12,7 +12,7 @@ export class RegisterService {
 
   login(register: Register): Observable<Message> {
     console.log("registered");
-    return this.httpClient.post<Message>("http://localhost:8080/api/register", register);
+    return this.httpClient.post<Message>("http://localhost:8081/api/register", register);
   }
 
 }
