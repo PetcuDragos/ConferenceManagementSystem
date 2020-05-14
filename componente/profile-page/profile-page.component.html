@@ -22,43 +22,44 @@
 
   </header>
 
-  <main class="main">
-    <article class="panel">
-
-      <div class="articol">
-        <h3>Profile Details</h3>
+  <main>
+    <div class="userContainer">
+      <div id="userTitle">
+        <span>Profile details</span>
       </div>
 
-      <hr/>
+      <div class="formContainer">
 
-      <form action="">
-        <div class="formContainer">
-          <label>Full Name:</label>
-          <input type="text" #fullname placeholder="Your full name..">
-        </div>
+        <form action="">
+          <div class="inputContainer">
+            <label>Full Name:</label>
+            <input type="text" #fullname placeholder="Your full name..">
+          </div>
 
-        <div class="formContainer">
-          <label>Email:</label>
-          <input type="text" #email placeholder="Your email..">
-        </div>
+          <div class="inputContainer">
+            <label>Email:</label>
+            <input type="text" #email placeholder="Your email..">
+          </div>
 
-        <div class="formContainer">
-          <label>Affiliation:</label>
-          <input type="text" #affiliation placeholder="Affiliation you're in..">
-        </div>
+          <div class="inputContainer">
+            <label>Affiliation:</label>
+            <input type="text" #affiliation placeholder="Affiliation you're in..">
+          </div>
 
-        <div class="formContainer">
-          <label>Webpage:</label>
-          <input type="text" #webpage placeholder="Your webpage..">
-        </div>
+          <div class="inputContainer">
+            <label>Webpage:</label>
+            <input type="text" #webpage placeholder="Your webpage..">
+          </div>
 
-        <hr/>
+          <hr>
 
-        <input type="submit" value="Save" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">
+          <input type="submit" value="Save" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">
 
-      </form>
+        </form>
 
-    </article>
+      </div>
+
+    </div>
   </main>
 
 </body>
