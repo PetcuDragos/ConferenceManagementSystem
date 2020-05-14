@@ -11,7 +11,7 @@ export class LoginService {
 
   login(user: MyUser): Observable<Message> {
     console.log("entered client add ts");
-    return this.httpClient.post<Message>("http://localhost:8080/api/login", user);
+    return this.httpClient.post<Message>("http://localhost:8081/api/login", user);
   }
 
 }

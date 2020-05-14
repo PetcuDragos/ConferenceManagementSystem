@@ -1,5 +1,64 @@
-<br> fullname: <input type = "text" #fullname>
-<br> email: <input type = "text" #email>
-<br> affiliation: <input type = "text" #affiliation>
-<br> webpage: <input type = "text" #webpage>
-<br> <input type="button" value="save" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="profile-page.component.css" rel="stylesheet" type="text/css">
+  <base href="/">
+  <title>CMS</title>
+</head>
+<body>
+  <header>
+    <div class="backtop">
+      <div class="top">
+        <div class="top_bar_buttons">
+
+          <div class="back">
+            <span> < Back </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <main class="main">
+    <article class="panel">
+
+      <div class="articol">
+        <h3>Profile Details</h3>
+      </div>
+
+      <hr/>
+
+      <form action="">
+        <div class="formContainer">
+          <label>Full Name:</label>
+          <input type="text" #fullname placeholder="Your full name..">
+        </div>
+
+        <div class="formContainer">
+          <label>Email:</label>
+          <input type="text" #email placeholder="Your email..">
+        </div>
+
+        <div class="formContainer">
+          <label>Affiliation:</label>
+          <input type="text" #affiliation placeholder="Affiliation you're in..">
+        </div>
+
+        <div class="formContainer">
+          <label>Webpage:</label>
+          <input type="text" #webpage placeholder="Your webpage..">
+        </div>
+
+        <hr/>
+
+        <input type="submit" value="Save" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">
+
+      </form>
+
+    </article>
+  </main>
+
+</body>
