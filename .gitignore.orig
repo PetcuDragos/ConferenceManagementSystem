@@ -29,4 +29,8 @@ gradle
 #diagrams
 Diagrams
 
+<<<<<<< HEAD
 webapp
+=======
+webapp
+>>>>>>> feature/angular
