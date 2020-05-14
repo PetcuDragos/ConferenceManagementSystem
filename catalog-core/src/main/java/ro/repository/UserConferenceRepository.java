@@ -1,4 +1,6 @@
 package ro.repository;
 
-public interface UserConferenceRepository {
+import ro.domain.UserConference;
+
+public interface UserConferenceRepository extends RepositoryInterface<UserConference,Long> {
 }

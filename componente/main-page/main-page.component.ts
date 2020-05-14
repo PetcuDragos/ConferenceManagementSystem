@@ -1,5 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {ConferenceService} from "./conferences/shared/service";
+import {AbstractService} from "./abstracts/shared/service";
+import {Conference} from "../../../../componente/main-page/conferences/shared/model";
+import {ConferenceUser} from "./conferences/shared/model";
 
 @Component({
   selector: 'app-main-page',
@@ -7,12 +11,15 @@ import {Router} from "@angular/router";
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-
-  constructor(private router: Router) { }
+    conferencesList: ConferenceUser[];
+  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) { }
 
   @Input() option : number = 1;
 
   ngOnInit(): void {
+    this.conferenceService.getConferencesFromUser().subscribe(c=>{
+      this.conferencesList = c;
+    });
   }
 
   register(){
@@ -47,9 +54,6 @@ export class MainPageComponent implements OnInit {
     this.router.navigate(["profile"]);
   }
 
-  populateConferenceList():void{
-
-  }
   conferences():void{
     this.option = 2;
   }
@@ -64,5 +68,26 @@ export class MainPageComponent implements OnInit {
 
   getOption():number{
     return this.option;
+  }
+
+  userIsChairAtAConference():boolean{
+    return false;
+  }
+  userIsPCMemberAtAConference():boolean{
+    return false;
+  }
+  userIsAuthorAtAConference():boolean{
+    return false;
+  }
+  userIsMemberAtAConference():boolean{
+    return false;
+  }
+
+  populateConferenceList(user_title: string):ConferenceUser[]{
+    return this.conferencesList.filter(p=>p.title == user_title);
+  }
+
+  changeSelectedConference(conference_id: number):void{
+    localStorage.setItem("selected_conference_id",conference_id.toString());
   }
 }

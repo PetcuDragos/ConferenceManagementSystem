@@ -16,3 +16,8 @@ export class Conference{
   chair_id: number;
   co_chair_id: number;
 }
+
+export class ConferenceUser{
+  title: string;
+  conference: Conference;
+}

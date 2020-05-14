@@ -9,7 +9,6 @@ import ro.domain.*;
 import ro.repository.*;
 import ro.utils.Message;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -76,16 +75,19 @@ public class MemberService {
         this.scMemberRepository.save(scMember);
         return new Message<>(scMember, "");
     }
-
+    // todo: de schimbat functia
+    /*
     public Message<CChair> addCChair(Long pcMember) {
         List<CChair> cChairs = this.cChairRepository.findAll();
         for (CChair cChair : cChairs)
-            if (cChair.getPc_id().equals(pcMember))
+            if (cChair.getUser_id().equals(pcMember))
                 return new Message<>(null, "You are already a chair here!");
-        CChair chair = new CChair(pcMember);
+//        CChair chair = new CChair(pcMember);
         this.cChairRepository.save(chair);
         return new Message<>(chair, "");
     }
+
+     */
 
     public MyUser getUserFromUsername(String username) {
         log.trace("getUserFromUsername - method entered");

@@ -84,11 +84,17 @@
 
         <li>
           <select id="group_list">
-            <optgroup label="Chair"> <option value="Conference 1">Managements Conference</option>
+            <optgroup label="Chair" *ngIf="userIsChairAtAConference()">
+              <option *ngFor="let conference of populateConferenceList('Chair')"  routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
             </optgroup>
-            <optgroup label="PC-Member"><option value="Conference 2">New Conference</option>
+            <optgroup label="PC-Member" *ngIf="userIsPCMemberAtAConference()">
+              <option *ngFor="let conference of populateConferenceList('PCMember')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
             </optgroup>
-            <optgroup label="Member"><option value="Conference 3">Car Conference</option>
+            <optgroup label="Author" *ngIf="userIsAuthorAtAConference()">
+              <option *ngFor="let conference of populateConferenceList('Author')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
+            </optgroup>
+            <optgroup label="Member" *ngIf="userIsMemberAtAConference()">
+              <option *ngFor="let conference of populateConferenceList('Member')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
             </optgroup>
 
           </select>

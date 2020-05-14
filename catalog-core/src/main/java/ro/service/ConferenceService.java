@@ -2,10 +2,7 @@ package ro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.domain.CChair;
-import ro.domain.Conference;
-import ro.domain.Date;
-import ro.domain.Section;
+import ro.domain.*;
 import ro.repository.*;
 
 import java.util.List;
@@ -35,18 +32,20 @@ public class ConferenceService {
 
     public List<CChair> getCChairs(){return this.cChairRepository.findAll();}
 
+    public List<UserConference> getUserConferences(){return this.userConferenceRepository.findAll();}
+
     public boolean isConferenceChair(Long conferenceId, Long userId) {
         //toDo: check if the conference exists
         Conference conference = this.conferenceRepository.getOne(conferenceId);
         return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getChair_id())
-                .get().getPc_id()).get().getUser_id().equals(userId);
+                .get().getUser_id()).get().getUser_id().equals(userId);
     }
 
     public boolean isConferenceCoChair(Long conferenceId, Long userId) {
         //toDo: check if the conference exists
         Conference conference = this.conferenceRepository.getOne(conferenceId);
         return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getCo_chair_id())
-                .get().getPc_id()).get().getUser_id().equals(userId);
+                .get().getUser_id()).get().getUser_id().equals(userId);
     }
 
     public void changePaperDeadline(Long conferenceId, Long userId, Date date){
@@ -65,5 +64,9 @@ public class ConferenceService {
         //toDo: check if the conference exists
         if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
             this.conferenceRepository.getOne(conferenceId).setReviewDeadline(date);
+    }
+
+    public Conference getConferenceFromId(Long id){
+        return conferenceRepository.getOne(id);
     }
 }
