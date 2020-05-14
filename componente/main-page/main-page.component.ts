@@ -17,7 +17,8 @@ export class MainPageComponent implements OnInit {
   @Input() option : number = 1;
 
   ngOnInit(): void {
-    this.conferenceService.getConferencesFromUser().subscribe(c=>{
+    if(localStorage.getItem("state")=="true")
+      this.conferenceService.getConferencesFromUser().subscribe(c=>{
       this.conferencesList = c;
     });
   }

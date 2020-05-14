@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile-page',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -15,6 +16,10 @@ export class ProfilePageComponent implements OnInit {
   save(fullname, email, affiliation, webpage): void{
       //todo
       alert("saved");
+  }
+
+  back() :void {
+    this.router.navigate(['']);
   }
 
 }
