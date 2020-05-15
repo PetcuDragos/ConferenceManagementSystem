@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"ro.controller", "ro.converter"})
+@ComponentScan({"ro.controller", "ro.converter","ro.hardcodedMain"})
 public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {

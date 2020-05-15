@@ -69,4 +69,15 @@ public class ConferenceService {
     public Conference getConferenceFromId(Long id){
         return conferenceRepository.getOne(id);
     }
+
+    public Conference addConference(String name, Long chair_id, Long co_chair_id, Date startingDate, Date endingDate, Date abstractDeadline, Date paperDeadline,Date bidDeadline, Date reviewDeadline){
+        return this.conferenceRepository.save(new Conference(name,abstractDeadline,paperDeadline,bidDeadline,reviewDeadline,startingDate,endingDate,chair_id,co_chair_id));
+    }
+
+    public Conference getConferenceFromName(String name){
+        for(Conference conference: this.conferenceRepository.findAll()){
+            if(conference.getName().equals(name)) return conference;
+        }
+        return null;
+    }
 }

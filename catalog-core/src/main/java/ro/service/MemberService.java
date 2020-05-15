@@ -66,28 +66,15 @@ public class MemberService {
         return new Message<>(pcMember,"");
     }
 
-    public Message<ScMember> addScMember(Long conferenceId, Long userId) {
+    public Message<ScMember> addScMember(Long userId) {
         List<ScMember> scMembers = this.scMemberRepository.findAll();
         for(ScMember scMember : scMembers)
-            if(scMember.getConference_id().equals(conferenceId) && scMember.getUser_id().equals(userId))
-                return new Message<>(null, "You are already a ScMember at this conference!");
-        ScMember scMember = new ScMember(conferenceId, userId);
+            if(scMember.getUser_id().equals(userId))
+                return new Message<>(null, "You are already a ScMember!");
+        ScMember scMember = new ScMember(userId);
         this.scMemberRepository.save(scMember);
         return new Message<>(scMember, "");
     }
-    // todo: de schimbat functia
-    /*
-    public Message<CChair> addCChair(Long pcMember) {
-        List<CChair> cChairs = this.cChairRepository.findAll();
-        for (CChair cChair : cChairs)
-            if (cChair.getUser_id().equals(pcMember))
-                return new Message<>(null, "You are already a chair here!");
-//        CChair chair = new CChair(pcMember);
-        this.cChairRepository.save(chair);
-        return new Message<>(chair, "");
-    }
-
-     */
 
     public MyUser getUserFromUsername(String username) {
         log.trace("getUserFromUsername - method entered");
@@ -194,4 +181,15 @@ public class MemberService {
         }
         return countAts == 1 && countDots == 1;
     }
+
+    public CChair addCChair(Long user_id, Long conference_id){
+        return cChairRepository.save(new CChair(user_id,conference_id));
+    }
+
+    public Author addAuthor(Long user_id, Long conference_id){
+        return authorRepository.save(new Author(user_id,conference_id));
+    }
+
+
+
 }
