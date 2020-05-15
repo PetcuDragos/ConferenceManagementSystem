@@ -18,6 +18,7 @@ import {MemberService} from "./main-page/members/shared/service";
 import {PaperService} from "./main-page/papers/shared/service";
 import {ConferenceService} from "./main-page/conferences/shared/service";
 import {AbstractService} from "./main-page/abstracts/shared/service";
+import {ProfilePageService} from "./profile-page/shared/service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import {AbstractService} from "./main-page/abstracts/shared/service";
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService],
+  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

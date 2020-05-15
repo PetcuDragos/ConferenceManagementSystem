@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ConferenceService} from "./conferences/shared/service";
 import {AbstractService} from "./abstracts/shared/service";
-import {Conference} from "../../../../componente/main-page/conferences/shared/model";
 import {ConferenceUser} from "./conferences/shared/model";
 
 @Component({
@@ -90,5 +89,9 @@ export class MainPageComponent implements OnInit {
 
   changeSelectedConference(conference_id: number):void{
     localStorage.setItem("selected_conference_id",conference_id.toString());
+  }
+
+  insert(): void{
+
   }
 }

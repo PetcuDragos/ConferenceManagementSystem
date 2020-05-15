@@ -99,15 +99,22 @@ public class MemberService {
         return null;
     }
 
-    public void updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
-        log.trace("updateProfile - method entered");
+    public Message<MyUser> updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
+        log.trace("updateProfile - method entered, {}, {}, {}, {}, {}", username, fullname, email, affiliation, webpage);
         MyUser user = this.getUserFromUsername(username);
+        log.trace("user = {}", user);
         if (user != null) {
-            user.setFullName(fullname);
             user.setEmail(email);
             user.setAffiliation(affiliation);
             user.setWeb_page(webpage);
+            user.setFullName(fullname);
+            this.myUserRepository.deleteById(user.getId());
+            this.myUserRepository.save(user);
+
+            log.trace("Service - updateProfile - finished - {}", user);
+            return new Message<MyUser>(user, "");
         }
+        return new Message<MyUser>(null, "error");
     }
 
     public Message<MyUser> login(String username, String password) {

@@ -11,6 +11,7 @@ import ro.converter.MemberConverter;
 import ro.domain.MyUser;
 import ro.dto.LoginDto;
 import ro.dto.MemberDto;
+import ro.dto.ProfilePageDto;
 import ro.dto.RegisterDto;
 import ro.service.MemberService;
 import ro.utils.Message;
@@ -58,5 +59,22 @@ public class AuthController {
     @RequestMapping(value = "/members", method = RequestMethod.GET)
     public List<MemberDto> getMembers() {
             return new ArrayList<MemberDto>(this.memberConverter.convertModelsToDtos(serviceMember.getAllMembers()));
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public Message<MyUser> saveProfile(@RequestBody ProfilePageDto profilePageDto){
+        log.trace("Controller - saveProfile - {}", profilePageDto);
+        try{
+            Message<MyUser> result = this.serviceMember.updateProfile(profilePageDto.getUsername(),
+                    profilePageDto.getFullName(), profilePageDto.getEmail(), profilePageDto.getAffiliation(),
+                    profilePageDto.getWebpage());
+            if(result.getEntity() != null) log.trace("Controller - saveProfile successful");
+            else log.trace("Controller - saveProfile unsuccessful");
+            return result;
+        }
+        catch (Exception e){
+            log.trace("Controller - saveProfile failed. Error: \n {}", e.toString());
+        }
+        return new Message<MyUser>(null,"error");
     }
 }
