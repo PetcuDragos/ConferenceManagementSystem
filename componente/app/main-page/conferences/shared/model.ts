@@ -25,8 +25,8 @@ export class ConferenceUser{
 }
 
 export class ConferenceDescription {
-  title: string;
+  name: string;
   conference: Conference;
-  chair: string;
-  co_chair: string;
+  chairName: string;
+  co_chairName: string;
 }

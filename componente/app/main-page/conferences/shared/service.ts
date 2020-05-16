@@ -20,10 +20,6 @@ export class ConferenceService {
     return null;
   }
   getConferencesChairCoChair(): Observable<ConferenceDescription[]> {
-    if(localStorage.getItem("username") != null) {
-      let user = localStorage.getItem("username");
-      return this.httpClient.get<Array<ConferenceDescription>>("http://localhost:8080/api/conferences/");
-    }
-    return null;
+    return this.httpClient.get<Array<ConferenceDescription>>("http://localhost:8080/api/conferencest/");
   }
 }
