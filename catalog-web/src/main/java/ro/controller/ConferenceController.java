@@ -1,6 +1,8 @@
 package ro.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
@@ -57,17 +59,26 @@ public class ConferenceController {
                 }
         );
     }
+
+    public static final Logger log = LoggerFactory.getLogger(MemberService.class);
     //GLORIOUS way to access users from any id ref
-    @RequestMapping(value = "/conferences", method = RequestMethod.GET)
+    @RequestMapping(value = "/conferencest", method = RequestMethod.GET)
     public List<ConferenceChairCoChairDto> getConferencesWithChairs(){
         List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
         List<Conference> conferences = conferenceService.getConferences();
-        conferences.forEach(c->conferenceDtoList.add( new ConferenceChairCoChairDto(
-                c.getName(),
-                c,
-                memberService.getAllMembers().stream().filter(p->p.getId().equals(memberService.getCChairs().stream().filter(cp->cp.getUser_id().equals(c.getChair_id())).collect(toSingleton()).getUser_id())).collect(toSingleton()).getFullName(),
-                memberService.getAllMembers().stream().filter(p->p.getId().equals(memberService.getCChairs().stream().filter(cp->cp.getUser_id().equals(c.getCo_chair_id())).collect(toSingleton()).getUser_id())).collect(toSingleton()).getFullName()
-                )));
+        conferences.forEach(c->{
+            String name1 = memberService.getMemberFromId( memberService.getChairFromId(c.getChair_id()).getUser_id()).getFullName();
+            String name2 = memberService.getMemberFromId( memberService.getChairFromId(c.getCo_chair_id()).getUser_id()).getFullName();
+            log.trace(" controller: {}",name1);
+            log.trace(" controller: {}",name2);
+            log.trace("controller : {}", c.getName());
+            conferenceDtoList.add( new ConferenceChairCoChairDto(
+                    c.getName(),
+                    c,
+                    name1,
+                    name2
+            ));
+        });
         return conferenceDtoList;
     }
 }

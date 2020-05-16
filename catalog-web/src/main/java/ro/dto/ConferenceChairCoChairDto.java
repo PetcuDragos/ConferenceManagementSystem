@@ -11,6 +11,6 @@ import lombok.ToString;
 public class ConferenceChairCoChairDto {
     String name;
     Conference conference;
-    String chair;
-    String co_chair;
+    String chairName;
+    String co_chairName;
 }
