@@ -5,4 +5,7 @@ export class Paper{
   author_id: number;
   abstract_id:number;
   section_id: number;
+  paper_name: string;
+  abstract_content: string;
+  author_name: string;
 }
