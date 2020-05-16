@@ -34,6 +34,8 @@ public class ConferenceService {
 
     public List<UserConference> getUserConferences(){return this.userConferenceRepository.findAll();}
 
+    //public List<Conference> getConferencesDesc(){return this.userConferenceRepository.findAll();}
+
     public boolean isConferenceChair(Long conferenceId, Long userId) {
         //toDo: check if the conference exists
         Conference conference = this.conferenceRepository.getOne(conferenceId);

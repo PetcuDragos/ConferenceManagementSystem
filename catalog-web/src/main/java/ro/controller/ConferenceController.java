@@ -4,6 +4,7 @@ package ro.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
+import ro.dto.ConferenceChairCoChairDto;
 import ro.dto.ConferenceDto;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
@@ -11,6 +12,7 @@ import ro.service.MemberService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +43,31 @@ public class ConferenceController {
         cChairList.forEach(p->conferenceDtoList.add(new ConferenceDto("Chair",conferenceService.getConferenceFromId(p.getConference_id()))));
         authorList.forEach(p->conferenceDtoList.add(new ConferenceDto("Author",conferenceService.getConferenceFromId(p.getConference_id()))));
         userList.forEach(p->conferenceDtoList.add(new ConferenceDto("Member",conferenceService.getConferenceFromId(p.getConference_id()))));
+        return conferenceDtoList;
+    }
+
+    public static <T> Collector<T, ?, T> toSingleton() { //Awesome to use in lambdas where u need just one element returned by id
+        return Collectors.collectingAndThen(
+                Collectors.toList(),
+                list -> {
+                    if (list.size() != 1) {
+                        throw new IllegalStateException();
+                    }
+                    return list.get(0);
+                }
+        );
+    }
+    //GLORIOUS way to access users from any id ref
+    @RequestMapping(value = "/conferences", method = RequestMethod.GET)
+    public List<ConferenceChairCoChairDto> getConferencesWithChairs(){
+        List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
+        List<Conference> conferences = conferenceService.getConferences();
+        conferences.forEach(c->conferenceDtoList.add( new ConferenceChairCoChairDto(
+                c.getName(),
+                c,
+                memberService.getAllMembers().stream().filter(p->p.getId().equals(memberService.getCChairs().stream().filter(cp->cp.getUser_id().equals(c.getChair_id())).collect(toSingleton()).getUser_id())).collect(toSingleton()).getFullName(),
+                memberService.getAllMembers().stream().filter(p->p.getId().equals(memberService.getCChairs().stream().filter(cp->cp.getUser_id().equals(c.getCo_chair_id())).collect(toSingleton()).getUser_id())).collect(toSingleton()).getFullName()
+                )));
         return conferenceDtoList;
     }
 }
