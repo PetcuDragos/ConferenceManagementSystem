@@ -1,8 +1,8 @@
-<article class="panel" *ngFor="let paper of papers">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae dui at eros dictum finibus vel eget
-    leo.
-    Nam feugiat pharetra orci, eget ultricies erat imperdiet eu. Vivamus convallis, nunc eget imperdiet
-    scelerisque, eros elit lobortis sapien, id mattis enim felis sit amet turpis.
-  </p>
+<article class="panel paper-panel" *ngFor="let paper of papers">
+  <div class="paper-name">{{paper.paper_name}}</div>
+  <div class="paper-author"><em>{{paper.author_name}}</em></div>
+  <div class="paper-abstract">{{paper.abstract_content}}</div>
+  <button class="paper-button"><a href=" https://youtu.be/dQw4w9WgXcQ" class="paper-download">Download full paper</a></button>
+
+  <!-- schimba la loc lol <button><a href="{{paper.content}}" class="paper-download">Download full paper</a></button> -->
 </article>
