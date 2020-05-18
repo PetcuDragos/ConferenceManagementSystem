@@ -62,7 +62,7 @@ public class AuthController {
 
     @RequestMapping(value = "/members", method = RequestMethod.GET)
     public List<MemberDto> getMembers() {
-            /*
+
             try{
                 console.runConsole();
             }
@@ -70,7 +70,7 @@ public class AuthController {
                 log.trace(e.toString());
             }
             
-             */
+
             return new ArrayList<MemberDto>(this.memberConverter.convertModelsToDtos(serviceMember.getAllMembers()));
     }
 

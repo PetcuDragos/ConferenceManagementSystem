@@ -68,7 +68,10 @@ public class Console {
         paperService.addPaper(abstract2.getId(),null,"paper1.pdf",conferenceService.getConferenceFromName("First conference").getId(),memberService.getAuthors().get(1).getId());
 
 */
-
+        conferenceService.getConferenceFromId((long) 1).setChair_id((long) 1);
+        conferenceService.getConferenceFromId((long) 1).setCo_chair_id((long) 2);
+        conferenceService.getConferenceFromId((long) 2).setChair_id((long) 1);
+        conferenceService.getConferenceFromId((long) 2).setCo_chair_id((long) 2);
 
     }
 }

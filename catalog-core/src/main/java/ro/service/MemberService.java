@@ -58,18 +58,18 @@ public class MemberService {
 
     public Message<PcMember> addPcMember(Long conferenceId, Long userId) {
         List<PcMember> pcMembers = this.pcMemberRepository.findAll();
-        for(PcMember pcMember : pcMembers)
-            if(pcMember.getConference_id().equals(conferenceId) && pcMember.getUser_id().equals(userId))
+        for (PcMember pcMember : pcMembers)
+            if (pcMember.getConference_id().equals(conferenceId) && pcMember.getUser_id().equals(userId))
                 return new Message<>(null, "You are already a pcMember at this conference");
         PcMember pcMember = new PcMember(conferenceId, userId);
         this.pcMemberRepository.save(pcMember);
-        return new Message<>(pcMember,"");
+        return new Message<>(pcMember, "");
     }
 
     public Message<ScMember> addScMember(Long userId) {
         List<ScMember> scMembers = this.scMemberRepository.findAll();
-        for(ScMember scMember : scMembers)
-            if(scMember.getUser_id().equals(userId))
+        for (ScMember scMember : scMembers)
+            if (scMember.getUser_id().equals(userId))
                 return new Message<>(null, "You are already a ScMember!");
         ScMember scMember = new ScMember(userId);
         this.scMemberRepository.save(scMember);
@@ -118,32 +118,31 @@ public class MemberService {
     }
 
     public Message<MyUser> register(String givenUsername, String givenPassword, String givenVerifyPassword, String givenEmail, String givenFullName,
-                                    String givenAffiliation, String givenWebPage){
+                                    String givenAffiliation, String givenWebPage) {
         log.trace("memberService - register function - entered");
         List<MyUser> users = this.myUserRepository.findAll();
         String errorString = "";
-        for(MyUser user : users) {
-            if(user.getEmail().equals(givenEmail))
-                return new Message<MyUser>(null,"Email is already being used");
-            if(user.getUsername().equals(givenUsername))
-                return new Message<MyUser>(null,"Username is already being used");
+        for (MyUser user : users) {
+            if (user.getEmail().equals(givenEmail))
+                return new Message<MyUser>(null, "Email is already being used");
+            if (user.getUsername().equals(givenUsername))
+                return new Message<MyUser>(null, "Username is already being used");
         }
-        if(givenUsername.equals(""))
+        if (givenUsername.equals(""))
             errorString += "Username field required\n";
-        if(givenPassword.equals(""))
-            errorString +="Password field required\n";
-        if(!givenPassword.equals(givenVerifyPassword))
+        if (givenPassword.equals(""))
+            errorString += "Password field required\n";
+        if (!givenPassword.equals(givenVerifyPassword))
             errorString += "Passwords do not match\n";
-        if(givenEmail.equals(""))
+        if (givenEmail.equals(""))
             errorString += "Email field required\n";
-        else
-            if(!validateEmail(givenEmail))
-                errorString += "Please enter a valid email address\n";
-        if(!validateWebsite(givenWebPage))
+        else if (!validateEmail(givenEmail))
+            errorString += "Please enter a valid email address\n";
+        if (!validateWebsite(givenWebPage))
             errorString += "Please enter a valid web page\n";
-        if(!errorString.equals(""))
+        if (!errorString.equals(""))
             return new Message<MyUser>(null, errorString);
-        MyUser user = new MyUser(givenUsername,givenPassword,givenEmail,givenFullName,givenAffiliation,givenWebPage);
+        MyUser user = new MyUser(givenUsername, givenPassword, givenEmail, givenFullName, givenAffiliation, givenWebPage);
         this.myUserRepository.save(user);
         return new Message<MyUser>(user, "");
     }
@@ -152,25 +151,24 @@ public class MemberService {
         String[] givenWebPageCharacters = givenWebPage.split("");
         int countDots = 0;
         for (String currentCharacter : givenWebPageCharacters) {
-            if(currentCharacter.equals("."))
+            if (currentCharacter.equals("."))
                 countDots += 1;
         }
         return countDots != 0;
     }
 
-    private boolean validateEmail(String givenEmail)
-    {
+    private boolean validateEmail(String givenEmail) {
         String[] givenEmailCharacters = givenEmail.split("");
         int countAts = 0;
         int countDots = 0;
         int position = 0;
         for (String currentCharacter : givenEmailCharacters) {
-            if(currentCharacter.equals("@")) {
+            if (currentCharacter.equals("@")) {
                 if (position == 0)
                     return false;
                 countAts += 1;
             }
-            if(currentCharacter.equals(".")) {
+            if (currentCharacter.equals(".")) {
                 if (countAts == 0 || position == 0)
                     return false;
                 if (givenEmailCharacters[position - 1].equals("@"))
@@ -182,28 +180,33 @@ public class MemberService {
         return countAts == 1 && countDots == 1;
     }
 
-    public CChair addCChair(Long user_id, Long conference_id){
-        return cChairRepository.save(new CChair(user_id,conference_id));
+    public CChair addCChair(Long user_id, Long conference_id) {
+        return cChairRepository.save(new CChair(user_id, conference_id));
     }
 
-    public Author addAuthor(Long user_id, Long conference_id){
-        return authorRepository.save(new Author(user_id,conference_id));
+    public Author addAuthor(Long user_id, Long conference_id) {
+        return authorRepository.save(new Author(user_id, conference_id));
     }
 
-    public CChair getChairFromId(Long id){
+    public CChair getChairFromId(Long id) {
         log.trace("am intrat in getchair from id");
-        CChair c =  this.cChairRepository.findById(id).orElse(new CChair());
-        log.trace("am intrat in getchair {}",c);
-        return c;
+        if (id != null) {
+            CChair c = this.cChairRepository.findById(id).orElse(null);
+            log.trace("am intrat in getchair {}", c);
+            return c;
+        }
+        return null;
     }
 
-    public MyUser getMemberFromId(Long id){
+    public MyUser getMemberFromId(Long id) {
         log.trace("am intrat in getmemeber from id");
-        MyUser m =  this.myUserRepository.findById(id).orElse(null);
-        log.trace("am intrat in getmember {}",m);
-        return m;
+        if(id!= null) {
+            MyUser m = this.myUserRepository.findById(id).orElse(null);
+            log.trace("am intrat in getmember {}", m);
+            return m;
+        }
+        return null;
     }
-
 
 
 }

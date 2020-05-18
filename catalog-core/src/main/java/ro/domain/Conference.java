@@ -1,7 +1,9 @@
 package ro.domain;
 
-import javax.persistence.Entity;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
+@Transactional
 @Entity
 public class Conference extends BaseEntity{
 
