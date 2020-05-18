@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Conference} from "./shared/model";
+import {Conference, ConferenceDescription} from "./shared/model";
 import {ConferenceService} from "./shared/service";
+import {ConferenceUser} from "../../../../../componente/app/main-page/conferences/shared/model";
 
 @Component({
   selector: 'app-conferences',
@@ -8,11 +9,11 @@ import {ConferenceService} from "./shared/service";
   styleUrls: ['./conferences.component.css']
 })
 export class ConferencesComponent implements OnInit {
-  conferences: Conference[];
+  conferences: ConferenceDescription[];
   constructor(private conferenceService: ConferenceService) { }
 
   ngOnInit(): void {
-    this.conferenceService.getConferences().subscribe(
+    this.conferenceService.getConferencesChairCoChair().subscribe(
       conferences=>this.conferences = conferences
     );
   }

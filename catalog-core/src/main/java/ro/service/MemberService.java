@@ -190,6 +190,20 @@ public class MemberService {
         return authorRepository.save(new Author(user_id,conference_id));
     }
 
+    public CChair getChairFromId(Long id){
+        log.trace("am intrat in getchair from id");
+        CChair c =  this.cChairRepository.findById(id).orElse(new CChair());
+        log.trace("am intrat in getchair {}",c);
+        return c;
+    }
+
+    public MyUser getMemberFromId(Long id){
+        log.trace("am intrat in getmemeber from id");
+        MyUser m =  this.myUserRepository.findById(id).orElse(null);
+        log.trace("am intrat in getmember {}",m);
+        return m;
+    }
+
 
 
 }

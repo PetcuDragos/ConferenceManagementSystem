@@ -15,9 +15,18 @@ export class Conference{
   endingDate: date;
   chair_id: number;
   co_chair_id: number;
+
 }
 
 export class ConferenceUser{
   title: string;
   conference: Conference;
+
+}
+
+export class ConferenceDescription {
+  name: string;
+  conference: Conference;
+  chairName: string;
+  co_chairName: string;
 }
