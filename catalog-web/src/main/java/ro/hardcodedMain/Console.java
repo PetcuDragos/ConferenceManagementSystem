@@ -21,7 +21,6 @@ public class Console {
     private EvaluationService evaluationService;
 
     public void runConsole(){
-/*
         // making users
         try {
             memberService.register("admin", "admin", "admin", "admin@admin.com", "admin", "admin", "www.admin.com");
@@ -66,12 +65,6 @@ public class Console {
 
         paperService.addPaper(abstract1.getId(),null,"paper1.pdf",conferenceService.getConferenceFromName("First conference").getId(),memberService.getAuthors().get(0).getId());
         paperService.addPaper(abstract2.getId(),null,"paper1.pdf",conferenceService.getConferenceFromName("First conference").getId(),memberService.getAuthors().get(1).getId());
-
-*/
-        conferenceService.getConferenceFromId((long) 1).setChair_id((long) 1);
-        conferenceService.getConferenceFromId((long) 1).setCo_chair_id((long) 2);
-        conferenceService.getConferenceFromId((long) 2).setChair_id((long) 1);
-        conferenceService.getConferenceFromId((long) 2).setCo_chair_id((long) 2);
 
     }
 }

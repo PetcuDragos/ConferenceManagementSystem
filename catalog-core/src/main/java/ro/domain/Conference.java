@@ -2,11 +2,12 @@ package ro.domain;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 @Transactional
 @Entity
 public class Conference extends BaseEntity{
-
+    @Column(nullable = false, unique = true)
     private String name;
     private Date abstractDeadline;
     private Date paperDeadline;

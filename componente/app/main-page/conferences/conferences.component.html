@@ -2,5 +2,5 @@
   <div class="conference_name">{{conferencel.name}}</div>
   <div class="conference_chair"> {{conferencel.chairName}} </div>
   <div class="conference_co_chair">{{conferencel.co_chairName}} </div>
-  <button class="conference_button">Join conference</button>
+  <button class="conference_button" (click)="joinConference(conferencel.conference.id)">Join conference</button>
 </div>

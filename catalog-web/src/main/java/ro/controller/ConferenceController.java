@@ -4,10 +4,7 @@ package ro.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
 import ro.dto.ConferenceChairCoChairDto;
 import ro.dto.ConferenceDto;
@@ -53,10 +50,27 @@ public class ConferenceController {
         List<Author> authorList = memberService.getAuthors().stream().filter(p -> p.getUser_id().equals(user.getId())).collect(Collectors.toList());
         List<UserConference> userList = conferenceService.getUserConferences().stream().filter(p -> p.getId().equals(user.getId())).collect(Collectors.toList());
         List<ConferenceDto> conferenceDtoList = new ArrayList<>();
-        pcMemberList.forEach(p -> conferenceDtoList.add(new ConferenceDto("PCMember", conferenceService.getConferenceFromId(p.getConference_id()))));
-        cChairList.forEach(p -> conferenceDtoList.add(new ConferenceDto("Chair", conferenceService.getConferenceFromId(p.getConference_id()))));
-        authorList.forEach(p -> conferenceDtoList.add(new ConferenceDto("Author", conferenceService.getConferenceFromId(p.getConference_id()))));
-        userList.forEach(p -> conferenceDtoList.add(new ConferenceDto("Member", conferenceService.getConferenceFromId(p.getConference_id()))));
+        pcMemberList.forEach(p -> {
+            Conference conference = conferenceService.getConferenceFromId(p.getConference_id());
+            if(conference!=null)
+                conferenceDtoList.add(new ConferenceDto("PCMember", conference.getName()));
+        });
+        cChairList.forEach(p -> {
+            Conference conference = conferenceService.getConferenceFromId(p.getConference_id());
+            if(conference!=null)
+            conferenceDtoList.add(new ConferenceDto("Chair", conference.getName()));
+        });
+        authorList.forEach(p -> {
+            Conference conference = conferenceService.getConferenceFromId(p.getConference_id());
+            if(conference!=null)
+                conferenceDtoList.add(new ConferenceDto("Author", conference.getName()));
+
+        });
+        userList.forEach(p -> {
+            Conference conference = conferenceService.getConferenceFromId(p.getConference_id());
+            if(conference!=null)
+                conferenceDtoList.add(new ConferenceDto("Member", conference.getName()));
+        });
         return conferenceDtoList;
     }
 
@@ -82,4 +96,5 @@ public class ConferenceController {
         });
         return conferenceDtoList;
     }
+
 }

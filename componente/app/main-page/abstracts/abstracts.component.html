@@ -1,5 +1,6 @@
 <div *ngFor="let abstract of abstracts" class="panel">
- <h4>{{abstract.title}}</h4>
+ <h4>{{abstract.entity.name}}</h4> by <h5>{{abstract.authorName}}</h5>
   <br>
-  <h1>{{abstract.content}}</h1>
+  <h6>{{abstract.entity.content}}</h6>
+  <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
 </div>

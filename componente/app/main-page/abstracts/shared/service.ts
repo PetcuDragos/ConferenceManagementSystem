@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Abstract} from "./model";
+import {AbstractAuthorDto, AbstractDto} from "./model";
 
 @Injectable()
 export class AbstractService {
@@ -9,8 +9,10 @@ export class AbstractService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAbstractsFromConference(): Observable<Abstract[]> {
+  getAbstractsFromConference(): Observable<AbstractAuthorDto[]> {
     let conference_id = localStorage.getItem("selected_conference_id");
-    return this.httpClient.get<Array<Abstract>>("http://localhost:8080/api/abstracts/"+conference_id);
+    if(conference_id != "")
+      return this.httpClient.get<Array<AbstractAuthorDto>>("http://localhost:8080/api/abstract/", {params:{conferenceName: conference_id}});
+    else return null;
   }
 }

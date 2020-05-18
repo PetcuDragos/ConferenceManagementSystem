@@ -68,7 +68,7 @@
 
 </header>
 
-<div class="middle">
+<div class="middle" id="middle">
   <div class="left">
 
     <div class="user_info" *ngIf="isAuthenticated()">
@@ -88,16 +88,16 @@
         <li>
           <select id="group_list">
             <optgroup label="Chair" *ngIf="userIsChairAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Chair')"  routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
+              <option *ngFor="let conference of populateConferenceList('Chair')"   (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="PC-Member" *ngIf="userIsPCMemberAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('PCMember')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
+              <option *ngFor="let conference of populateConferenceList('PCMember')"  (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="Author" *ngIf="userIsAuthorAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Author')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
+              <option *ngFor="let conference of populateConferenceList('Author')" (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="Member" *ngIf="userIsMemberAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Member')" routerLink="articles" routerLinkActive="active" (select)="changeSelectedConference(conference.conference.conference_id)">{{conference.conference.name}}</option>
+              <option *ngFor="let conference of populateConferenceList('Member')" (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
             </optgroup>
 
           </select>
@@ -123,15 +123,13 @@
     </div>
   </div>
 
-  <router-outlet>
+
   <section class="main">
   <app-abstracts *ngIf="getOption() == 1"></app-abstracts>
     <app-conferences *ngIf="getOption() == 2"></app-conferences>
     <app-papers *ngIf="getOption() == 3"></app-papers>
     <app-members *ngIf="getOption() == 4"></app-members>
-
   </section>
-  </router-outlet>
 </div>
 
 </body>

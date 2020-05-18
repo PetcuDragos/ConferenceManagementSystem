@@ -69,7 +69,7 @@ public class ConferenceService {
     }
 
     public Conference getConferenceFromId(Long id){
-        return conferenceRepository.getOne(id);
+        return conferenceRepository.findById(id).orElse(null);
     }
 
     public Conference addConference(String name, Long chair_id, Long co_chair_id, Date startingDate, Date endingDate, Date abstractDeadline, Date paperDeadline,Date bidDeadline, Date reviewDeadline){

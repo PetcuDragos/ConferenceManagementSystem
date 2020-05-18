@@ -5,7 +5,7 @@ export class date{
 }
 
 export class Conference{
-  conference_id: number;
+  id: number;
   name: string;
   abstractDeadline: date;
   paperDeadline: date;
@@ -20,7 +20,7 @@ export class Conference{
 
 export class ConferenceUser{
   title: string;
-  conference: Conference;
+  conferenceName: string;
 
 }
 

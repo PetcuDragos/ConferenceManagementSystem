@@ -11,7 +11,9 @@ import {ConferenceUser} from "./conferences/shared/model";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) { }
+  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) {
+    this.conferencesList = [];
+  }
 
   @Input() option : number = 1;
 
@@ -71,24 +73,26 @@ export class MainPageComponent implements OnInit {
   }
 
   userIsChairAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Chair").length>0;
   }
   userIsPCMemberAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="PCMember").length>0;
   }
   userIsAuthorAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Author").length>0;
   }
   userIsMemberAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Member").length>0;
   }
 
   populateConferenceList(user_title: string):ConferenceUser[]{
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
-  changeSelectedConference(conference_id: number):void{
-    localStorage.setItem("selected_conference_id",conference_id.toString());
+  changeSelectedConference(conference_id: string):void{
+    localStorage.setItem("selected_conference_id",conference_id);
+    this.option = 1;
+    console.log("dwq")
   }
 
   insert(): void{
