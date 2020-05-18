@@ -79,6 +79,7 @@ public class ConferenceController {
     public List<ConferenceChairCoChairDto> getConferencesWithChairs() {
         List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
         List<Conference> conferences = conferenceService.getConferences();
+        log.trace("size: {}",conferences.size());
         conferences.forEach(c -> {
             if (c.getChair_id() != null && c.getCo_chair_id() != null) {
                 String name1 = memberService.getMemberFromId(memberService.getChairFromId(c.getChair_id()).getUser_id()).getFullName();
