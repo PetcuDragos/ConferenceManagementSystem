@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
 import ro.dto.ConferenceChairCoChairDto;
 import ro.dto.ConferenceDto;
+import ro.dto.JoinConferenceDto;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
 
@@ -96,6 +97,13 @@ public class ConferenceController {
             }
         });
         return conferenceDtoList;
+    }
+
+    @RequestMapping(value = "/conferencest", method = RequestMethod.POST)
+    public void joinConference(@RequestBody JoinConferenceDto joinConferenceDto){
+        log.trace("controllerrrrrr");
+        long userId = this.memberService.getUserFromUsername(joinConferenceDto.getUsername()).getId();
+        this.conferenceService.joinConference(userId, joinConferenceDto.getConferenceId());
     }
 
 }
