@@ -1,9 +1,12 @@
 package ro.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
+import ro.dto.ConferenceChairCoChairDto;
 import ro.dto.ConferenceDto;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
@@ -11,6 +14,7 @@ import ro.service.MemberService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +45,40 @@ public class ConferenceController {
         cChairList.forEach(p->conferenceDtoList.add(new ConferenceDto("Chair",conferenceService.getConferenceFromId(p.getConference_id()))));
         authorList.forEach(p->conferenceDtoList.add(new ConferenceDto("Author",conferenceService.getConferenceFromId(p.getConference_id()))));
         userList.forEach(p->conferenceDtoList.add(new ConferenceDto("Member",conferenceService.getConferenceFromId(p.getConference_id()))));
+        return conferenceDtoList;
+    }
+
+    public static <T> Collector<T, ?, T> toSingleton() { //Awesome to use in lambdas where u need just one element returned by id
+        return Collectors.collectingAndThen(
+                Collectors.toList(),
+                list -> {
+                    if (list.size() != 1) {
+                        throw new IllegalStateException();
+                    }
+                    return list.get(0);
+                }
+        );
+    }
+
+    public static final Logger log = LoggerFactory.getLogger(MemberService.class);
+    //GLORIOUS way to access users from any id ref
+    @RequestMapping(value = "/conferencest", method = RequestMethod.GET)
+    public List<ConferenceChairCoChairDto> getConferencesWithChairs(){
+        List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
+        List<Conference> conferences = conferenceService.getConferences();
+        conferences.forEach(c->{
+            String name1 = memberService.getMemberFromId( memberService.getChairFromId(c.getChair_id()).getUser_id()).getFullName();
+            String name2 = memberService.getMemberFromId( memberService.getChairFromId(c.getCo_chair_id()).getUser_id()).getFullName();
+            log.trace(" controller: {}",name1);
+            log.trace(" controller: {}",name2);
+            log.trace("controller : {}", c.getName());
+            conferenceDtoList.add( new ConferenceChairCoChairDto(
+                    c.getName(),
+                    c,
+                    name1,
+                    name2
+            ));
+        });
         return conferenceDtoList;
     }
 }

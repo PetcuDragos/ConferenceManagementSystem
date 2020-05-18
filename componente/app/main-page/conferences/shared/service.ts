@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Conference, ConferenceUser} from "./model";
+import {Conference, ConferenceDescription, ConferenceUser} from "./model";
 
 @Injectable()
 export class ConferenceService {
@@ -18,5 +18,8 @@ export class ConferenceService {
       return this.httpClient.post<Array<ConferenceUser>>("http://localhost:8080/api/conferences/", user);
     }
     return null;
+  }
+  getConferencesChairCoChair(): Observable<ConferenceDescription[]> {
+    return this.httpClient.get<Array<ConferenceDescription>>("http://localhost:8080/api/conferencest/");
   }
 }
