@@ -2,6 +2,7 @@ package ro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ro.domain.*;
 import ro.repository.*;
 
@@ -81,5 +82,10 @@ public class ConferenceService {
             if(conference.getName().equals(name)) return conference;
         }
         return null;
+    }
+
+    @Transactional
+    public void joinConference(long userId, long conferenceId){
+        this.userConferenceRepository.save(new UserConference(conferenceId, userId));
     }
 }

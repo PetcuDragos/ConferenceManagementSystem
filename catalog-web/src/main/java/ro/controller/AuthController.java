@@ -62,15 +62,12 @@ public class AuthController {
 
     @RequestMapping(value = "/members", method = RequestMethod.GET)
     public List<MemberDto> getMembers() {
-
             try{
                 console.runConsole();
             }
             catch(Exception e){
                 log.trace(e.toString());
             }
-            
-
             return new ArrayList<MemberDto>(this.memberConverter.convertModelsToDtos(serviceMember.getAllMembers()));
     }
 

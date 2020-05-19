@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.domain.*;
 import ro.dto.ConferenceChairCoChairDto;
 import ro.dto.ConferenceDto;
+import ro.dto.JoinConferenceDto;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
 
@@ -79,6 +80,7 @@ public class ConferenceController {
     public List<ConferenceChairCoChairDto> getConferencesWithChairs() {
         List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
         List<Conference> conferences = conferenceService.getConferences();
+        log.trace("size: {}",conferences.size());
         conferences.forEach(c -> {
             if (c.getChair_id() != null && c.getCo_chair_id() != null) {
                 String name1 = memberService.getMemberFromId(memberService.getChairFromId(c.getChair_id()).getUser_id()).getFullName();
@@ -95,6 +97,13 @@ public class ConferenceController {
             }
         });
         return conferenceDtoList;
+    }
+
+    @RequestMapping(value = "/conferencest", method = RequestMethod.POST)
+    public void joinConference(@RequestBody JoinConferenceDto joinConferenceDto){
+        log.trace("controllerrrrrr");
+        long userId = this.memberService.getUserFromUsername(joinConferenceDto.getUsername()).getId();
+        this.conferenceService.joinConference(userId, joinConferenceDto.getConferenceId());
     }
 
 }
