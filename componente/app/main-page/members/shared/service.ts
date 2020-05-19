@@ -12,4 +12,5 @@ export class MemberService {
   getMembers(): Observable<Member[]> {
     return this.httpClient.get<Array<Member>>("http://localhost:8080/api/members");
   }
+
 }

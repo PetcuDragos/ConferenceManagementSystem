@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {ConferenceService} from "./conferences/shared/service";
 import {AbstractService} from "./abstracts/shared/service";
 import {ConferenceUser} from "./conferences/shared/model";
+import {MemberService} from "./members/shared/service";
 
 @Component({
   selector: 'app-main-page',
@@ -11,7 +12,7 @@ import {ConferenceUser} from "./conferences/shared/model";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) {
+  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService) {
     this.conferencesList = [];
   }
 
@@ -94,8 +95,11 @@ export class MainPageComponent implements OnInit {
     this.option = 1;
     console.log("dwq")
   }
+  userIsSCMember():boolean{
+    return localStorage.getItem("userSCMember") == "true";
+  }
 
-  insert(): void{
-
+  loadCreateConferencePage():void{
+    this.router.navigate(["create-conference"]);
   }
 }

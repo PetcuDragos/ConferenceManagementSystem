@@ -19,6 +19,8 @@ import {PaperService} from "./main-page/papers/shared/service";
 import {ConferenceService} from "./main-page/conferences/shared/service";
 import {AbstractService} from "./main-page/abstracts/shared/service";
 import {ProfilePageService} from "./profile-page/shared/service";
+import { CreateConferencePageComponent } from './create-conference-page/create-conference-page.component';
+import {CreateConferenceService} from "./create-conference-page/shared/createConference.service";
 
 @NgModule({
   declarations: [
@@ -31,13 +33,14 @@ import {ProfilePageService} from "./profile-page/shared/service";
     ConferencesComponent,
     PapersComponent,
     MembersComponent,
+    CreateConferencePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService],
+  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService, CreateConferenceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

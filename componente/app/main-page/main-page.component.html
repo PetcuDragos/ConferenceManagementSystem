@@ -102,6 +102,11 @@
 
           </select>
         </li>
+
+        <li *ngIf="userIsSCMember()">
+          <button (click)="loadCreateConferencePage()">Create conference</button>
+
+        </li>
       </ul>
     </div>
 
