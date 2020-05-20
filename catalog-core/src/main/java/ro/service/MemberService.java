@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.domain.*;
 import ro.repository.*;
 import ro.utils.Message;
@@ -85,18 +86,19 @@ public class MemberService {
         }
         return null;
     }
-
+    @Transactional
     public Message<MyUser> updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
         log.trace("updateProfile - method entered, {}, {}, {}, {}, {}", username, fullname, email, affiliation, webpage);
         MyUser user = this.getUserFromUsername(username);
         log.trace("user = {}", user);
         if (user != null) {
-            user.setEmail(email);
-            user.setAffiliation(affiliation);
-            user.setWeb_page(webpage);
-            user.setFullName(fullname);
-            this.myUserRepository.deleteById(user.getId());
-            this.myUserRepository.save(user);
+
+            this.myUserRepository.findById(user.getId()).ifPresent(u->{
+                u.setEmail(email);
+                u.setAffiliation(affiliation);
+                u.setWeb_page(webpage);
+                u.setFullName(fullname);
+            });
 
             log.trace("Service - updateProfile - finished - {}", user);
             return new Message<MyUser>(user, "");
@@ -182,6 +184,10 @@ public class MemberService {
 
     public CChair addCChair(Long user_id, Long conference_id) {
         return cChairRepository.save(new CChair(user_id, conference_id));
+    }
+
+    public CChair addCChair(CChair chair){
+        return cChairRepository.save(chair);
     }
 
     public Author addAuthor(Long user_id, Long conference_id) {

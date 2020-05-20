@@ -92,7 +92,8 @@ export class MainPageComponent implements OnInit {
 
   changeSelectedConference(conference_id: string):void{
     localStorage.setItem("selected_conference_id",conference_id);
-    this.option = 1;
+    if(this.option == 1) this.option = 0;
+    else this.option =1;
     console.log("dwq")
   }
   userIsSCMember():boolean{

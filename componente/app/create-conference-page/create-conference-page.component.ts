@@ -14,8 +14,8 @@ export class CreateConferencePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(): void{
-    this.createConferenceService.add();
+  save(conference_name :string,chair_username: string,co_chair_username:string ,starting_date: Date,ending_date: Date,abstract_deadline: Date,paper_deadline: Date,bidding_deadline : Date,review_deadline:Date): void{
+    this.createConferenceService.add(conference_name,chair_username,co_chair_username,starting_date,ending_date,abstract_deadline,paper_deadline,bidding_deadline,review_deadline);
   }
 
   back() :void {

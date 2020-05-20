@@ -84,8 +84,8 @@ public class ConferenceService {
         return null;
     }
 
-    @Transactional
     public void joinConference(long userId, long conferenceId){
+        int x = 0;
         this.userConferenceRepository.save(new UserConference(conferenceId, userId));
     }
 }

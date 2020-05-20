@@ -30,3 +30,12 @@ export class ConferenceDescription {
   chairName: string;
   co_chairName: string;
 }
+
+export class JoinConferenceDto{
+  username:string;
+  conference_id:number;
+  constructor(username:string, conference_id:number) {
+    this.conference_id = conference_id;
+    this.username = username;
+  }
+}

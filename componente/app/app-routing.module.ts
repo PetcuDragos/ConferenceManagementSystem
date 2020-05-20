@@ -5,6 +5,8 @@ import {LoginPageComponent} from "./login-page/login-page.component";
 import {RegisterPageComponent} from "./register-page/register-page.component";
 import {ProfilePageComponent} from "./profile-page/profile-page.component";
 import {CreateConferencePageComponent} from "./create-conference-page/create-conference-page.component";
+import {AbstractsComponent} from "./main-page/abstracts/abstracts.component";
+import {CreateAbstractPageComponent} from "./create-abstract-page/create-abstract-page.component";
 
 
 const routes: Routes = [
@@ -12,7 +14,8 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'profile', component: ProfilePageComponent},
-  {path: 'create-conference', component: CreateConferencePageComponent}
+  {path: 'create-conference', component: CreateConferencePageComponent},
+  {path: 'create-abstract', component: CreateAbstractPageComponent}
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Conference, ConferenceDescription} from "./shared/model";
+import {ConferenceDescription} from "./shared/model";
 import {ConferenceService} from "./shared/service";
-import {ConferenceUser} from "../../../../../componente/app/main-page/conferences/shared/model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-conferences',
@@ -10,7 +10,7 @@ import {ConferenceUser} from "../../../../../componente/app/main-page/conference
 })
 export class ConferencesComponent implements OnInit {
   conferences: ConferenceDescription[];
-  constructor(private conferenceService: ConferenceService) { }
+  constructor(private conferenceService: ConferenceService, private router:Router) { }
 
   ngOnInit(): void {
     this.conferenceService.getConferencesChairCoChair().subscribe(
@@ -18,12 +18,10 @@ export class ConferencesComponent implements OnInit {
     );
   }
 
-  notJoinedConference(conference_id: number):boolean{
-    // todo
-    return false;
-}
-  joinConference(conference_id: number): void{
-    //todo
+  joinConference(conference_id: number): void {
+    this.conferenceService.joinConference(conference_id).subscribe(m=>{
+    });
+    location.reload();
   }
 
 

@@ -130,6 +130,7 @@
 
 
   <section class="main">
+    <app-abstracts *ngIf="getOption() == 0"></app-abstracts>
   <app-abstracts *ngIf="getOption() == 1"></app-abstracts>
     <app-conferences *ngIf="getOption() == 2"></app-conferences>
     <app-papers *ngIf="getOption() == 3"></app-papers>
