@@ -1,6 +1,11 @@
 <div *ngIf="hasAnyConference()">
   <div class="option" (click)="addAbstract()"> Start your own paper</div>
 <div class="option" (click)="changeDeadlines()" *ngIf="isUserChairForConference()">Change deadlines</div>
+<div class="option" (click)="addPCMemberOption()" *ngIf="isUserChairForConference()">Add PC Member</div>
+  <div *ngIf="pcmember_option">
+    <input type="text" #username placeholder="username">
+    <button (click)="addPCMember(username.value)">Add</button>
+  </div>
   <div class="option">Abstract Deadline is {{getAbstractDeadline()}}</div>
 <div class="option">'Call for papers' Deadline is {{getPaperDeadline()}}</div>
 <div class="option">Bidding Deadline is {{getBidDeadline()}}</div>

@@ -39,6 +39,7 @@ export class MainPageComponent implements OnInit {
     localStorage.removeItem("username");
     localStorage.setItem("state", "false");
     localStorage.clear();
+    location.reload();
   }
 
   isAuthenticated(): boolean{

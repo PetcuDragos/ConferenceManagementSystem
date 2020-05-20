@@ -62,7 +62,7 @@ public class MemberService {
         for (PcMember pcMember : pcMembers)
             if (pcMember.getConference_id().equals(conferenceId) && pcMember.getUser_id().equals(userId))
                 return new Message<>(null, "You are already a pcMember at this conference");
-        PcMember pcMember = new PcMember(conferenceId, userId);
+        PcMember pcMember = new PcMember(userId,conferenceId);
         this.pcMemberRepository.save(pcMember);
         return new Message<>(pcMember, "");
     }

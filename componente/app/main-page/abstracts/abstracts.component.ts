@@ -12,9 +12,9 @@ import {Conference} from "../conferences/shared/model";
 export class AbstractsComponent implements OnInit {
   abstracts: AbstractAuthorDto[];
   conference:Conference;
-  pcmember:boolean;
-  chair:boolean;
+  pcmember_option:boolean;
   constructor(private abstractService: AbstractService, private router: Router, private conferenceService:ConferenceService) {
+    this.pcmember_option = false;
     this.abstracts = [];
     this.conference=null;
   }
@@ -83,6 +83,14 @@ export class AbstractsComponent implements OnInit {
   }
   isUserChairForConference(): boolean{
     return this.abstractService.chair;
+  }
+
+  addPCMemberOption():void{
+    this.pcmember_option = true;
+  }
+
+  addPCMember(username:string):void{
+    this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
   }
 
 

@@ -92,10 +92,10 @@ public class ConferenceController {
                     log.trace(" controller: {}", user1.getFullName());
                     log.trace(" controller: {}", user2.getFullName());
                     log.trace("controller : {}", c.getName());
-                    MyConferenceDto co = new MyConferenceDto(c.getId(),c.getName(),conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
-                            conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
-                            conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),c.getChair_id(),c.getCo_chair_id());
+                    MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id());
                     conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName()));
                 }
             }
@@ -106,11 +106,10 @@ public class ConferenceController {
     @RequestMapping(value = "/conferencest", method = RequestMethod.POST)
     public String joinConference(@RequestBody JoinConferenceDto joinConferenceDto) {
         log.trace("controllerrrrrr");
-        try{
+        try {
             long userId = this.memberService.getUserFromUsername(joinConferenceDto.getUsername()).getId();
             this.conferenceService.joinConference(userId, joinConferenceDto.getConference_id());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
         return "success";
@@ -144,31 +143,46 @@ public class ConferenceController {
     }
 
     @RequestMapping(value = "/conference", method = RequestMethod.POST)
-    public MyConferenceDto getConferenceByName(@RequestBody String conference_name){
+    public MyConferenceDto getConferenceByName(@RequestBody String conference_name) {
         Conference c = conferenceService.getConferenceFromName(conference_name);
-        MyConferenceDto co = new MyConferenceDto(c.getId(),c.getName(),conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
-                conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
-                conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),c.getChair_id(),c.getCo_chair_id());
+        MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
+                conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
+                conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
+                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id());
         return co;
     }
 
     @RequestMapping(value = "/ispcmember", method = RequestMethod.POST)
-    public boolean isUserPCMemberAtConference(@RequestBody UserRankDto rank){
+    public boolean isUserPCMemberAtConference(@RequestBody UserRankDto rank) {
         MyUser user = memberService.getUserFromUsername(rank.getUsername());
         Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
-        if(user!= null && conference!=null){
+        if (user != null && conference != null) {
             return memberService.getPcMembers().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
         }
         return false;
     }
 
     @RequestMapping(value = "/ischair", method = RequestMethod.POST)
-    public boolean isUserChairAtConference(@RequestBody UserRankDto rank){
+    public boolean isUserChairAtConference(@RequestBody UserRankDto rank) {
         MyUser user = memberService.getUserFromUsername(rank.getUsername());
         Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
-        if(user!= null && conference!=null){
+        if (user != null && conference != null) {
             return memberService.getCChairs().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/addpcmember", method = RequestMethod.POST)
+    public boolean addPCMember(@RequestBody UserRankDto rank) {
+        MyUser user = memberService.getUserFromUsername(rank.getUsername());
+        Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
+        if (user != null && conference != null) {
+            try {
+                memberService.addPcMember(conference.getId(), user.getId());
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
         return false;
     }
