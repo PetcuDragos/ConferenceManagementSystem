@@ -1,25 +1,28 @@
-<div (click)="addAbstract()"> Start your own paper!</div>
-<div (click)="changeDeadlines()">Change deadlines!</div>
-<p>Abstract Deadline is --{{abstractDeadline}}</p>
-<p>'Call for papers' Deadline is --{{paperDeadline}}</p>
-<p>Bidding Deadline is --{{bidDeadline}}</p>
-<p>Review Deadline is --{{reviewDeadline}}</p>
+<div *ngIf="hasAnyConference()">
+  <div class="option" (click)="addAbstract()"> Start your own paper</div>
+<div class="option" (click)="changeDeadlines()" *ngIf="isUserChairForConference()">Change deadlines</div>
+  <div class="option">Abstract Deadline is {{getAbstractDeadline()}}</div>
+<div class="option">'Call for papers' Deadline is {{getPaperDeadline()}}</div>
+<div class="option">Bidding Deadline is {{getBidDeadline()}}</div>
+<div class="option">Review Deadline is {{getReviewDeadline()}}</div>
 
 <div *ngFor="let abstract of abstracts" class="panel">
  <h4>{{abstract.entity.name}}</h4> by <h5>{{abstract.authorName}}</h5>
   <br>
   <h6>{{abstract.entity.content}}</h6>
   <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
-  Bid:
-  <select>
+
+  <select *ngIf="isUserPCMemberForConference()">
+    Bid:
     <option>Accept for review</option>
     <option>Don't care for review</option>
     <option>Refuse for review</option>
   </select>
-  <button (click)="bidAbstract()">Bid</button>
-  <br><button (click)="reviewPaper()">Review</button>
-  <br><button>assign reviewers</button>
-  <br><button>ask for re-evaluation</button>
-  <br><button> See other reviewers evaluation</button>
+  <button (click)="bidAbstract()" *ngIf="isUserPCMemberForConference()">Bid</button>
+  <br><button (click)="reviewPaper()" *ngIf="isUserPCMemberForConference()">Review</button>
+  <br><button *ngIf="isUserChairForConference()">assign reviewers</button>
+  <br><button *ngIf="isUserChairForConference()">ask for re-evaluation</button>
+  <br><button *ngIf="isUserChairForConference()||isUserPCMemberForConference()"> See other reviewers evaluation</button>
 
+</div>
 </div>

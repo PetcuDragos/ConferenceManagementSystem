@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ro.domain.*;
-import ro.dto.ConferenceChairCoChairDto;
-import ro.dto.ConferenceDto;
-import ro.dto.CreateConferenceDto;
-import ro.dto.JoinConferenceDto;
+import ro.dto.*;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
 import ro.utils.Message;
@@ -83,8 +80,8 @@ public class ConferenceController {
 
     //GLORIOUS way to access users from any id ref
     @RequestMapping(value = "/conferencest", method = RequestMethod.GET)
-    public List<ConferenceChairCoChairDto> getConferencesWithChairs() {
-        List<ConferenceChairCoChairDto> conferenceDtoList = new ArrayList<>();
+    public List<ConferenceDescriptionDto> getConferencesWithChairs() {
+        List<ConferenceDescriptionDto> conferenceDtoList = new ArrayList<>();
         List<Conference> conferences = conferenceService.getConferences();
         log.trace("size: {}", conferences.size());
         conferences.forEach(c -> {
@@ -95,7 +92,11 @@ public class ConferenceController {
                     log.trace(" controller: {}", user1.getFullName());
                     log.trace(" controller: {}", user2.getFullName());
                     log.trace("controller : {}", c.getName());
-                    conferenceDtoList.add(new ConferenceChairCoChairDto(c.getName(), c, user1.getFullName(), user2.getFullName()));
+                    MyConferenceDto co = new MyConferenceDto(c.getId(),c.getName(),conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),c.getChair_id(),c.getCo_chair_id());
+                    conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName()));
                 }
             }
         });
@@ -140,6 +141,36 @@ public class ConferenceController {
             return new Message<CreateConferenceDto>(null, e.toString());
         }
         return new Message<CreateConferenceDto>(createConferenceDto, "conference creation was successful");
+    }
+
+    @RequestMapping(value = "/conference", method = RequestMethod.POST)
+    public MyConferenceDto getConferenceByName(@RequestBody String conference_name){
+        Conference c = conferenceService.getConferenceFromName(conference_name);
+        MyConferenceDto co = new MyConferenceDto(c.getId(),c.getName(),conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
+                conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
+                conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()),conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
+                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),c.getChair_id(),c.getCo_chair_id());
+        return co;
+    }
+
+    @RequestMapping(value = "/ispcmember", method = RequestMethod.POST)
+    public boolean isUserPCMemberAtConference(@RequestBody UserRankDto rank){
+        MyUser user = memberService.getUserFromUsername(rank.getUsername());
+        Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
+        if(user!= null && conference!=null){
+            return memberService.getPcMembers().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/ischair", method = RequestMethod.POST)
+    public boolean isUserChairAtConference(@RequestBody UserRankDto rank){
+        MyUser user = memberService.getUserFromUsername(rank.getUsername());
+        Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
+        if(user!= null && conference!=null){
+            return memberService.getCChairs().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
+        }
+        return false;
     }
 
 }

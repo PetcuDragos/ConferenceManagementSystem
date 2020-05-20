@@ -27,4 +27,8 @@ export class ConferenceService {
     var c = new JoinConferenceDto(localStorage.getItem("username"),conference_id);
     return this.httpClient.post<string>("http://localhost:8080/api/conferencest",c as JoinConferenceDto);
   }
+
+  getConferenceFromName(name:string):Observable<Conference>{
+    return this.httpClient.post<Conference>("http://localhost:8080/api/conference",name);
+  }
 }

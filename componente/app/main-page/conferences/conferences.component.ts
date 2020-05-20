@@ -20,9 +20,9 @@ export class ConferencesComponent implements OnInit {
 
   joinConference(conference_id: number): void {
     this.conferenceService.joinConference(conference_id).subscribe(m=>{
-    });
-    location.reload();
+    this.ngOnInit();});
   }
+
 
 
 }

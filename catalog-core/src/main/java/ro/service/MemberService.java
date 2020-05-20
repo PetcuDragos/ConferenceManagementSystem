@@ -219,5 +219,7 @@ public class MemberService {
         return authorRepository.findById(author_id).orElse(null);
     }
 
-
+    public MyUser addUser(String username, String password, String email, String fullname, String affiliation, String webpage){
+        return myUserRepository.save(new MyUser(username,password,email,fullname,affiliation,webpage));
+    }
 }

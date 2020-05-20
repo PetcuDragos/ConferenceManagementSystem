@@ -16,13 +16,11 @@ export class MainPageComponent implements OnInit {
     this.conferencesList = [];
   }
 
-  @Input() option : number = 1;
+  @Input() option : number = -1;
 
   ngOnInit(): void {
-    if(localStorage.getItem("state")=="true")
-      this.conferenceService.getConferencesFromUser().subscribe(c=>{
-      this.conferencesList = c;
-    });
+    localStorage.setItem("selected_conference_id","");
+    this.option = -1;
   }
 
   register(){
@@ -90,7 +88,7 @@ export class MainPageComponent implements OnInit {
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
-  changeSelectedConference(conference_id: string):void{
+  changeSelectedConference(conference_id: string, rank:string):void{
     localStorage.setItem("selected_conference_id",conference_id);
     if(this.option == 1) this.option = 0;
     else this.option =1;
@@ -102,5 +100,12 @@ export class MainPageComponent implements OnInit {
 
   loadCreateConferencePage():void{
     this.router.navigate(["create-conference"]);
+  }
+
+  populateAll():void{
+    if(localStorage.getItem("state")=="true")
+      this.conferenceService.getConferencesFromUser().subscribe(c=>{
+        this.conferencesList = c;
+      });
   }
 }

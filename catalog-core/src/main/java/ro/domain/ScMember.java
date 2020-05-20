@@ -1,9 +1,15 @@
 package ro.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames={"user_id"}))
 @Entity
 public class ScMember extends BaseEntity {
+
+    @Column(name="user_id")
     private Long user_id;
 
     public ScMember(Long user_id) {
