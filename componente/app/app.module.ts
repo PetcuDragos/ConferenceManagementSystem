@@ -23,6 +23,8 @@ import { CreateConferencePageComponent } from './create-conference-page/create-c
 import {CreateConferenceService} from "./create-conference-page/shared/createConference.service";
 import { CreateAbstractPageComponent } from './create-abstract-page/create-abstract-page.component';
 import {CreateAbstractService} from "./create-abstract-page/shared/create.abstract.service";
+import { ReviewAbstractPageComponent } from './review-abstract-page/review-abstract-page.component';
+import { AssignReviewersPageComponent } from './assign-reviewers-page/assign-reviewers-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {CreateAbstractService} from "./create-abstract-page/shared/create.abstra
     MembersComponent,
     CreateConferencePageComponent,
     CreateAbstractPageComponent,
+    ReviewAbstractPageComponent,
+    AssignReviewersPageComponent,
   ],
   imports: [
     BrowserModule,
