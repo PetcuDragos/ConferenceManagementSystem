@@ -1,19 +1,14 @@
 package ro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.converter.PaperConverter;
 import ro.converter.PublishedPaperConverter;
 import ro.domain.Abstract;
 import ro.domain.Author;
 import ro.domain.Conference;
 import ro.domain.MyUser;
-import ro.dto.AbstractDto;
-import ro.dto.PaperDto;
-import ro.dto.PublishedPaperDto;
+import ro.dto.*;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
 import ro.service.PaperService;
@@ -58,5 +53,22 @@ public class PaperController {
         }
         return null;
 
+    }
+
+    @RequestMapping(value = "/createabstract", method = RequestMethod.POST)
+    public String addAbstract(@RequestBody CreateAbstractDto abstractDto) {
+        MyUser user = memberService.getUserFromUsername(abstractDto.getUsername());
+        Conference conference = conferenceService.getConferenceFromName(abstractDto.getConference_name());
+        if (user!=null && conference!=null){
+            Author author = this.memberService.addAuthor(user.getId(),conference.getId());
+            try{
+                this.paperService.addAbstract(abstractDto.getKeywords(),abstractDto.getTopics(),abstractDto.getTitle(),abstractDto.getAdditional_authors(),abstractDto.getContent(),author.getId(),conference.getId());
+                return "success";
+            }
+            catch(Exception e){
+                return e.toString();
+            }
+        }
+        return "error";
     }
 }

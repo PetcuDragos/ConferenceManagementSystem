@@ -14,4 +14,8 @@ export class LoginService {
     return this.httpClient.post<Message>("http://localhost:8080/api/login", user);
   }
 
+  userIsSCMember():Observable<boolean>{
+    return this.httpClient.get<boolean>("http://localhost:8080/api/scmembers",{params:{username: localStorage.getItem("username")}});
+  }
+
 }

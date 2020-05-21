@@ -3,13 +3,13 @@ package ro.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
-@ToString
 @NoArgsConstructor
-public class JoinConferenceDto {
+@AllArgsConstructor
+public class UserRankDto implements Serializable {
     private String username;
-    private long conference_id;
+    private String conference_name;
 }

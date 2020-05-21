@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {ConferenceService} from "./conferences/shared/service";
 import {AbstractService} from "./abstracts/shared/service";
 import {ConferenceUser} from "./conferences/shared/model";
+import {MemberService} from "./members/shared/service";
 
 @Component({
   selector: 'app-main-page',
@@ -11,17 +12,15 @@ import {ConferenceUser} from "./conferences/shared/model";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) {
+  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService) {
     this.conferencesList = [];
   }
 
-  @Input() option : number = 1;
+  @Input() option : number = -1;
 
   ngOnInit(): void {
-    if(localStorage.getItem("state")=="true")
-      this.conferenceService.getConferencesFromUser().subscribe(c=>{
-      this.conferencesList = c;
-    });
+    localStorage.setItem("selected_conference_id","");
+    this.option = -1;
   }
 
   register(){
@@ -40,6 +39,7 @@ export class MainPageComponent implements OnInit {
     localStorage.removeItem("username");
     localStorage.setItem("state", "false");
     localStorage.clear();
+    location.reload();
   }
 
   isAuthenticated(): boolean{
@@ -89,13 +89,24 @@ export class MainPageComponent implements OnInit {
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
-  changeSelectedConference(conference_id: string):void{
+  changeSelectedConference(conference_id: string, rank:string):void{
     localStorage.setItem("selected_conference_id",conference_id);
-    this.option = 1;
+    if(this.option == 1) this.option = 0;
+    else this.option =1;
     console.log("dwq")
   }
+  userIsSCMember():boolean{
+    return localStorage.getItem("userSCMember") == "true";
+  }
 
-  insert(): void{
+  loadCreateConferencePage():void{
+    this.router.navigate(["create-conference"]);
+  }
 
+  populateAll():void{
+    if(localStorage.getItem("state")=="true")
+      this.conferenceService.getConferencesFromUser().subscribe(c=>{
+        this.conferencesList = c;
+      });
   }
 }

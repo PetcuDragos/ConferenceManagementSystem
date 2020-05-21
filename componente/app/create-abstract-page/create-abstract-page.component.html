@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link href="profile-page.component.css" rel="stylesheet" type="text/css">
+  <link href="create-abstract-page.component.css" rel="stylesheet" type="text/css">
   <base href="/">
   <title>CMS</title>
 </head>
@@ -33,40 +33,48 @@
       </div>
     </div>
   </div>
-  </header>
-
+</header>
+<div class="mainDiv">
   <main>
     <div class="userContainer">
       <div id="userTitle">
-        <span>Profile details</span>
+        <span>Start your own abstract</span>
       </div>
 
       <div class="formContainer">
-
         <form>
           <div class="inputContainer">
-            <label>Full Name:</label>
-            <input type="text" #fullname placeholder="Your full name..">
+            <label>Title:</label>
+            <input type="text" #title>
           </div>
 
           <div class="inputContainer">
-            <label>Email:</label>
-            <input type="text" #email placeholder="Your email..">
+            <label>Content:</label>
+            <input type="text" #content>
           </div>
 
           <div class="inputContainer">
-            <label>Affiliation:</label>
-            <input type="text" #affiliation placeholder="Affiliation you're in..">
+            <label>Keywords:</label>
+            <input type="text" #keywords >
           </div>
 
           <div class="inputContainer">
-            <label>Webpage:</label>
-            <input type="text" #webpage placeholder="Your webpage..">
+            <label>Topics:</label>
+            <input type="text" #topics>
           </div>
 
+          <div class="inputContainer">
+            <label>Additional authors:</label>
+            <input type="text" #additional_authors>
+          </div>
+
+          <div class="inputContainer">
+            <label>Upload paper:</label>
+            <div #additional_authors>Paper...To be made.</div>
+          </div>
           <hr>
 
-          <div (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">Save</div>
+          <div (click)="save(title.value,content.value,keywords.value, topics.value,additional_authors.value)" style="float: right">Save</div>
 
         </form>
 
@@ -74,5 +82,6 @@
 
     </div>
   </main>
-
+</div>
 </body>
+</html>

@@ -77,31 +77,31 @@
       </div>
 
       <ul class="user_list">
-        <li (click)="profile()">
-          Profile
-        </li>
 
         <li>
-          Notifications
-        </li>
-
-        <li>
-          <select id="group_list">
+          <select id="group_list" (click)="populateAll()">
+            <option value="" selected disabled hidden>Choose conference</option>
             <optgroup label="Chair" *ngIf="userIsChairAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Chair')"   (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
+              <option *ngFor="let conference of populateConferenceList('Chair')"   (click)="changeSelectedConference(conference.conferenceName,'Chair')">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="PC-Member" *ngIf="userIsPCMemberAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('PCMember')"  (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
+              <option *ngFor="let conference of populateConferenceList('PCMember')"  (click)="changeSelectedConference(conference.conferenceName,'PCMember')">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="Author" *ngIf="userIsAuthorAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Author')" (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
+              <option *ngFor="let conference of populateConferenceList('Author')" (click)="changeSelectedConference(conference.conferenceName,'Author')">{{conference.conferenceName}}</option>
             </optgroup>
             <optgroup label="Member" *ngIf="userIsMemberAtAConference()">
-              <option *ngFor="let conference of populateConferenceList('Member')" (click)="changeSelectedConference(conference.conferenceName)">{{conference.conferenceName}}</option>
+              <option *ngFor="let conference of populateConferenceList('Member')" (click)="changeSelectedConference(conference.conferenceName,'Member')">{{conference.conferenceName}}</option>
             </optgroup>
 
           </select>
         </li>
+
+        <li (click)="profile()" class="clickable">
+          Profile
+        </li>
+
+        <li *ngIf="userIsSCMember()" (click)="loadCreateConferencePage()" class="clickable"> Create conference </li>
       </ul>
     </div>
 
@@ -125,7 +125,28 @@
 
 
   <section class="main">
-  <app-abstracts *ngIf="getOption() == 1"></app-abstracts>
+    <div class="main_content panel" *ngIf="getOption()==-1">
+        <h4> Hello there stranger,</h4>
+      <h5>
+        Start using our conference platform by creating an account. Then you may join conferences and propose your own
+        ideas by submitting abstracts and completing papers.
+        <li><i>How can I register?</i></li>
+        <br>As you can see, there is a button in the top-right part of your screen named '<b>Sign Up</b>'.
+        <br> Click it and it will take you to another page where you will create an account. Type in the information needed and
+        you are good to go.
+        <li><i>How can I join a conference?</i></li>
+        <br>In order to join a conference, you will have to search for a conference that is available by pressing the anchor
+        <b>'Conferences'</b> located at the top of the website.
+        <br>
+        You will find there all the conferences that are currently running and u can join by pressing the button <b>'Join conference'</b>
+      </h5>
+
+
+    </div>
+
+
+    <app-abstracts *ngIf="getOption() == 0"></app-abstracts>
+    <app-abstracts *ngIf="getOption() == 1"></app-abstracts>
     <app-conferences *ngIf="getOption() == 2"></app-conferences>
     <app-papers *ngIf="getOption() == 3"></app-papers>
     <app-members *ngIf="getOption() == 4"></app-members>
