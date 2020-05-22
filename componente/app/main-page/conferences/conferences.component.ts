@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ConferenceDescription} from "./shared/model";
 import {ConferenceService} from "./shared/service";
 import {Router} from "@angular/router";
@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 })
 export class ConferencesComponent implements OnInit {
   conferences: ConferenceDescription[];
+  @Output() someEvent = new EventEmitter<string>();
   constructor(private conferenceService: ConferenceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -20,8 +21,12 @@ export class ConferencesComponent implements OnInit {
 
   joinConference(conference_id: number): void {
     this.conferenceService.joinConference(conference_id).subscribe(m=>{
-    this.ngOnInit();});
+    this.someEvent.next("");});
   }
+
+
+
+
 
 
 

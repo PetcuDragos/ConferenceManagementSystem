@@ -3,6 +3,8 @@ package ro.domain;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @AllArgsConstructor
 @Data
@@ -10,6 +12,7 @@ import javax.persistence.Entity;
 @Entity
 @ToString
 @EqualsAndHashCode(callSuper = true)
+//@Table(uniqueConstraints = @UniqueConstraint(columnNames={"conference_id","user_id"}))
 public class UserConference extends BaseEntity{
     private Long conference_id;
     private Long user_id;
