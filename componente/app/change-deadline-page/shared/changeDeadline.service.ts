@@ -10,6 +10,7 @@ export class ChangeDeadlineService{
   }
 
   update(abstract_deadline: Date,paper_deadline: Date,bidding_deadline : Date,review_deadline:Date,ending_date: Date): void{
+    console.log("service");
     var id = localStorage.getItem("selected_conference_id");
     var model = new ChangeDeadlineModel();
     model.conference = id;

@@ -52,6 +52,7 @@ public class ConferenceService {
                 .get().getUser_id()).get().getUser_id().equals(userId);
     }
 
+    @Transactional
     public void changeDeadlines(Long conferenceId, Date abstractDeadline, Date paperDeadline, Date bidDeadline, Date reviewDeadline, Date endDeadline){
         this.conferenceRepository.findById(conferenceId).ifPresent(
                 c -> {c.setAbstractDeadline(java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-'+abstractDeadline.getDay().toString()));

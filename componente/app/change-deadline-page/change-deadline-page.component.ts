@@ -23,7 +23,7 @@ export class ChangeDeadlinePageComponent implements OnInit {
     {
       if(date1.getMonth()<date2.getMonth())
         return true;
-      else if(date1.getMonth()==date2.getMonth() && date1.getDay()<date2.getDay())
+      else if(date1.getMonth()==date2.getMonth() && date1.getDate()<date2.getDate())
           return true;
     }
     return false;
@@ -34,6 +34,7 @@ export class ChangeDeadlinePageComponent implements OnInit {
     console.log("change deadline components.ts");
     if(this.check(abstract_deadline, paper_deadline) && this.check(paper_deadline, bidding_deadline) && this.check(bidding_deadline,review_deadline) && this.check(review_deadline, ending_date)) {
       this.service.update(abstract_deadline, paper_deadline, bidding_deadline, review_deadline, ending_date);
+      document.getElementById("error").innerHTML="";
       this.back();
     }
     else{

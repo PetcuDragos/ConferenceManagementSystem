@@ -90,9 +90,14 @@ export class MainPageComponent implements OnInit {
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
+<<<<<<< HEAD
+  changeSelectedConference(conference_id: string, rank:string):void{
+    console.log("cartof");
+=======
   changeSelectedConference():void{
     var conference_id = this.elementRef.nativeElement.querySelector('select').value;
     console.log(conference_id);
+>>>>>>> feature/angular
     localStorage.setItem("selected_conference_id",conference_id);
     if(this.option == 1) this.option = 0;
     else this.option = 1;
