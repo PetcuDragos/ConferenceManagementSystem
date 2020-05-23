@@ -10,7 +10,7 @@ export class PaperService {
   }
 
   getPapers(): Observable<Paper[]> {
-    return this.httpClient.get<Array<Paper>>("http://localhost:8080/api/papers");
+    return this.httpClient.get<Array<Paper>>("http://localhost:8080/api/published-papers");
   }
 
 

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.converter.PaperConverter;
 import ro.converter.PublishedPaperConverter;
-import ro.domain.Abstract;
 import ro.domain.Author;
 import ro.domain.Conference;
 import ro.domain.MyUser;
+import ro.domain.PublishedPaper;
 import ro.dto.*;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
@@ -15,7 +15,6 @@ import ro.service.PaperService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class PaperController {
@@ -30,10 +29,18 @@ public class PaperController {
     private MemberService memberService;
 
     @Autowired
+    private PaperConverter paperConverter;
+
+    @Autowired
     private PublishedPaperConverter publishedPaperConverter;
 
     @RequestMapping(value = "/papers", method = RequestMethod.GET)
-    public List<PublishedPaperDto> getPapers() {
+    public List<PaperDto> getPapers() {
+        return new ArrayList<PaperDto>(this.paperConverter.convertModelsToDtos(paperService.getPapers()));
+    }
+
+    @RequestMapping(value = "/published-papers", method = RequestMethod.GET)
+    public List<PublishedPaperDto> getPublishedPapers() {
         return new ArrayList<PublishedPaperDto>(this.publishedPaperConverter.convertModelsToDtos(paperService.getPapers()));
     }
 
