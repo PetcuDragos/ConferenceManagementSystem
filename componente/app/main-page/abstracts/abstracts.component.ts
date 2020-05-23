@@ -29,7 +29,8 @@ export class AbstractsComponent implements OnInit {
       abstracts=>{if(abstracts!=null) this.abstracts = abstracts;
       this.getConferenceDetails();
       this.abstractService.isUserChairForConference();
-      this.abstractService.isUserPCMemberForConference();}
+      this.abstractService.isUserPCMemberForConference();
+      this.abstractService.isUserAuthor()}
     )
   }
 
@@ -100,6 +101,9 @@ export class AbstractsComponent implements OnInit {
   isUserChairForConference(): boolean{
     return this.abstractService.chair;
   }
+  isUserAuthor() {
+    return this.abstractService.author;
+  }
 
   addPCMemberOption():void{
     this.pcmember_option = true;
@@ -108,7 +112,4 @@ export class AbstractsComponent implements OnInit {
   addPCMember(username:string):void{
     this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
   }
-
-
-
 }

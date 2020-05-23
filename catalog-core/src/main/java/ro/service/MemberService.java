@@ -1,5 +1,6 @@
 package ro.service;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,8 @@ import ro.repository.*;
 import ro.utils.Message;
 
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
+import java.util.stream.Collectors;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 @Service
 public class MemberService {
 
@@ -33,8 +30,6 @@ public class MemberService {
     private CChairRepository cChairRepository;
     @Autowired
     private ConferenceRepository conferenceRepository;
-    @Autowired
-    private NewsletterRepository newsletterRepository;
 
     public MemberService() {
     }
@@ -85,6 +80,7 @@ public class MemberService {
 
     public MyUser getUserFromUsername(String username) {
         log.trace("getUserFromUsername - method entered");
+        System.out.println("USERNAME (USER): " + username);
         List<MyUser> users = this.myUserRepository.findAll();
         for (MyUser user : users) {
             if (user.getUsername().equals(username))
@@ -92,6 +88,22 @@ public class MemberService {
         }
         return null;
     }
+
+    //TODO: A. (not used)
+    public Long getUserIdFromUsername(String username) {
+        log.trace("getUserIdFromUsername - method entered");
+        System.out.println("USERNAME (ID): " + username);
+        List<Long> ids = this.myUserRepository.findAll().stream()
+                .filter(myUser -> myUser.getUsername().equals(username))
+                .map(BaseEntity::getId)
+                .collect(Collectors.toList());
+
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(0);
+    }
+    
     @Transactional
     public Message<MyUser> updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
         log.trace("updateProfile - method entered, {}, {}, {}, {}, {}", username, fullname, email, affiliation, webpage);
@@ -227,65 +239,5 @@ public class MemberService {
 
     public MyUser addUser(String username, String password, String email, String fullname, String affiliation, String webpage){
         return myUserRepository.save(new MyUser(username,password,email,fullname,affiliation,webpage));
-    }
-    public Message<Newsletter> subscribeToNewsletter(String givenName, String givenEmail, Boolean givenDailyNewsletter) throws MessagingException {
-        log.trace("memberService - newsletter function - entered");
-        List<Newsletter> subscribedUsers = this.newsletterRepository.findAll();
-        String errorString = "";
-        for (Newsletter user : subscribedUsers) {
-            if (user.getEmail().equals(givenEmail))
-                return new Message<Newsletter>(null, "Email is already being used");
-        }
-        if (givenName.equals(""))
-            errorString += "Name field required\n";
-        if (givenEmail.equals(""))
-            errorString += "Email field required\n";
-        else if (!validateEmail(givenEmail))
-            errorString += "Please enter a valid email address\n";
-        if (!errorString.equals(""))
-            return new Message<Newsletter>(null, errorString);
-        Newsletter newSubscriber = new Newsletter(givenName,givenEmail,givenDailyNewsletter);
-        this.newsletterRepository.save(newSubscriber);
-        sendMail(newSubscriber.getEmail(), newSubscriber.getName());
-        return new Message<Newsletter>(newSubscriber, "");
-    }
-
-    public static void sendMail(String recepientEmail, String recepientName) throws MessagingException {
-        Properties properties = new Properties();
-
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        String myAccountEmail = "conf.manag.sys.lescroissants@gmail.com";
-        String password = "croissants";
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected  PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(myAccountEmail, password);
-            }
-        });
-
-        javax.mail.Message message = prepareMessage(session, myAccountEmail, recepientEmail, recepientName);
-
-        Transport.send(message);
-    }
-
-    private static javax.mail.Message prepareMessage(Session session, String myAccountEmail, String recepientEmail,
-                                                     String recepientName)  {
-        try {
-            javax.mail.Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(myAccountEmail));
-            message.setRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(recepientEmail));
-            message.setSubject("Welcome to our newsletter");
-            message.setText("Hello there " + recepientName + "\n This is a text message sent from our newsletter.\nGoodbye "
-            + recepientName + "\nEmail sent to " + recepientEmail + "\n");
-            return message;
-        } catch (Exception ex){
-            log.trace("Error creating newsletter message" +  ex);
-        }
-        return null;
     }
 }

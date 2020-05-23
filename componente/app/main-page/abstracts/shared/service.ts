@@ -1,19 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AbstractAuthorDto, CreateBidDto} from "./model";
-import {MyDate} from "../../../create-conference-page/shared/createConference.model";
+import {AbstractAuthorDto} from "./model";
 
 @Injectable()
 export class AbstractService {
   pcmember: boolean;
   chair: boolean;
-  eligible:boolean [];
+  author: boolean;
 
   constructor(private httpClient: HttpClient) {
     this.isUserPCMemberForConference();
     this.isUserChairForConference();
-    this.getEligible();
+    this.isUserAuthor();
   }
 
   getAbstractsFromConference(): Observable<AbstractAuthorDto[]> {
@@ -32,14 +31,6 @@ export class AbstractService {
     });
   }
 
-  getEligible(): void{
-    //AICI trebuie prinsa lista de permisiuni
-    this.httpClient.post<any>("http://localhost:8080/api/ispcmemberandnotauth", {
-      username: localStorage.getItem("username"),
-      conference_name: localStorage.getItem("selected_conference_id"),
-    }).subscribe(m => this.eligible=m);
-  }
-
   isUserChairForConference(): void {
     this.httpClient.post<boolean>("http://localhost:8080/api/ischair", {
       username: localStorage.getItem("username"),
@@ -49,22 +40,18 @@ export class AbstractService {
     });
   }
 
+  //TODO: A
+  isUserAuthor(): void {
+    this.httpClient.post<boolean>("http://localhost:8080/api/isauthor", {
+      username: localStorage.getItem("username"),
+      conference_name: localStorage.getItem("selected_conference_id")
+    }).subscribe(isAuthor => this.author = isAuthor);
+  }
+
   addPCMember(username: string): Observable<boolean> {
     return this.httpClient.post<boolean>("http://localhost:8080/api/addpcmember", {
       username: username,
       conference_name: localStorage.getItem("selected_conference_id")
     });
-  }
-
-  addBid(abs_id: number, result: number): void {
-    var b = new CreateBidDto()
-      b.pc_name = localStorage.getItem("username");
-      b.conference_name = localStorage.getItem("")
-      b.abstract_id = abs_id;
-      b.result = result;
-      b.date = new MyDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
-    console.log(b);
-
-     this.httpClient.post<any>("http://localhost:8080/api/createbid",b).subscribe(m => {});
   }
 }

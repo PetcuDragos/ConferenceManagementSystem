@@ -191,6 +191,16 @@ public class ConferenceController {
         return false;
     }
 
+    // TODO: A
+    @RequestMapping(value = "/isauthor", method = RequestMethod.POST)
+    public boolean isUserAuthorOfPaper(@RequestBody UserRankDto rank) {
+        Long userId = memberService.getUserFromUsername(rank.getUsername()).getId();
+        Long conferenceId = conferenceService.getConferenceFromName(rank.getConference_name()).getId();
+
+        Author author = conferenceService.getAuthor(conferenceId, userId);
+        return !(author == null);
+    }
+
     @RequestMapping(value = "/addpcmember", method = RequestMethod.POST)
     public boolean addPCMember(@RequestBody UserRankDto rank) {
         MyUser user = memberService.getUserFromUsername(rank.getUsername());
