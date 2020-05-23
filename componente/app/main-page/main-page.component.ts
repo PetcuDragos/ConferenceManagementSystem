@@ -90,6 +90,7 @@ export class MainPageComponent implements OnInit {
   }
 
   changeSelectedConference(conference_id: string, rank:string):void{
+    console.log("cartof");
     localStorage.setItem("selected_conference_id",conference_id);
     if(this.option == 1) this.option = 0;
     else this.option =1;
