@@ -49,7 +49,7 @@ export class AbstractsComponent implements OnInit {
   }
 
   changeDeadlines():void{
-    this.router.navigate(['change-deadline']);
+    console.log("not made yet.")
   }
 
   bidAbstract(abs_id: number):void{

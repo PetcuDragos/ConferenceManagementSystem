@@ -6,3 +6,9 @@ export class Member{
   affiliation:string;
   webpage:string;
 }
+
+export class Newsletter {
+  name: string;
+  email: string;
+  dailyNewsletter: boolean;
+}

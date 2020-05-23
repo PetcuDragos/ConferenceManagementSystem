@@ -64,6 +64,11 @@
         </div>
 
         <div class="inputContainer">
+          <label>Ending date:</label>
+          <input type="date" #ending_date>
+        </div>
+
+        <div class="inputContainer">
           <label>Abstract deadline:</label>
           <input type="date" #abstract_deadline>
         </div>
@@ -83,16 +88,10 @@
           <input type="date" #review_deadline>
         </div>
 
-        <div class="inputContainer">
-          <label>Ending date:</label>
-          <input type="date" #ending_date>
-        </div>
-
         <hr>
 
         <div class="saveButton" (click)="save(conference_name.value,chair_username.value,co_chair_username.value,starting_date.valueAsDate,ending_date.valueAsDate,abstract_deadline.valueAsDate,paper_deadline.valueAsDate,bidding_deadline.valueAsDate,review_deadline.valueAsDate)" style="float: right">Save</div>
 
-        <div id="error"></div>
       </form>
 
     </div>

@@ -113,12 +113,12 @@
 
       <div class="container">
         <form>
-          <input type="text" placeholder="Name" name="name" required>
-          <input type="text" placeholder="Email address" name="mail" required>
+          <input type="text" placeholder="Name"  #name name="name" required>
+          <input type="text" placeholder="Email address"  #email name="mail" required>
           <label>
-            <input type="checkbox" checked="checked" name="subscribe" id="news"> Daily Newsletter
+            <input type="checkbox" #dailyNewsletter checked="checked" name="subscribe" id="news"> Daily Newsletter
           </label>
-          <input type="submit" value="Subscribe">
+          <input (click)="addToNewsletter(name.value, email.value, dailyNewsletter.checked)" type="submit" value="Subscribe">
         </form>
       </div>
     </div>
