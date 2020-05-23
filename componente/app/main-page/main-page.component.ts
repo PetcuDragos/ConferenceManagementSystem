@@ -1,10 +1,9 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ConferenceService} from "./conferences/shared/service";
 import {AbstractService} from "./abstracts/shared/service";
 import {ConferenceUser} from "./conferences/shared/model";
 import {MemberService} from "./members/shared/service";
-
 
 @Component({
   selector: 'app-main-page',
@@ -13,14 +12,13 @@ import {MemberService} from "./members/shared/service";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private elementRef : ElementRef, private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService/*, private evaluationService: EvaluationService*/) {
+  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService) {
     this.conferencesList = [];
   }
 
   @Input() option : number = -1;
 
   ngOnInit(): void {
-    this.populateAll();
     localStorage.setItem("selected_conference_id","");
     this.option = -1;
   }
@@ -91,12 +89,12 @@ export class MainPageComponent implements OnInit {
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
-  changeSelectedConference():void{
-    var conference_id = this.elementRef.nativeElement.querySelector('select').value;
-    console.log(conference_id);
+  changeSelectedConference(conference_id: string, rank:string):void{
+    console.log("cartof");
     localStorage.setItem("selected_conference_id",conference_id);
     if(this.option == 1) this.option = 0;
-    else this.option = 1;
+    else this.option =1;
+    console.log("dwq")
   }
   userIsSCMember():boolean{
     return localStorage.getItem("userSCMember") == "true";
@@ -112,5 +110,4 @@ export class MainPageComponent implements OnInit {
         this.conferencesList = c;
       });
   }
-
 }

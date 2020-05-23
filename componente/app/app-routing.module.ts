@@ -7,6 +7,7 @@ import {ProfilePageComponent} from "./profile-page/profile-page.component";
 import {CreateConferencePageComponent} from "./create-conference-page/create-conference-page.component";
 import {AbstractsComponent} from "./main-page/abstracts/abstracts.component";
 import {CreateAbstractPageComponent} from "./create-abstract-page/create-abstract-page.component";
+import {ChangeDeadlinePageComponent} from "./change-deadline-page/change-deadline-page.component";
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterPageComponent},
   {path: 'profile', component: ProfilePageComponent},
   {path: 'create-conference', component: CreateConferencePageComponent},
-  {path: 'create-abstract', component: CreateAbstractPageComponent}
+  {path: 'create-abstract', component: CreateAbstractPageComponent},
+  {path: 'change-deadline', component: ChangeDeadlinePageComponent},
 ];
 
 @NgModule({

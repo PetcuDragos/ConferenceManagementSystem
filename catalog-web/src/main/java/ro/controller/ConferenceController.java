@@ -206,4 +206,22 @@ public class ConferenceController {
         return false;
     }
 
+    @RequestMapping(value = "/change_deadline", method = RequestMethod.PUT)
+    public Message<ChangeDeadlineDto> changeDeadline(@RequestBody ChangeDeadlineDto changeDeadlineDto) {
+        //todo validation
+        try {
+            log.trace("a ajuns in controller");
+            this.conferenceService.changeDeadlines(this.conferenceService
+                    .getConferenceFromName(changeDeadlineDto.getConference()).getId(),
+                    changeDeadlineDto.getAbstract_deadline(), changeDeadlineDto.getPaper_deadline(),
+                    changeDeadlineDto.getBidding_deadline(), changeDeadlineDto.getReview_deadline(),
+                    changeDeadlineDto.getEnding_date());
+        } catch (Exception e) {
+            log.trace("i-o dat eroare la fraier");
+            return new Message<ChangeDeadlineDto>(null, e.toString());
+        }
+        log.trace("gataaaa");
+        return new Message<ChangeDeadlineDto>(changeDeadlineDto, "changing deadline was successful");
+    }
+
 }
