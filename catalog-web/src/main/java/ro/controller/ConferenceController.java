@@ -208,7 +208,6 @@ public class ConferenceController {
 
     @RequestMapping(value = "/change_deadline", method = RequestMethod.PUT)
     public Message<ChangeDeadlineDto> changeDeadline(@RequestBody ChangeDeadlineDto changeDeadlineDto) {
-        //todo validation
         try {
             log.trace("a ajuns in controller");
             this.conferenceService.changeDeadlines(this.conferenceService
