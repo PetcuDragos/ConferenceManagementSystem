@@ -52,16 +52,24 @@ public class ConferenceService {
                 .get().getUser_id()).get().getUser_id().equals(userId);
     }
 
-    @Transactional
-    public void changeDeadlines(Long conferenceId, Date abstractDeadline, Date paperDeadline, Date bidDeadline, Date reviewDeadline, Date endDeadline){
-        this.conferenceRepository.findById(conferenceId).ifPresent(
-                c -> {c.setAbstractDeadline(java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-'+abstractDeadline.getDay().toString()));
-                    c.setPaperDeadline(java.sql.Date.valueOf(paperDeadline.getYear().toString()+'-'+paperDeadline.getMonth().toString()+'-'+paperDeadline.getDay().toString()));
-                    c.setBidDeadline(java.sql.Date.valueOf(bidDeadline.getYear().toString()+'-'+bidDeadline.getMonth().toString()+'-'+bidDeadline.getDay().toString()));
-                    c.setReviewDeadline(java.sql.Date.valueOf(reviewDeadline.getYear().toString()+'-'+reviewDeadline.getMonth().toString()+'-'+reviewDeadline.getDay().toString()));
-                    c.setEndingDate(java.sql.Date.valueOf(endDeadline.getYear().toString()+'-'+endDeadline.getMonth().toString()+'-'+endDeadline.getDay().toString()));}
-        );
-    }
+    //todo de refacut aceste functii
+//    public void changePaperDeadline(Long conferenceId, Long userId, Date date){
+//        //toDo: check if the conference exists
+//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
+//            this.conferenceRepository.fingetOne(conferenceId).setPaperDeadline(date);
+//    }
+//
+//    public void changeBidDeadline(Long conferenceId, Long userId, Date date){
+//        //toDo: check if the conference exists
+//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
+//            this.conferenceRepository.getOne(conferenceId).setBidDeadline(date);
+//    }
+//
+//    public void changeReviewDeadline(Long conferenceId, Long userId, Date date){
+//        //toDo: check if the conference exists
+//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
+//            this.conferenceRepository.getOne(conferenceId).setReviewDeadline(date);
+//    }
 
     public Conference getConferenceFromId(Long id){
         return conferenceRepository.findById(id).orElse(null);
