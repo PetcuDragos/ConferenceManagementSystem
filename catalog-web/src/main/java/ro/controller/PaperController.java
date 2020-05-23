@@ -41,7 +41,7 @@ public class PaperController {
 
     @RequestMapping(value = "/published-papers", method = RequestMethod.GET)
     public List<PublishedPaperDto> getPublishedPapers() {
-        return new ArrayList<PublishedPaperDto>(this.publishedPaperConverter.convertModelsToDtos(paperService.getPapers()));
+        return new ArrayList<PublishedPaperDto>(this.publishedPaperConverter.convertModelsToDtos(paperService.getPublishedPapers()));
     }
 
     @RequestMapping(value = "/abstract", method = RequestMethod.GET, params = {"conferenceName"})
