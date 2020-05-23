@@ -104,15 +104,14 @@ public class ConferenceController {
     }
 
     @RequestMapping(value = "/conferencest", method = RequestMethod.POST)
-    public String joinConference(@RequestBody JoinConferenceDto joinConferenceDto) {
-        log.trace("controllerrrrrr");
+    public Message<String> joinConference(@RequestBody JoinConferenceDto joinConferenceDto) {
         try {
             long userId = this.memberService.getUserFromUsername(joinConferenceDto.getUsername()).getId();
             this.conferenceService.joinConference(userId, joinConferenceDto.getConference_id());
         } catch (Exception e) {
-            return e.toString();
+            return new Message<String>(null,"error");
         }
-        return "success";
+        return new Message<String>(null,"success");
     }
 
     @Transactional
