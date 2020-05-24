@@ -79,7 +79,7 @@ public class ConferenceService {
     }
 
     public Conference addConference(String name, Long chair_id, Long co_chair_id, Date startingDate, Date endingDate, Date abstractDeadline, Date paperDeadline,Date bidDeadline, Date reviewDeadline){
-
+        //
         return this.conferenceRepository.save(new Conference(name,
            java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-' + abstractDeadline.getDay().toString()),
            java.sql.Date.valueOf(paperDeadline.getYear().toString()+'-'+paperDeadline.getMonth().toString()+'-' + paperDeadline.getDay().toString()),

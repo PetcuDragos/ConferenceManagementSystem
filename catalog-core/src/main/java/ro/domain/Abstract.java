@@ -12,6 +12,7 @@ public class Abstract extends BaseEntity{
     private Long author_id;
     private Long conference_id;
 
+
     public Abstract() {
     }
 
