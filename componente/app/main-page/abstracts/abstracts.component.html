@@ -17,13 +17,13 @@
   <h6>{{abstract.entity.content}}</h6>
   <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
 
-  <select [(ngModel)]={{"selectedOption"}} *ngIf="isUserPCMemberForConference() ">
+  <select id="{{abstract.abstract_id}}" [(ngModel)]="abstract.abstract_id" *ngIf="isUserPCMemberForConferenceNotTheAuthor(abstract.abstract_id) ">
     Bid:
     <option value="1">Accept for review</option>
     <option value="0">Don't care for review</option>
     <option value="-1">Refuse for review</option>
   </select>
-  <button (click)="bidAbstract(abstract.abstract_id)" *ngIf="isUserPCMemberForConference()">Bid</button>
+  <button (click)="bidAbstract(abstract.abstract_id)" *ngIf="isUserPCMemberForConferenceNotTheAuthor(abstract.abstract_id)">Bid</button>
   <br><button (click)="reviewPaper()" *ngIf="isUserPCMemberForConference()">Review</button>
   <br><button *ngIf="isUserChairForConference()">assign reviewers</button>
   <br><button *ngIf="isUserChairForConference()">ask for re-evaluation</button>

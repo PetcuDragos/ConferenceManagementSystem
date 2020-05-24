@@ -4,6 +4,7 @@ import {Abstract, AbstractAuthorDto, AbstractDto} from "./shared/model";
 import {Router} from "@angular/router";
 import {ConferenceService} from "../conferences/shared/service";
 import {Conference} from "../conferences/shared/model";
+import {Observable} from "rxjs";
 @Component({
   selector: 'app-abstracts',
   templateUrl: './abstracts.component.html',
@@ -54,8 +55,9 @@ export class AbstractsComponent implements OnInit {
   bidAbstract(abs_id: number):void{
     //ugly and highly coupled
     var result = 0;
-    if (this.selectedOption == "1") result=1;
-    else if (this.selectedOption == "-1") result=-1;
+    var option = (<HTMLSelectElement>document.getElementById(abs_id.toString())).value;
+    if (option == "1") result=1;
+    else if (option == "-1") result=-1;
     var statusBid;
     statusBid = this.abstractService.addBid(abs_id,result);
     console.log(statusBid);
@@ -89,6 +91,12 @@ export class AbstractsComponent implements OnInit {
   isUserPCMemberForConference(): boolean{
     return this.abstractService.pcmember;
   }
+
+  isUserPCMemberForConferenceNotTheAuthor(abs_id : number):boolean{
+    return this.abstractService.eligible[abs_id];
+  }
+
+
   isUserChairForConference(): boolean{
     return this.abstractService.chair;
   }

@@ -24,6 +24,7 @@ export class AbstractAuthorDto{
 
 export class CreateBidDto{
    abstract_id: number;
+   conference_name: string;
    date : MyDate;
    pc_name: string;
    result: number;

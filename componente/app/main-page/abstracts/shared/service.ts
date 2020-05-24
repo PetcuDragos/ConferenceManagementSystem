@@ -8,10 +8,12 @@ import {MyDate} from "../../../create-conference-page/shared/createConference.mo
 export class AbstractService {
   pcmember: boolean;
   chair: boolean;
+  eligible:boolean [];
 
   constructor(private httpClient: HttpClient) {
     this.isUserPCMemberForConference();
     this.isUserChairForConference();
+    this.getEligible();
   }
 
   getAbstractsFromConference(): Observable<AbstractAuthorDto[]> {
@@ -28,6 +30,14 @@ export class AbstractService {
     }).subscribe(m => {
       this.pcmember = m;
     });
+  }
+
+  getEligible(): void{
+    //AICI trebuie prinsa lista de permisiuni
+    this.httpClient.post<any>("http://localhost:8080/api/ispcmemberandnotauth", {
+      username: localStorage.getItem("username"),
+      conference_name: localStorage.getItem("selected_conference_id"),
+    }).subscribe(m => this.eligible=m);
   }
 
   isUserChairForConference(): void {
@@ -49,6 +59,7 @@ export class AbstractService {
   addBid(abs_id: number, result: number): void {
     var b = new CreateBidDto()
       b.pc_name = localStorage.getItem("username");
+      b.conference_name = localStorage.getItem("")
       b.abstract_id = abs_id;
       b.result = result;
       b.date = new MyDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
