@@ -17,17 +17,17 @@
   <h6>{{abstract.entity.content}}</h6>
   <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
 
-  <select *ngIf="isUserPCMemberForConference()">
+  <select *ngIf="isUserPCMemberForConference() && !isUserAuthor()">
     Bid:
     <option>Accept for review</option>
     <option>Don't care for review</option>
     <option>Refuse for review</option>
   </select>
-  <button (click)="bidAbstract()" *ngIf="isUserPCMemberForConference()">Bid</button>
-  <br><button (click)="reviewPaper()" *ngIf="isUserPCMemberForConference()">Review</button>
-  <br><button *ngIf="isUserChairForConference()">assign reviewers</button>
-  <br><button *ngIf="isUserChairForConference()">ask for re-evaluation</button>
-  <br><button *ngIf="isUserChairForConference()||isUserPCMemberForConference()"> See other reviewers evaluation</button>
+  <button (click)="bidAbstract()" *ngIf="isUserPCMemberForConference() && !isUserAuthor()">Bid</button>
+  <br><button (click)="reviewPaper()" *ngIf="isUserPCMemberForConference() && !isUserAuthor()">Review</button>
+  <br><button *ngIf="isUserChairForConference() && !isUserAuthor()">assign reviewers</button>
+  <br><button *ngIf="isUserChairForConference() && !isUserAuthor()">ask for re-evaluation</button>
+  <br><button *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && !isUserAuthor()"> See other reviewers evaluation</button>
 
 </div>
 </div>

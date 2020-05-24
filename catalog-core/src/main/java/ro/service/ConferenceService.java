@@ -8,6 +8,7 @@ import ro.repository.*;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -21,6 +22,8 @@ public class ConferenceService {
     private CChairRepository cChairRepository;
     @Autowired
     private PcMemberRepository pcMemberRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @Autowired
     private UserConferenceRepository userConferenceRepository;
@@ -108,5 +111,16 @@ public class ConferenceService {
     public void joinConference(long userId, long conferenceId){
         int x = 0;
         this.userConferenceRepository.save(new UserConference(conferenceId, userId));
+    }
+
+    // TODO: A
+    public Author getAuthor(Long conferenceId, Long userId) {
+        List<Author> authors = this.authorRepository.findAll().stream()
+                .filter(author -> author.getConference_id().equals(conferenceId) && author.getUser_id().equals(userId))
+                .collect(Collectors.toList());
+        if (authors.isEmpty()) {
+            return null;
+        }
+        return authors.get(0);
     }
 }

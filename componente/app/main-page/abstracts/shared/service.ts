@@ -7,10 +7,12 @@ import {AbstractAuthorDto} from "./model";
 export class AbstractService {
   pcmember: boolean;
   chair: boolean;
+  author: boolean;
 
   constructor(private httpClient: HttpClient) {
     this.isUserPCMemberForConference();
     this.isUserChairForConference();
+    this.isUserAuthor();
   }
 
   getAbstractsFromConference(): Observable<AbstractAuthorDto[]> {
@@ -36,6 +38,14 @@ export class AbstractService {
     }).subscribe(m => {
       this.chair = m;
     });
+  }
+
+  //TODO: A
+  isUserAuthor(): void {
+    this.httpClient.post<boolean>("http://localhost:8080/api/isauthor", {
+      username: localStorage.getItem("username"),
+      conference_name: localStorage.getItem("selected_conference_id")
+    }).subscribe(isAuthor => this.author = isAuthor);
   }
 
   addPCMember(username: string): Observable<boolean> {

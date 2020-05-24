@@ -12,6 +12,7 @@ import ro.utils.Message;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -85,6 +86,7 @@ public class MemberService {
 
     public MyUser getUserFromUsername(String username) {
         log.trace("getUserFromUsername - method entered");
+        System.out.println("USERNAME (USER): " + username);
         List<MyUser> users = this.myUserRepository.findAll();
         for (MyUser user : users) {
             if (user.getUsername().equals(username))
@@ -92,6 +94,22 @@ public class MemberService {
         }
         return null;
     }
+
+    //TODO: A. (not used)
+    public Long getUserIdFromUsername(String username) {
+        log.trace("getUserIdFromUsername - method entered");
+        System.out.println("USERNAME (ID): " + username);
+        List<Long> ids = this.myUserRepository.findAll().stream()
+                .filter(myUser -> myUser.getUsername().equals(username))
+                .map(BaseEntity::getId)
+                .collect(Collectors.toList());
+
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(0);
+    }
+    
     @Transactional
     public Message<MyUser> updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
         log.trace("updateProfile - method entered, {}, {}, {}, {}, {}", username, fullname, email, affiliation, webpage);
