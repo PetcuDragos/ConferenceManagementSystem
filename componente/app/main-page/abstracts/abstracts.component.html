@@ -17,7 +17,7 @@
   <h6>{{abstract.entity.content}}</h6>
   <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
 
-  <select [(ngModel)]="selectedOption" *ngIf="isUserPCMemberForConference() ">
+  <select [(ngModel)]={{"selectedOption"}} *ngIf="isUserPCMemberForConference() ">
     Bid:
     <option value="1">Accept for review</option>
     <option value="0">Don't care for review</option>

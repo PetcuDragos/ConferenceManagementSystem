@@ -13,6 +13,7 @@ import ro.domain.*;
 import ro.dto.*;
 import ro.service.ConferenceService;
 import ro.service.MemberService;
+import ro.service.PaperService;
 import ro.utils.Message;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class ConferenceController {
     private ConferenceService conferenceService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private PaperService paperService;
 
     public static <T> Collector<T, ?, T> toSingleton() { //Awesome to use in lambdas where u need just one element returned by id
         return Collectors.collectingAndThen(
@@ -164,6 +167,18 @@ public class ConferenceController {
             return memberService.getPcMembers().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
         }
         return false;
+    }
+
+    //NOT DONE
+    @RequestMapping(value = "/ispcmemberandnotauth", method = RequestMethod.POST)
+    public List<PcPrivilegeDto> getAuthorStatus(@RequestBody UserRankDto rank) {
+        log.trace("AICI MAI");
+        MyUser user = memberService.getUserFromUsername(rank.getUsername());
+        Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
+        List<Abstract> abstracts = paperService.getAbstracts().stream().filter(p->p.getConference_id().equals(conference.getId())).collect(Collectors.toList());
+
+
+        return null;
     }
 
     @RequestMapping(value = "/ischair", method = RequestMethod.POST)

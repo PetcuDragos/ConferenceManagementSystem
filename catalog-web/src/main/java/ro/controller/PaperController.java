@@ -99,7 +99,7 @@ public class PaperController {
             ///MAJOR warning: if pcMember belongs to more than one conference this is going to fail
             MyUser userId = memberService.getUserFromUsername(bidDto.getPc_name());
             PcMember pcMember = memberService.getPcMembers().stream().filter(p -> p.getUser_id().equals(userId.getId())).collect(toSingleton());
-            Conference conference = conferenceService.getConferenceFromId(pcMember.getConference_id());
+            Conference conference = conferenceService.getConferenceFromName(bidDto.getConference_name());
             Abstract abstrac= paperService.getAbstracts().stream().filter(a -> a.getId().equals(bidDto.getAbstract_id())).collect(toSingleton());
 
             if (conference!= null && !evaluationService.getBidEvaluations().stream().anyMatch(b->b.getAbstract_id().equals(bidDto.getAbstract_id()) && b.getPc_id().equals(pcMember.getId()))) {
