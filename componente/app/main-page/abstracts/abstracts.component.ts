@@ -47,6 +47,7 @@ export class AbstractsComponent implements OnInit {
   }
 
   changeDeadlines():void{
+    this.router.navigate(['change-deadline']);
     console.log("not made yet.")
   }
 
@@ -96,4 +97,5 @@ export class AbstractsComponent implements OnInit {
   addPCMember(username:string):void{
     this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
   }
+
 }
