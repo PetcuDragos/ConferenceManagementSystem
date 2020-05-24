@@ -81,7 +81,9 @@ public class ConferenceController {
     //GLORIOUS way to access users from any id ref
     @RequestMapping(value = "/conferencest", method = RequestMethod.GET)
     public List<ConferenceDescriptionDto> getConferencesWithChairs() {
+        //hardcoded in conferenceService.addConference("FirstDateConference",(long)1,(long)2, new Date(11,02,2020),new Date(11,06,2020),new Date(26,05,2020),new Date(27,05,2020),new Date(28,05,2020),new Date(29,05,2020));
         List<ConferenceDescriptionDto> conferenceDtoList = new ArrayList<>();
+
         List<Conference> conferences = conferenceService.getConferences();
         log.trace("size: {}", conferences.size());
         conferences.forEach(c -> {
@@ -97,6 +99,9 @@ public class ConferenceController {
                             conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
                             conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id());
                     conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName()));
+                    log.trace("aici crapa fara deadlines");
+                    log.trace("conference: {}",co);
+
                 }
             }
         });
