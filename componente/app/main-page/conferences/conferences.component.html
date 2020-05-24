@@ -1,6 +1,6 @@
-<div *ngFor="let conference of conferences" class="panel">
-  <h4>{{conference.name}}</h4>
-  <br><h6>{{conference.startingDate.}}</h6>
-  <br>{{conference.endingDate}}
-  <button *ngIf="notJoinedConference(conference.conference_id)" (click)="joinConference(conference.conference_id)">Join conference</button>
+<div *ngFor="let conferencel of conferences" class="panel conference-panel">
+  <div class="conference_name">{{conferencel.name}}</div>
+  <div class="conference_chair"> {{conferencel.chairName}} </div>
+  <div class="conference_co_chair">{{conferencel.co_chairName}} </div>
+  <button class="conference_button" (click)="joinConference(conferencel.conference.id)">Join conference</button>
 </div>

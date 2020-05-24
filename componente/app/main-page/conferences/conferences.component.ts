@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Conference} from "./shared/model";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ConferenceDescription} from "./shared/model";
 import {ConferenceService} from "./shared/service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-conferences',
@@ -8,22 +9,25 @@ import {ConferenceService} from "./shared/service";
   styleUrls: ['./conferences.component.css']
 })
 export class ConferencesComponent implements OnInit {
-  conferences: Conference[];
-  constructor(private conferenceService: ConferenceService) { }
+  conferences: ConferenceDescription[];
+  @Output() someEvent = new EventEmitter<string>();
+  constructor(private conferenceService: ConferenceService, private router:Router) { }
 
   ngOnInit(): void {
-    this.conferenceService.getConferences().subscribe(
+    this.conferenceService.getConferencesChairCoChair().subscribe(
       conferences=>this.conferences = conferences
     );
   }
 
-  notJoinedConference(conference_id: number):boolean{
-    // todo
-    return false;
-}
-  joinConference(conference_id: number): void{
-    //todo
+  joinConference(conference_id: number): void {
+    this.conferenceService.joinConference(conference_id).subscribe(m=>{
+    this.someEvent.next("");});
   }
+
+
+
+
+
 
 
 }

@@ -3,10 +3,7 @@ package ro.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.converter.MemberConverter;
 import ro.domain.MyUser;
 import ro.dto.LoginDto;
@@ -62,14 +59,12 @@ public class AuthController {
 
     @RequestMapping(value = "/members", method = RequestMethod.GET)
     public List<MemberDto> getMembers() {
-
             try{
                 console.runConsole();
             }
             catch(Exception e){
                 log.trace(e.toString());
             }
-
             return new ArrayList<MemberDto>(this.memberConverter.convertModelsToDtos(serviceMember.getAllMembers()));
     }
 
@@ -88,5 +83,15 @@ public class AuthController {
             log.trace("Controller - saveProfile failed. Error: \n {}", e.toString());
         }
         return new Message<MyUser>(null,"error");
+    }
+
+    @RequestMapping(value = "/scmembers", method = RequestMethod.GET, params = {"username"})
+    public boolean checkIfScMember(@RequestParam("username") String username) {
+        MyUser user = serviceMember.getUserFromUsername(username);
+        if (user!=null) {
+            Long user_id = user.getId();
+            return this.serviceMember.getScMembers().stream().anyMatch(t -> user_id.equals(t.getUser_id()));
+        }
+        return false;
     }
 }

@@ -12,5 +12,5 @@ import java.io.Serializable;
 @ToString
 public class ConferenceDto implements Serializable {
     private String title;
-    private Conference conferenceName;
+    private String conferenceName;
 }

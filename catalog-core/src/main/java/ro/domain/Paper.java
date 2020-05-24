@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 public class Paper extends BaseEntity{
 
     private Long abstract_id;
-    private Long section_id;
     private String document;
     private Long conference_id;
     private Long author_id;
@@ -14,9 +13,8 @@ public class Paper extends BaseEntity{
     public Paper() {
     }
 
-    public Paper(Long abstract_id, Long section_id, String document, Long conference_id, Long author_id) {
+    public Paper(Long abstract_id, String document, Long conference_id, Long author_id) {
         this.abstract_id = abstract_id;
-        this.section_id = section_id;
         this.document = document;
         this.conference_id = conference_id;
         this.author_id = author_id;
@@ -48,7 +46,6 @@ public class Paper extends BaseEntity{
 
     public Paper(Long abstract_id) {
         this.abstract_id = abstract_id;
-        this.section_id = null;
     }
 
     public Long getAbstract_id() {
@@ -59,19 +56,12 @@ public class Paper extends BaseEntity{
         this.abstract_id = abstract_id;
     }
 
-    public Long getSection_id() {
-        return section_id;
-    }
 
-    public void setSection_id(Long section_id) {
-        this.section_id = section_id;
-    }
 
     @Override
     public String toString() {
         return "Paper{" +
                 "abstract_id=" + abstract_id +
-                ", section_id=" + section_id +
                 '}';
     }
 }

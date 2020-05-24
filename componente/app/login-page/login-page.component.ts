@@ -21,7 +21,12 @@ export class LoginPageComponent implements OnInit {
       if (t.entity != null){
         localStorage.setItem("state", "true");
         localStorage.setItem("username", t.entity.username);
+        localStorage.setItem("selected_conference_id", "");
         console.log("hello" + t.entity.username);
+        this.serviceLogin.userIsSCMember().subscribe(t=>{
+          if(t) localStorage.setItem("userSCMember", "true");
+          else localStorage.setItem("userSCMember", "false");
+        });
         this.router.navigate(['']);
       }
       else{

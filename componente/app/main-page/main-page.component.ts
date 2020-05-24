@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ConferenceService} from "./conferences/shared/service";
 import {AbstractService} from "./abstracts/shared/service";
 import {ConferenceUser} from "./conferences/shared/model";
+import {MemberService} from "./members/shared/service";
 
 @Component({
   selector: 'app-main-page',
@@ -11,15 +12,16 @@ import {ConferenceUser} from "./conferences/shared/model";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService) { }
+  constructor(private elementRef : ElementRef, private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService) {
+    this.conferencesList = [];
+  }
 
-  @Input() option : number = 1;
+  @Input() option : number = -1;
 
   ngOnInit(): void {
-    if(localStorage.getItem("state")=="true")
-      this.conferenceService.getConferencesFromUser().subscribe(c=>{
-      this.conferencesList = c;
-    });
+    this.populateAll();
+    localStorage.setItem("selected_conference_id","");
+    this.option = -1;
   }
 
   register(){
@@ -38,6 +40,7 @@ export class MainPageComponent implements OnInit {
     localStorage.removeItem("username");
     localStorage.setItem("state", "false");
     localStorage.clear();
+    location.reload();
   }
 
   isAuthenticated(): boolean{
@@ -71,27 +74,42 @@ export class MainPageComponent implements OnInit {
   }
 
   userIsChairAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Chair").length>0;
   }
   userIsPCMemberAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="PCMember").length>0;
   }
   userIsAuthorAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Author").length>0;
   }
   userIsMemberAtAConference():boolean{
-    return false;
+    return this.conferencesList.filter(c=>c.title=="Member").length>0;
   }
 
   populateConferenceList(user_title: string):ConferenceUser[]{
     return this.conferencesList.filter(p=>p.title == user_title);
   }
 
-  changeSelectedConference(conference_id: number):void{
-    localStorage.setItem("selected_conference_id",conference_id.toString());
+  changeSelectedConference():void{
+    var conference_id = this.elementRef.nativeElement.querySelector('select').value;
+    console.log(conference_id);
+    localStorage.setItem("selected_conference_id",conference_id);
+    if(this.option == 1) this.option = 0;
+    else this.option = 1;
+  }
+  userIsSCMember():boolean{
+    return localStorage.getItem("userSCMember") == "true";
   }
 
-  insert(): void{
-
+  loadCreateConferencePage():void{
+    this.router.navigate(["create-conference"]);
   }
+
+  populateAll():void{
+    if(localStorage.getItem("state")=="true")
+      this.conferenceService.getConferencesFromUser().subscribe(c=>{
+        this.conferencesList = c;
+      });
+  }
+
 }

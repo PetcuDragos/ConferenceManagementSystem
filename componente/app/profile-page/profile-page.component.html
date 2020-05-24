@@ -43,7 +43,7 @@
 
       <div class="formContainer">
 
-        <form action="">
+        <form>
           <div class="inputContainer">
             <label>Full Name:</label>
             <input type="text" #fullname placeholder="Your full name..">
@@ -66,7 +66,7 @@
 
           <hr>
 
-          <input type="submit" value="Save" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">
+          <div (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">Save</div>
 
         </form>
 

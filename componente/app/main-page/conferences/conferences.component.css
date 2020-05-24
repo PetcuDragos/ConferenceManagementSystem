@@ -16,7 +16,31 @@ header {
   z-index: 2;
   height: 65px;
 }
-
+.conference_name{
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  color: #202020;
+  background: rgba(0, 138, 230, 0.3);
+  padding: 10px;
+}
+.conference_button{
+  margin:10px;
+}
+.conference-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}
+.conference_chair{
+  font-family: Helvetica, sans-serif;
+  font-size: 17px;
+  color: #202020;
+  padding: 10px;
+}
+.conference_co_chair{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
 .backtop {
   position: fixed;
   width: 100%;

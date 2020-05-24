@@ -1,5 +1,6 @@
 package ro.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -8,6 +9,7 @@ public class MyUser extends BaseEntity {
     private String fullName;
     private String affiliation;
     private String email;
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
     private String web_page;
