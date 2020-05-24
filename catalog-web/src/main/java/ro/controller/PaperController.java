@@ -12,6 +12,7 @@ import ro.service.ConferenceService;
 import ro.service.EvaluationService;
 import ro.service.MemberService;
 import ro.service.PaperService;
+import ro.utils.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,20 +62,20 @@ public class PaperController {
     }
 
     @RequestMapping(value = "/createabstract", method = RequestMethod.POST)
-    public String addAbstract(@RequestBody CreateAbstractDto abstractDto) {
+    public Message<String> addAbstract(@RequestBody CreateAbstractDto abstractDto) {
         MyUser user = memberService.getUserFromUsername(abstractDto.getUsername());
         Conference conference = conferenceService.getConferenceFromName(abstractDto.getConference_name());
         if (user!=null && conference!=null){
             Author author = this.memberService.addAuthor(user.getId(),conference.getId());
             try{
                 this.paperService.addAbstract(abstractDto.getKeywords(),abstractDto.getTopics(),abstractDto.getTitle(),abstractDto.getAdditional_authors(),abstractDto.getContent(),author.getId(),conference.getId());
-                return "success";
+                return new Message<String>(null,"success");
             }
             catch(Exception e){
-                return e.toString();
+                return new Message<String>(null,"error");
             }
         }
-        return "error";
+        return new Message<String>(null,"error");
     }
 
     public static <T> Collector<T, ?, T> toSingleton() { //Awesome to use in lambdas where u need just one element returned by id
@@ -90,7 +91,7 @@ public class PaperController {
     }
 
     @RequestMapping(value = "/createbid", method = RequestMethod.POST)
-    public String addBid(@RequestBody CreateBidDto bidDto){
+    public Message<String> addBid(@RequestBody CreateBidDto bidDto){
 
         log.trace("pana AICI");
         try{//Validation
@@ -103,12 +104,12 @@ public class PaperController {
 
             if (conference!= null && !evaluationService.getBidEvaluations().stream().anyMatch(b->b.getAbstract_id().equals(bidDto.getAbstract_id()) && b.getPc_id().equals(pcMember.getId()))) {
                 this.evaluationService.addBid(pcMember.getId(), bidDto.getAbstract_id(), bidDto.getResult(), bidDto.getDate());
-                return "success";
+                return new Message<String>(null,"success");
             }
-            else return "error, possible nonexisting data";
+            else return new Message<String>(null,"possible nonexisting data");
         }
         catch (Exception e){
-            return e.toString();
+            return new Message<String>(null,"error");
         }
     }
 

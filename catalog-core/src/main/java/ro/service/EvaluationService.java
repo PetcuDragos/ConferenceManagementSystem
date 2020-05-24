@@ -38,7 +38,11 @@ public class EvaluationService {
 
     public List<PcMember> getPcMembers(){return this.pcMemberRepository.findAll();}
 
+    public java.sql.Date transformMyDateIntoSQLDate(Date myDate){
+        return java.sql.Date.valueOf(myDate.getYear().toString()+'-'+myDate.getMonth().toString()+'-' + myDate.getDay().toString());
+    }
+
     public BidEvaluation addBid(Long pc_id,Long abs_id, Integer result, Date date){
-        return this.bidEvaluationRepository.save(new BidEvaluation(pc_id,abs_id,result,date));
+        return this.bidEvaluationRepository.save(new BidEvaluation(pc_id,abs_id,result,transformMyDateIntoSQLDate(date)));
     }
 }
