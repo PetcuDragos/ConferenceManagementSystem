@@ -13,6 +13,8 @@ export class AbstractsComponent implements OnInit {
   abstracts: AbstractAuthorDto[];
   conference:Conference;
   pcmember_option:boolean;
+  selectedOption:string;
+
   constructor(private abstractService: AbstractService, private router: Router, private conferenceService:ConferenceService) {
     this.pcmember_option = false;
     this.abstracts = [];
@@ -49,8 +51,14 @@ export class AbstractsComponent implements OnInit {
     console.log("not made yet.")
   }
 
-  bidAbstract():void{
-    console.log("not implemented.")
+  bidAbstract(abs_id: number):void{
+    //ugly and highly coupled
+    var result = 0;
+    if (this.selectedOption == "1") result=1;
+    else if (this.selectedOption == "-1") result=-1;
+    var statusBid;
+    statusBid = this.abstractService.addBid(abs_id,result);
+    console.log(statusBid);
   }
 
   reviewPaper():void{

@@ -5,6 +5,7 @@ import {AbstractService} from "./abstracts/shared/service";
 import {ConferenceUser} from "./conferences/shared/model";
 import {MemberService} from "./members/shared/service";
 
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -12,7 +13,7 @@ import {MemberService} from "./members/shared/service";
 })
 export class MainPageComponent implements OnInit {
     conferencesList: ConferenceUser[];
-  constructor(private elementRef : ElementRef, private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService) {
+  constructor(private elementRef : ElementRef, private router: Router, private abstractService: AbstractService, private conferenceService: ConferenceService, private memberService: MemberService/*, private evaluationService: EvaluationService*/) {
     this.conferencesList = [];
   }
 

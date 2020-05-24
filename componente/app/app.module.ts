@@ -25,6 +25,8 @@ import { CreateAbstractPageComponent } from './create-abstract-page/create-abstr
 import {CreateAbstractService} from "./create-abstract-page/shared/create.abstract.service";
 import { ReviewAbstractPageComponent } from './review-abstract-page/review-abstract-page.component';
 import { AssignReviewersPageComponent } from './assign-reviewers-page/assign-reviewers-page.component';
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -42,11 +44,12 @@ import { AssignReviewersPageComponent } from './assign-reviewers-page/assign-rev
     ReviewAbstractPageComponent,
     AssignReviewersPageComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+    ],
   providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService, CreateConferenceService, CreateAbstractService],
   bootstrap: [AppComponent]
 })

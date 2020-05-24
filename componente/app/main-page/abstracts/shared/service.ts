@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AbstractAuthorDto} from "./model";
+import {AbstractAuthorDto, CreateBidDto} from "./model";
+import {MyDate} from "../../../create-conference-page/shared/createConference.model";
 
 @Injectable()
 export class AbstractService {
@@ -43,5 +44,16 @@ export class AbstractService {
       username: username,
       conference_name: localStorage.getItem("selected_conference_id")
     });
+  }
+
+  addBid(abs_id: number, result: number): void {
+    var b = new CreateBidDto()
+      b.pc_name = localStorage.getItem("username");
+      b.abstract_id = abs_id;
+      b.result = result;
+      b.date = new MyDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
+    console.log(b);
+
+     this.httpClient.post<any>("http://localhost:8080/api/createbid",b).subscribe(m => {});
   }
 }
