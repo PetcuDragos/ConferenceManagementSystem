@@ -39,7 +39,16 @@ public class ConferenceService {
 
     public List<UserConference> getUserConferences(){return this.userConferenceRepository.findAll();}
 
-    //public List<Conference> getConferencesDesc(){return this.userConferenceRepository.findAll();}
+    @Transactional
+    public void changeDeadlines(Long conferenceId, Date abstractDeadline, Date paperDeadline, Date bidDeadline, Date reviewDeadline, Date endDeadline){
+        this.conferenceRepository.findById(conferenceId).ifPresent(
+                c -> {c.setAbstractDeadline(java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-'+abstractDeadline.getDay().toString()));
+                    c.setPaperDeadline(java.sql.Date.valueOf(paperDeadline.getYear().toString()+'-'+paperDeadline.getMonth().toString()+'-'+paperDeadline.getDay().toString()));
+                    c.setBidDeadline(java.sql.Date.valueOf(bidDeadline.getYear().toString()+'-'+bidDeadline.getMonth().toString()+'-'+bidDeadline.getDay().toString()));
+                    c.setReviewDeadline(java.sql.Date.valueOf(reviewDeadline.getYear().toString()+'-'+reviewDeadline.getMonth().toString()+'-'+reviewDeadline.getDay().toString()));
+                    c.setEndingDate(java.sql.Date.valueOf(endDeadline.getYear().toString()+'-'+endDeadline.getMonth().toString()+'-'+endDeadline.getDay().toString()));}
+        );
+    }
 
     public boolean isConferenceChair(Long conferenceId, Long userId) {
         //toDo: check if the conference exists
