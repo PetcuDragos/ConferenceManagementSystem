@@ -112,4 +112,15 @@ export class MainPageComponent implements OnInit {
       });
   }
 
+  addToNewsletter(givenName, givenEmail, givenDailyNewsletter):void {
+    this.memberService.addNewsletter({name: givenName, email: givenEmail, dailyNewsletter: givenDailyNewsletter})
+      .subscribe(t => {
+      if (t.entity != null) {
+        alert("Successfully added to the newsletter");
+      } else {
+        alert(t.error);
+      }
+    });
+  }
+
 }

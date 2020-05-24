@@ -20,6 +20,7 @@ export class CreateConferenceService{
     c.paper_deadline = new MyDate(paper_deadline.getDate(),paper_deadline.getMonth()+1,paper_deadline.getFullYear());
     c.bidding_deadline = new MyDate(bidding_deadline.getDate(),bidding_deadline.getMonth()+1,bidding_deadline.getFullYear());
     c.review_deadline = new MyDate(review_deadline.getDate(),review_deadline.getMonth()+1,review_deadline.getFullYear());
+    console.log("createConference_Service_Web: entered web service");
     this.httpClient.post<createConferenceMessage>("http://localhost:8080/api/add_conference",c).subscribe(response=>
     {
       console.log("createConference: ", response.error);

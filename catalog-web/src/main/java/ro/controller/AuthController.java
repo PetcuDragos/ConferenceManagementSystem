@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.converter.MemberConverter;
 import ro.domain.MyUser;
-import ro.dto.LoginDto;
-import ro.dto.MemberDto;
-import ro.dto.ProfilePageDto;
-import ro.dto.RegisterDto;
+import ro.domain.Newsletter;
+import ro.dto.*;
 import ro.hardcodedMain.Console;
 import ro.service.MemberService;
 import ro.utils.Message;
@@ -93,5 +91,20 @@ public class AuthController {
             return this.serviceMember.getScMembers().stream().anyMatch(t -> user_id.equals(t.getUser_id()));
         }
         return false;
+    }
+
+    @RequestMapping(value = "/newsletter", method = RequestMethod.POST)
+    public Message<Newsletter> newsletter(@RequestBody NewsletterDto newsletterDto) {
+        log.trace("Controller - newsletter - {}", newsletterDto);
+        try {
+            Message<Newsletter> result = serviceMember.subscribeToNewsletter(newsletterDto.getName(),newsletterDto.getEmail(),
+                    newsletterDto.getDailyNewsletter());
+            if(result.getEntity() != null) log.trace("Controller - newsletter successful");
+            else log.trace("Controller - newsletter unsuccessful, email used or one field empty.");
+            return result;
+        } catch (Exception e) {
+            log.trace("Controller - newsletter failed. Error: \n {}", e.toString());
+        }
+        return new Message<Newsletter>(null,"error");
     }
 }
