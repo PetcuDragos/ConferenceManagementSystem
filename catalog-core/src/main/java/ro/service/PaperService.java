@@ -2,14 +2,8 @@ package ro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.domain.Abstract;
-import ro.domain.Author;
-import ro.domain.Paper;
-import ro.domain.Section;
-import ro.repository.AbstractRepository;
-import ro.repository.AuthorRepository;
-import ro.repository.PaperRepository;
-import ro.repository.SectionRepository;
+import ro.domain.*;
+import ro.repository.*;
 
 import java.util.List;
 
@@ -24,12 +18,17 @@ public class PaperService {
     private AbstractRepository abstractRepository;
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private PublishedPaperRepository publishedPaperRepository;
 
-    public PaperService() {
-    }
+    public PaperService() {}
 
     public List<Paper> getPapers(){
         return this.paperRepository.findAll();
+    }
+
+    public List<PublishedPaper> getPublishedPapers(){
+        return this.publishedPaperRepository.findAll();
     }
 
     public List<Section> getSection(){return this.sectionRepository.findAll();}
@@ -38,8 +37,8 @@ public class PaperService {
 
     public List<Author> getAuthors(){return this.authorRepository.findAll();}
 
-    public Paper addPaper(Long abstract_id, Long section_id, String document, Long conference_id, Long author_id){
-        return paperRepository.save(new Paper(abstract_id,section_id,document, conference_id, author_id));
+    public Paper addPaper(Long abstract_id, String document, Long conference_id, Long author_id){
+        return paperRepository.save(new Paper(abstract_id, document, conference_id, author_id));
     }
 
     public Abstract addAbstract(String keywords, String topics, String name, String additionalAuthors, String content, Long author_id, Long conference_id){
