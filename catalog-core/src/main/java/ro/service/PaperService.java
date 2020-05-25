@@ -93,4 +93,8 @@ public class PaperService {
         this.getPublishedPapers().stream().filter(p -> p.getPaper_id().equals(paper_id)).findAny().ifPresent(publishedPaper -> publishedPaper.setSection_id(section_id));
 
     }
+
+    public Abstract getAbstractById(Long id) {
+        return this.abstractRepository.findById(id).orElse(null);
+    }
 }
