@@ -12,4 +12,7 @@ public class AbstractDto implements Serializable {
     private Long abstract_id;
     private Abstract entity;
     private String authorName;
+    private boolean bidded;
+    private boolean reviewed;
+    private String url;
 }

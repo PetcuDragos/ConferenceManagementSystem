@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import ro.domain.*;
 import ro.repository.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 @Component
@@ -47,5 +50,30 @@ public class PaperService {
 
     public Abstract getAbstractById(Long id) {
         return this.abstractRepository.findById(id).orElse(null);
+    }
+
+    public Paper getPaperFromAbstractId(Long abstract_id){
+        return this.paperRepository.findAll().stream().filter(p->p.getAbstract_id().equals(abstract_id)).findAny().orElse(null);
+    }
+
+    public File addFile(String url) {
+        File directory = new File("/resources");
+        if (!directory.exists()) {
+            if (directory.mkdir()) {
+                return new File("/resources/"+url);
+            } else {
+                System.out.println("Failed to create directory!");
+                return null;
+            }
+        }
+        else{
+            return new File("/resources/"+url);
+        }
+    }
+
+    public String getUrl(Long abstract_id){
+        Paper p = getPaperFromAbstractId(abstract_id);
+        if(p == null || p.getDocument()==null) return null;
+        else return p.getDocument();
     }
 }

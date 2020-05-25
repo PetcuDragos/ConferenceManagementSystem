@@ -70,7 +70,15 @@
 
           <div class="inputContainer">
             <label>Upload paper:</label>
-            <div #additional_authors>Paper...To be made.</div>
+            <div>
+              <input
+                hidden
+                type="file"
+                #uploader
+                (change)="uploadFile($event)"
+              />
+            </div>
+              <div (click)="uploader.click()">Upload paper.</div>
           </div>
           <hr>
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.io.Serializable;
 
 @Data
@@ -18,4 +19,5 @@ public class CreateAbstractDto implements Serializable {
     private String topics;
     private String additional_authors;
     private Long id;
+    private String url;
 }
