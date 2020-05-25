@@ -20,6 +20,9 @@ export class AbstractDto{
 export class AbstractAuthorDto{
   entity: AbstractDto;
   authorName: string;
+  bidded:boolean;
+  reviewed:boolean;
+  url:string;
 }
 
 export class CreateBidDto{

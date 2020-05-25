@@ -19,7 +19,7 @@ export class AbstractService {
   getAbstractsFromConference(): Observable<AbstractAuthorDto[]> {
     let conference_id = localStorage.getItem("selected_conference_id");
     if (conference_id != "")
-      return this.httpClient.get<Array<AbstractAuthorDto>>("http://localhost:8080/api/abstract/", {params: {conferenceName: conference_id}});
+      return this.httpClient.get<Array<AbstractAuthorDto>>("http://localhost:8080/api/abstract/", {params: {conferenceName: conference_id, username: localStorage.getItem("username")}});
     else return null;
   }
 
@@ -66,5 +66,34 @@ export class AbstractService {
     console.log(b);
 
     this.httpClient.post<any>("http://localhost:8080/api/createbid",b).subscribe(m => {});
+  }
+
+  downloadPaper(abstract_url:string){
+
+
+    this.httpClient.get("http://localhost:8080/api/download_paper", {responseType: 'blob', params: {abstract_url: abstract_url}}).subscribe(m=>{
+      console.log(m);
+
+      var newBlob = new Blob([m], { type: "application/pdf" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+
+      const data = window.URL.createObjectURL(newBlob);
+
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "kar.pdf";
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+      setTimeout(function () {
+        window.URL.revokeObjectURL(data);
+        link.remove();
+      }, 500);
+
+
+    });
   }
 }

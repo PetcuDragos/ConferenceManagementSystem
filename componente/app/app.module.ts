@@ -29,6 +29,9 @@ import { ChangeDeadlinePageComponent } from './change-deadline-page/change-deadl
 import {ChangeDeadlineService} from "./change-deadline-page/shared/changeDeadline.service";
 import { EditAbstractPageComponent } from './edit-abstract-page/edit-abstract-page.component';
 import {EditAbstractService} from "./edit-abstract-page/shared/service";
+import {ReviewAbstractService} from "./review-abstract-page/shared/service";
+import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
+import {ReviewService} from "./reviews-page/shared/service";
 
 @NgModule({
   declarations: [
@@ -46,14 +49,15 @@ import {EditAbstractService} from "./edit-abstract-page/shared/service";
     ReviewAbstractPageComponent,
     AssignReviewersPageComponent,
     ChangeDeadlinePageComponent,
-    EditAbstractPageComponent
+    EditAbstractPageComponent,
+    ReviewsPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService, CreateConferenceService, CreateAbstractService, ChangeDeadlineService, EditAbstractService],
+  providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService, CreateConferenceService, CreateAbstractService, ChangeDeadlineService, EditAbstractService, ReviewAbstractService, ReviewService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

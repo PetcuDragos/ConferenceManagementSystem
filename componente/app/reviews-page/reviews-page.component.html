@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link href="review-abstract-page.component.css" rel="stylesheet" type="text/css">
+  <link href="reviews-page.component.css" rel="stylesheet" type="text/css">
   <base href="/">
   <title>CMS</title>
 </head>
@@ -34,37 +34,18 @@
       </div>
     </div>
   </div>
-</header>
 
+</header>
 <div class="mainDiv">
   <main>
     <div class="userContainer">
-      <div id="userTitle">
-        <span>Review paper</span>
+
+      <div *ngFor="let review of reviews" class="panel conference-panel">
+        <div class="conference_name"> Reviewer: {{review.username}}</div>
+        <div class="conference_chair">Evaluation: {{review.content}} </div>
+        <div class="conference_co_chair">Result: {{review.result}}</div>
       </div>
-
-
-      <div class="inputContainer">
-        <label>Content:</label>
-        <input type="text" #content>
-      </div>
-
-      <select #result>
-        Bid:
-        <option value="3">Strong accept</option>
-        <option value="2">Accept</option>
-        <option value="1">Weak accept</option>
-        <option value="0">Borderline paper</option>
-        <option value="-1">Weak reject</option>
-        <option value="-2">Reject</option>
-        <option value="-3">Strong reject</option>
-      </select>
-      <hr>
-
-      <div (click)="save(content.value,result.value)" style="float: right">Save</div>
-
     </div>
-
   </main>
 </div>
 </body>

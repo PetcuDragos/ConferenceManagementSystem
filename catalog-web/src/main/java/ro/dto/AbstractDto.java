@@ -11,4 +11,7 @@ import java.io.Serializable;
 public class AbstractDto implements Serializable {
     private Abstract entity;
     private String authorName;
+    private boolean bidded;
+    private boolean reviewed;
+    private String url;
 }

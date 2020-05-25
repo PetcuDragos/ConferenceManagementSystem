@@ -3,8 +3,10 @@ package ro.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ro.converter.PaperConverter;
 import ro.converter.PublishedPaperConverter;
 import ro.domain.*;
@@ -15,6 +17,12 @@ import ro.service.MemberService;
 import ro.service.PaperService;
 import ro.utils.Message;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,16 +59,23 @@ public class PaperController {
         return new ArrayList<PublishedPaperDto>(this.publishedPaperConverter.convertModelsToDtos(paperService.getPublishedPapers()));
     }
 
-    @RequestMapping(value = "/abstract", method = RequestMethod.GET, params = {"conferenceName"})
-    public List<AbstractDto> getAbstractsFromConferenceName(@RequestParam("conferenceName") String conferenceName) {
+    @RequestMapping(value = "/abstract", method = RequestMethod.GET, params = {"conferenceName","username"})
+    public List<AbstractDto> getAbstractsFromConferenceName(@RequestParam("conferenceName") String conferenceName,@RequestParam("username") String username ) {
         Conference conference= this.conferenceService.getConferenceFromName(conferenceName);
         if(conference!=null){
             List<AbstractDto> abstracts = new ArrayList<>();
-            paperService.getAbstracts().stream().filter(a->a.getConference_id()==conference.getId()).forEach(p->{
+            paperService.getAbstracts().stream().filter(a-> a.getConference_id().equals(conference.getId())).forEach(p->{
                 Author author = memberService.getAuthorById(p.getAuthor_id());
                 if(author!= null) {
                     MyUser user = memberService.getMemberFromId(author.getUser_id());
-                    abstracts.add(new AbstractDto(p,user.getUsername()));
+                    boolean bidded = false;
+                    boolean reviewed = false;
+                    try{
+                        if(this.evaluationService.getBidEvaluations().stream().anyMatch(c -> c.getAbstract_id().equals(p.getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) bidded= true;
+                        if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c -> c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) reviewed=true;
+                    }catch (Exception e){}
+
+                    abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId())));
                 }
             });
             return abstracts;
@@ -76,7 +91,10 @@ public class PaperController {
         if (user!=null && conference!=null){
             Author author = this.memberService.addAuthor(user.getId(),conference.getId());
             try{
-                this.paperService.addAbstract(abstractDto.getKeywords(),abstractDto.getTopics(),abstractDto.getTitle(),abstractDto.getAdditional_authors(),abstractDto.getContent(),author.getId(),conference.getId());
+                Abstract a = this.paperService.addAbstract(abstractDto.getKeywords(),abstractDto.getTopics(),abstractDto.getTitle(),abstractDto.getAdditional_authors(),abstractDto.getContent(),author.getId(),conference.getId());
+                if(abstractDto.getUrl()!=null){
+                    paperService.addPaper(abstractDto.getId(),abstractDto.getUrl(),conference.getId(),author.getId());
+                }
                 return new Message<String>(null,"success");
             }
             catch(Exception e){
@@ -100,6 +118,14 @@ public class PaperController {
                     abstract_change.setKeywords(abstractDto.getKeywords());
                     abstract_change.setName(abstractDto.getTitle());
                     abstract_change.setTopics(abstractDto.getTopics());
+
+
+                    if(abstractDto.getUrl()!= null){
+                        Paper paper = paperService.getPaperFromAbstractId(abs.getId());
+                        if(paper==null) paperService.addPaper(abs.getId(),abstractDto.getUrl(),conference.getId(),abs.getAuthor_id());
+                        else paper.setDocument(abstractDto.getUrl());
+                    }
+
                     return new Message<String>(null,"success");
                 }
             }
@@ -139,26 +165,10 @@ public class PaperController {
         return new Message<String>(null,"error");
     }
 
-
-
-//    //INEFICIENT SEARCH
-//    @RequestMapping(value = "/getbidpapers", method = RequestMethod.POST)
-//    public List<Abstract> getBidPapers(@RequestBody String conference_name){
-//        Conference conference= this.conferenceService.getConferenceFromName(conference_name);
-//        if(conference!=null) {
-//            List<Abstract> abstracts = new ArrayList<>();
-//            List<BidEvaluation> bidEvaluations = this.evaluationService.getBidEvaluations().stream().filter(
-//                    b -> paperService.getAbstracts().stream().anyMatch(
-//                            p -> p.getId().equals(b.getAbstract_id()) && p.getConference_id().equals(conference.getId()))).collect(Collectors.toList());
-//            HashMap<Long, Integer> abstractResult = new HashMap<>();
-//            bidEvaluations.stream().forEach(p -> abstractResult.put(p.getAbstract_id(),p.getResult() + abstractResult.get(p.getAbstract_id())));
-//            abstractResult.entrySet().stream().filter(a ->
-//                    a.getValue() >= 0).forEach(a ->
-//                    abstracts.add(paperService.getAbstracts().stream().filter(p ->
-//                            p.getId().equals(a.getKey())).collect(toSingleton()))
-//            );
-//            return abstracts; //Convert to dto or die
-//        }
-//        return null;
-//    }
+    @RequestMapping(value = "/download_paper", method = RequestMethod.GET, params = {"abstract_url"})
+    @ResponseBody
+    public FileSystemResource getFile(@RequestParam("abstract_url") String fileName) {
+        File f = new File("/resources/"+fileName);
+        return new FileSystemResource(f);
+    }
 }
