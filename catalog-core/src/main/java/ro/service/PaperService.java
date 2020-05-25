@@ -44,4 +44,8 @@ public class PaperService {
     public Abstract addAbstract(String keywords, String topics, String name, String additionalAuthors, String content, Long author_id, Long conference_id){
         return abstractRepository.save(new Abstract(keywords,topics,name,additionalAuthors,content,author_id,conference_id));
     }
+
+    public Abstract getAbstractById(Long id) {
+        return this.abstractRepository.findById(id).orElse(null);
+    }
 }

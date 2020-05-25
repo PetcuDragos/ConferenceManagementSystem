@@ -22,8 +22,6 @@ export class CreateConferencePageComponent implements OnInit {
     } else {
       document.getElementById("error").innerHTML = "The dates should be chronological.";
     }
-    this.createConferenceService.add(conference_name, chair_username, co_chair_username, starting_date, ending_date, abstract_deadline, paper_deadline, bidding_deadline, review_deadline);
-    this.back();
   }
 
   back(): void {
@@ -40,7 +38,7 @@ export class CreateConferencePageComponent implements OnInit {
     else if (date1.getFullYear() == date2.getFullYear()) {
       if (date1.getMonth() < date2.getMonth())
         return true;
-      else if (date1.getMonth() == date2.getMonth() && date1.getDay() < date2.getDay())
+      else if (date1.getMonth() == date2.getMonth() && date1.getDate() < date2.getDate())
         return true;
     }
     return false;

@@ -12,6 +12,7 @@ export class Conference{
   endingDate: MyDate;
   chair_id: number;
   co_chair_id: number;
+  pc_members: string[];
 
 }
 

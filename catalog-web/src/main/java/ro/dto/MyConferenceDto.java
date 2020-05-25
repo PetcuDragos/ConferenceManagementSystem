@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import ro.domain.Date;
 
 import java.io.Serializable;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +22,5 @@ public class MyConferenceDto implements Serializable {
     private Date endingDate;
     private Long chair_id;
     private Long co_chair_id;
+    private List<String> pc_members;
 }

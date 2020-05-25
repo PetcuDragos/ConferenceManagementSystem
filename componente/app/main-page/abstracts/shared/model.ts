@@ -7,6 +7,7 @@ export class Abstract{
 }
 
 export class AbstractDto{
+  id:number;
   keywords: string;
   topics:string;
   name:string;
@@ -17,16 +18,15 @@ export class AbstractDto{
 }
 
 export class AbstractAuthorDto{
-  abstract_id: number;
   entity: AbstractDto;
   authorName: string;
 }
 
 export class CreateBidDto{
-   abstract_id: number;
-   conference_name: string;
-   date : MyDate;
-   pc_name: string;
-   result: number;
+  abstract_id: number;
+  conference_name:string;
+  date : MyDate;
+  pc_name: string;
+  result: number;
 }
 

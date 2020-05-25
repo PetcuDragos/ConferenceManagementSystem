@@ -4,7 +4,7 @@ import {Abstract, AbstractAuthorDto, AbstractDto} from "./shared/model";
 import {Router} from "@angular/router";
 import {ConferenceService} from "../conferences/shared/service";
 import {Conference} from "../conferences/shared/model";
-import {Observable} from "rxjs";
+import {CreateAbstractModel} from "../../create-abstract-page/shared/create.abstract.model";
 @Component({
   selector: 'app-abstracts',
   templateUrl: './abstracts.component.html',
@@ -14,8 +14,6 @@ export class AbstractsComponent implements OnInit {
   abstracts: AbstractAuthorDto[];
   conference:Conference;
   pcmember_option:boolean;
-  selectedOption:string;
-
   constructor(private abstractService: AbstractService, private router: Router, private conferenceService:ConferenceService) {
     this.pcmember_option = false;
     this.abstracts = [];
@@ -54,15 +52,13 @@ export class AbstractsComponent implements OnInit {
     console.log("not made yet.")
   }
 
+  selectedOption:string;
   bidAbstract(abs_id: number):void{
     //ugly and highly coupled
     var result = 0;
-    var option = (<HTMLSelectElement>document.getElementById(abs_id.toString())).value;
-    if (option == "1") result=1;
-    else if (option == "-1") result=-1;
-    var statusBid;
-    statusBid = this.abstractService.addBid(abs_id,result);
-    console.log(statusBid);
+    if (this.selectedOption == "1") result=1;
+    else if (this.selectedOption == "-1") result=-1;
+    this.abstractService.addBid(abs_id,result);
   }
 
   reviewPaper():void{
@@ -93,12 +89,6 @@ export class AbstractsComponent implements OnInit {
   isUserPCMemberForConference(): boolean{
     return this.abstractService.pcmember;
   }
-
-  isUserPCMemberForConferenceNotTheAuthor(abs_id : number):boolean{
-    return this.abstractService.eligible[abs_id];
-  }
-
-
   isUserChairForConference(): boolean{
     return this.abstractService.chair;
   }
@@ -112,6 +102,14 @@ export class AbstractsComponent implements OnInit {
 
   addPCMember(username:string):void{
     this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
+  }
+
+  getUsername():string{
+    return localStorage.getItem("username");
+  }
+
+  editAbstract():void{
+    this.router.navigate(['edit-abstract']);
   }
 
 }

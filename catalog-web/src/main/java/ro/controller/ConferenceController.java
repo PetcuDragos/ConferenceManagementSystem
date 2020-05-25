@@ -45,8 +45,15 @@ public class ConferenceController {
     }
 
     @RequestMapping(value = "/conferences", method = RequestMethod.GET)
-    public List<Conference> getConferences() {
-        return new ArrayList<Conference>(conferenceService.getConferences());
+    public List<MyConferenceDto> getConferences() {
+        List<MyConferenceDto> conferences = new ArrayList<>();
+        conferenceService.getConferences().forEach(c-> {
+            conferences.add(new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
+                    conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
+                    conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
+                    conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(), memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi->memberService.getMemberFromId(pi.getUser_id()).getFullName()).collect(Collectors.toList())));
+        });
+        return conferences;
     }
 
     @RequestMapping(value = "/conferences", method = RequestMethod.POST)
@@ -100,7 +107,7 @@ public class ConferenceController {
                     MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
                             conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
                             conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id());
+                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(),memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi->memberService.getMemberFromId(pi.getUser_id()).getFullName()).collect(Collectors.toList()));
                     conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName()));
                     log.trace("aici crapa fara deadlines");
                     log.trace("conference: {}",co);
@@ -155,7 +162,7 @@ public class ConferenceController {
         MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
                 conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
                 conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id());
+                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(),null);
         return co;
     }
 

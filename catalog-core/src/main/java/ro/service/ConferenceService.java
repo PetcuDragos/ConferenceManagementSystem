@@ -64,25 +64,6 @@ public class ConferenceService {
                 .get().getUser_id()).get().getUser_id().equals(userId);
     }
 
-    //todo de refacut aceste functii
-//    public void changePaperDeadline(Long conferenceId, Long userId, Date date){
-//        //toDo: check if the conference exists
-//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
-//            this.conferenceRepository.fingetOne(conferenceId).setPaperDeadline(date);
-//    }
-//
-//    public void changeBidDeadline(Long conferenceId, Long userId, Date date){
-//        //toDo: check if the conference exists
-//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
-//            this.conferenceRepository.getOne(conferenceId).setBidDeadline(date);
-//    }
-//
-//    public void changeReviewDeadline(Long conferenceId, Long userId, Date date){
-//        //toDo: check if the conference exists
-//        if (isConferenceChair(conferenceId, userId) || isConferenceCoChair(conferenceId, userId))
-//            this.conferenceRepository.getOne(conferenceId).setReviewDeadline(date);
-//    }
-
     public Conference getConferenceFromId(Long id){
         return conferenceRepository.findById(id).orElse(null);
     }
