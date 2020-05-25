@@ -207,4 +207,8 @@ public class EvaluationService {
         }
         return -1;
     }
+
+    public ReviewEvaluation addReview(Long pc_id,Long paper_id, Integer result, Date date, String content){
+        return this.reviewEvaluationRepository.save(new ReviewEvaluation(pc_id,paper_id,result,transformMyDateIntoSQLDate(date),content));
+    }
 }
