@@ -21,15 +21,17 @@
 
   <select *ngIf="isUserPCMemberForConference() && !isUserAuthor()">
     Bid:
-    <option>Accept for review</option>
-    <option>Don't care for review</option>
-    <option>Refuse for review</option>
+    <option value="1">Accept for review</option>
+    <option value="0">Don't care for review</option>
+    <option value="-1">Refuse for review</option>
   </select>
-  <button (click)="bidAbstract()" *ngIf="isUserPCMemberForConference() && !isUserAuthor()">Bid</button>
+
+  <button (click)="bidAbstract(abstract.entity.id)" *ngIf="isUserPCMemberForConference() && !isUserAuthor()">Bid</button>
   <br><button (click)="reviewPaper()" *ngIf="isUserPCMemberForConference() && !isUserAuthor()">Review</button>
   <br><button *ngIf="isUserChairForConference() && !isUserAuthor()">assign reviewers</button>
   <br><button *ngIf="isUserChairForConference() && !isUserAuthor()">ask for re-evaluation</button>
   <br><button *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && !isUserAuthor()"> See other reviewers evaluation</button>
+  <div *ngIf="getUsername()==abstract.authorName" (click)="editAbstract()">Edit abstract</div>
 
 </div>
 </div>

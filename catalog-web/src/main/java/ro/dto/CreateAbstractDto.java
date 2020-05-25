@@ -17,4 +17,5 @@ public class CreateAbstractDto implements Serializable {
     private String keywords;
     private String topics;
     private String additional_authors;
+    private Long id;
 }

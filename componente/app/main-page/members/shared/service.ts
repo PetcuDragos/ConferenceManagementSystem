@@ -14,10 +14,12 @@ export class MemberService {
     return this.httpClient.get<Array<Member>>("http://localhost:8080/api/members");
   }
 
-
-
   addNewsletter(newsletter: Newsletter): Observable<Message> {
     console.log("new newsletter");
     return this.httpClient.post<Message>("http://localhost:8080/api/newsletter", newsletter);
+  }
+
+  getPcMembersFromConference(conference_id:number) :Observable<Member[]>{
+    return this.httpClient.get<Member[]>("http://localhost:8080/api/getpcmembers",{params: {conference_id: conference_id.toString()}})
   }
 }

@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Conference, ConferenceDescription, ConferenceUser, JoinConferenceDto} from "./model";
+import {MemberService} from "../../members/shared/service";
 
 @Injectable()
 export class ConferenceService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private memberService: MemberService) {
   }
 
   getConferences(): Observable<Conference[]> {
@@ -31,4 +32,5 @@ export class ConferenceService {
   getConferenceFromName(name:string):Observable<Conference>{
     return this.httpClient.post<Conference>("http://localhost:8080/api/conference",name);
   }
+
 }

@@ -4,6 +4,7 @@ import {Abstract, AbstractAuthorDto, AbstractDto} from "./shared/model";
 import {Router} from "@angular/router";
 import {ConferenceService} from "../conferences/shared/service";
 import {Conference} from "../conferences/shared/model";
+import {CreateAbstractModel} from "../../create-abstract-page/shared/create.abstract.model";
 @Component({
   selector: 'app-abstracts',
   templateUrl: './abstracts.component.html',
@@ -51,8 +52,13 @@ export class AbstractsComponent implements OnInit {
     console.log("not made yet.")
   }
 
-  bidAbstract():void{
-    console.log("not implemented.")
+  selectedOption:string;
+  bidAbstract(abs_id: number):void{
+    //ugly and highly coupled
+    var result = 0;
+    if (this.selectedOption == "1") result=1;
+    else if (this.selectedOption == "-1") result=-1;
+    this.abstractService.addBid(abs_id,result);
   }
 
   reviewPaper():void{
@@ -96,6 +102,14 @@ export class AbstractsComponent implements OnInit {
 
   addPCMember(username:string):void{
     this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
+  }
+
+  getUsername():string{
+    return localStorage.getItem("username");
+  }
+
+  editAbstract():void{
+    this.router.navigate(['edit-abstract']);
   }
 
 }

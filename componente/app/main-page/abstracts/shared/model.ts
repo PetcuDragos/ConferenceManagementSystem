@@ -1,3 +1,5 @@
+import {MyDate} from "../../../create-conference-page/shared/createConference.model";
+
 export class Abstract{
   abstract_id: number;
   title: string;
@@ -5,6 +7,7 @@ export class Abstract{
 }
 
 export class AbstractDto{
+  id:number;
   keywords: string;
   topics:string;
   name:string;
@@ -17,5 +20,13 @@ export class AbstractDto{
 export class AbstractAuthorDto{
   entity: AbstractDto;
   authorName: string;
+}
+
+export class CreateBidDto{
+  abstract_id: number;
+  conference_name:string;
+  date : MyDate;
+  pc_name: string;
+  result: number;
 }
 

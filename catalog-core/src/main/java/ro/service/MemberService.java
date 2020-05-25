@@ -306,4 +306,8 @@ public class MemberService {
         }
         return null;
     }
+
+    public PcMember getPcMemberFromId(Long id){
+        return pcMemberRepository.findById(id).orElse(null);
+    }
 }
