@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AbstractAuthorDto, CreateBidDto} from "./model";
+import {AbstractAuthorDto, CreateBidDto, PCMemberDto} from "./model";
 import {MyDate} from "../../../create-conference-page/shared/createConference.model";
 
 @Injectable()
@@ -95,5 +95,19 @@ export class AbstractService {
 
 
     });
+  }
+
+  getPCMembers(abstract_id:number):Observable<PCMemberDto[]>{
+    return this.httpClient.post<PCMemberDto[]>("http://localhost:8080/api/get_reviewers",{
+      conference_name: localStorage.getItem("selected_conference_id"),
+      abstract_id:abstract_id
+    });
+  }
+
+  assignPCMember(abstract_id:number, pc_id:number): Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/addreviewer",{
+      abstract_id:abstract_id.toString(),
+      pc_id:pc_id.toString()
+    })
   }
 }

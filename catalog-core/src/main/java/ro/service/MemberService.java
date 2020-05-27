@@ -95,21 +95,6 @@ public class MemberService {
         return null;
     }
 
-    //TODO: A. (not used)
-    public Long getUserIdFromUsername(String username) {
-        log.trace("getUserIdFromUsername - method entered");
-        System.out.println("USERNAME (ID): " + username);
-        List<Long> ids = this.myUserRepository.findAll().stream()
-                .filter(myUser -> myUser.getUsername().equals(username))
-                .map(BaseEntity::getId)
-                .collect(Collectors.toList());
-
-        if (ids.isEmpty()) {
-            return null;
-        }
-        return ids.get(0);
-    }
-    
     @Transactional
     public Message<MyUser> updateProfile(String username, String fullname, String email, String affiliation, String webpage) {
         log.trace("updateProfile - method entered, {}, {}, {}, {}, {}", username, fullname, email, affiliation, webpage);
@@ -306,6 +291,47 @@ public class MemberService {
         }
         return null;
     }
+
+
+    public static void sendMailPaperAccepted(String recepientEmail, String recepientName) throws MessagingException {
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        String myAccountEmail = "conf.manag.sys.lescroissants@gmail.com";
+        String password = "croissants";
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected  PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(myAccountEmail, password);
+            }
+        });
+
+        javax.mail.Message message = prepareMessagePaperAccepted(session, myAccountEmail, recepientEmail, recepientName);
+
+        Transport.send(message);
+    }
+
+    private static javax.mail.Message prepareMessagePaperAccepted(Session session, String myAccountEmail, String recepientEmail,
+                                                     String recepientName)  {
+        try {
+            javax.mail.Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.setSubject("Your paper has been accepted!");
+            message.setText("Hello there " + recepientName + "!\n Your paper has been accepted and now can go to the next faze, the conference.\nHave a nice day/night! "
+                    + recepientName + "\nEmail sent to " + recepientEmail + "\n");
+            return message;
+        } catch (Exception ex){
+            log.trace("Error creating newsletter message" +  ex);
+        }
+        return null;
+    }
+
 
     public PcMember getPcMemberFromId(Long id){
         return pcMemberRepository.findById(id).orElse(null);

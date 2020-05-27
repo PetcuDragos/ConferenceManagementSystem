@@ -23,6 +23,8 @@ export class AbstractAuthorDto{
   bidded:boolean;
   reviewed:boolean;
   url:string;
+  show_reviewers:boolean;
+  canReview:boolean;
 }
 
 export class CreateBidDto{
@@ -31,5 +33,10 @@ export class CreateBidDto{
   date : MyDate;
   pc_name: string;
   result: number;
+}
+
+export class PCMemberDto{
+  username:string;
+  pc_id:number;
 }
 
