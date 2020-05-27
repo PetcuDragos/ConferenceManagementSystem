@@ -18,7 +18,7 @@ export class ReviewAbstractService {
     date.month = currentDate.getMonth()+1;
     date.year = currentDate.getFullYear();
     var c = new ReviewAbstractModel(localStorage.getItem("selected_conference_id"),this.abstract_id,content,result,localStorage.getItem("username"),date);
-    return this.httpClient.post<any>("http://localhost:8080/api/addreview",c);
+    return this.httpClient.post<any>("http://localhost:8080/api/updatereview",c);
   }
 
 

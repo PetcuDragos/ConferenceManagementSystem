@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractService} from "./shared/service";
-import {Abstract, AbstractAuthorDto, AbstractDto} from "./shared/model";
+import {Abstract, AbstractAuthorDto, AbstractDto, PCMemberDto} from "./shared/model";
 import {Router} from "@angular/router";
 import {ConferenceService} from "../conferences/shared/service";
 import {Conference} from "../conferences/shared/model";
@@ -21,9 +21,11 @@ export class AbstractsComponent implements OnInit {
     this.pcmember_option = false;
     this.abstracts = [];
     this.conference=null;
+    this.pcmembers = [];
   }
 
   ngOnInit(): void {
+    this.pcmembers = [];
     console.log("init abstracts");
     if(localStorage.getItem("selected_conference_id") != "")
     this.abstractService.getAbstractsFromConference().subscribe(
@@ -95,6 +97,7 @@ export class AbstractsComponent implements OnInit {
   isUserChairForConference(): boolean{
     return this.abstractService.chair;
   }
+
   isUserAuthor() {
     return this.abstractService.author;
   }
@@ -174,6 +177,20 @@ export class AbstractsComponent implements OnInit {
 }
   downloadPaper(abstract_url:string){
     this.abstractService.downloadPaper(abstract_url);
+  }
+
+  pcmembers: PCMemberDto[];
+  getPCMembers(abstract_entity:AbstractAuthorDto, abstract_id:number):void{
+    this.abstracts.forEach(p=>p.show_reviewers=false);
+    this.abstractService.getPCMembers(abstract_id).subscribe(m=>{this.pcmembers=m;
+    this.abstracts.filter(a=>a.entity.id==abstract_id)[0].show_reviewers = true;
+    abstract_entity.show_reviewers = true;
+    });
+  }
+
+  assignReviewer(abstract_entity:AbstractAuthorDto, abstract_id:number,pc_id:number):void{
+    this.abstractService.assignPCMember(abstract_id, pc_id).subscribe(m=>{
+      abstract_entity.show_reviewers = false;})
   }
 
 }

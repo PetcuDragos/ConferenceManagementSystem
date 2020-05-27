@@ -17,13 +17,16 @@ import ro.service.MemberService;
 import ro.service.PaperService;
 import ro.utils.Message;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -70,12 +73,36 @@ public class PaperController {
                     MyUser user = memberService.getMemberFromId(author.getUser_id());
                     boolean bidded = false;
                     boolean reviewed = false;
+                    boolean canReview = false;
                     try{
                         if(this.evaluationService.getBidEvaluations().stream().anyMatch(c -> c.getAbstract_id().equals(p.getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) bidded= true;
-                        if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c -> c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) reviewed=true;
+                        if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c ->
+                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId())&&c.getDate()!=null)) reviewed=true;
+                        if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c ->
+                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) canReview=true;
                     }catch (Exception e){}
 
-                    abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId())));
+                    if(conference.getReviewDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+                       int review_result = evaluationService.checkPaperStatusReview(conference.getId(),p.getId());
+                        if(review_result == 1) {//todo:make a function to send people email accepted paper
+                        }
+                        if(review_result==0)
+                           abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                    }
+                    else if(conference.getBidDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+                        int bid_result = evaluationService.checkPaperStatusBidding(conference.getId(),p.getId());
+                        if(bid_result == 0)
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                    }
+                    else if(conference.getPaperDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+                        int callforpaper_result = evaluationService.checkPaperStatusCallForPaper(p.getId());
+                        if(callforpaper_result==0)
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                    }
+                    else
+                        abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+
+
                 }
             });
             return abstracts;

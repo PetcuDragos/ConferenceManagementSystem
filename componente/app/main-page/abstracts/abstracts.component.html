@@ -30,8 +30,17 @@
   <button (click)="bidAbstract(abstract,choice.value)" >Bid</button>
   </div>
 
-  <br><button (click)="reviewPaper(abstract.entity.id)" *ngIf="isUserPCMemberForConference() && abstract.authorName!=getUsername() && canReview() && !canBid() && !abstract.reviewed">Review</button>
-  <br><button *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canBid()">assign reviewers</button>
+  <br><button (click)="reviewPaper(abstract.entity.id)" *ngIf="abstract.canReview && abstract.authorName!=getUsername() && canReview() && !canBid() && !abstract.reviewed">Review</button>
+  <br>
+  <div *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canBid()" >
+    <button (click)="getPCMembers(abstract, abstract.entity.id)">Assign Reviewers</button>
+    <div *ngIf="abstract.show_reviewers">
+      <div *ngFor="let pcmember of pcmembers" (click)="assignReviewer(abstract, abstract.entity.id,pcmember.pc_id)">{{pcmember.username}}</div>
+    </div>
+
+
+  </div>
+
   <br><button *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canReview()">ask for re-evaluation</button>
   <br><button (click)="seeReviews(abstract.entity.id)" *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && abstract.authorName!=getUsername() && !canBid() && abstract.reviewed"> See other reviewers evaluation</button>
   <div *ngIf="getUsername()==abstract.authorName && canChangePaper()" (click)="editAbstract(abstract.entity.id)">Edit abstract</div>

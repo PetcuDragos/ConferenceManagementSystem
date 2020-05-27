@@ -15,7 +15,6 @@ import ro.service.MemberService;
 import ro.service.PaperService;
 import ro.utils.Message;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,9 +121,9 @@ public class ConferenceController {
             long userId = this.memberService.getUserFromUsername(joinConferenceDto.getUsername()).getId();
             this.conferenceService.joinConference(userId, joinConferenceDto.getConference_id());
         } catch (Exception e) {
-            return new Message<String>(null, "error");
+            return new Message<>(null, "error");
         }
-        return new Message<String>(null, "success");
+        return new Message<>(null, "success");
     }
 
     @Transactional
@@ -134,9 +133,9 @@ public class ConferenceController {
         MyUser chair_user = this.memberService.getUserFromUsername(createConferenceDto.getChair_username());
         MyUser co_chair_user = this.memberService.getUserFromUsername(createConferenceDto.getCo_chair_username());
         if (chair_user == null)
-            return new Message<CreateConferenceDto>(null, "chair username doesnt match with any user");
+            return new Message<>(null, "chair username doesnt match with any user");
         if (co_chair_user == null)
-            return new Message<CreateConferenceDto>(null, "co_chair username doesnt match with any user");
+            return new Message<>(null, "co_chair username doesnt match with any user");
         CChair chair = memberService.addCChair(chair_user.getId(), null);
         CChair co_chair = memberService.addCChair(co_chair_user.getId(), null);
         Conference createdConference = null;
@@ -149,9 +148,9 @@ public class ConferenceController {
             memberService.getChairFromId(chair.getId()).setConference_id(createdConference.getId());
             memberService.getChairFromId(co_chair.getId()).setConference_id(createdConference.getId());
         } catch (Exception e) {
-            return new Message<CreateConferenceDto>(null, e.toString());
+            return new Message<>(null, e.toString());
         }
-        return new Message<CreateConferenceDto>(createConferenceDto, "conference creation was successful");
+        return new Message<>(createConferenceDto, "conference creation was successful");
     }
 
     @RequestMapping(value = "/conference", method = RequestMethod.POST)
@@ -226,8 +225,8 @@ public class ConferenceController {
         return new Message<ChangeDeadlineDto>(changeDeadlineDto, "changing deadline was successful");
     }
 
-    @RequestMapping(value = "/addreview", method = RequestMethod.POST)
-    public Message<String> addReview(@RequestBody ReviewEvaluationDto review) {
+    @RequestMapping(value = "/updatereview", method = RequestMethod.POST)
+    public Message<String> updateReview(@RequestBody ReviewEvaluationDto review) {
         MyUser user = memberService.getUserFromUsername(review.getUsername());
         if (user == null) return new Message<String>(null, "error");
         Long user_id = user.getId();
@@ -238,13 +237,13 @@ public class ConferenceController {
         Paper paper = this.paperService.getPaperFromAbstractId(review.getAbstract_id());
         if (paper == null) return new Message<String>(null, "error");
         try {
-            this.evaluationService.addReview(pc.getId(), paper.getId(), review.getResult(), review.getDate(), review.getContent());
+            this.evaluationService.updateReview(pc.getId(), paper.getId(), review.getResult(), review.getDate(), review.getContent());
             return new Message<String>(null, "success");
         } catch (Exception e) {
 
         }
 
-        return new Message<String>(null, "error");
+        return new Message<>(null, "error");
     }
 
 
@@ -265,8 +264,35 @@ public class ConferenceController {
         try {
             file.transferTo(paperService.addFile(url));
         } catch (IOException e) {
-            return new Message<String>(null,"error");
+            return new Message<>(null, "error");
         }
-        return new Message<String>(null,"success");
+        return new Message<>(null, "success");
     }
+
+    @RequestMapping(value = "/get_reviewers", method = RequestMethod.POST)
+    public List<PCMemberDto> getPCMembersAvailableForAbstract(@RequestBody Get_ReviewersDto reviewersDto) {
+        Conference c = this.conferenceService.getConferenceFromName(reviewersDto.getConference_name());
+        Paper p = this.paperService.getPaperFromAbstractId(reviewersDto.getAbstract_id());
+        List<PCMemberDto> pcMembers = new ArrayList<>();
+        if (c == null || p == null) return pcMembers;
+        List<PcMember> pc = this.evaluationService.getPCMembersAvailableForPaper(c.getId(), p);
+        pc.forEach(a -> pcMembers.add(new PCMemberDto(memberService.getMemberFromId(a.getUser_id()).getUsername(), a.getId())));
+        return pcMembers;
+    }
+
+    @RequestMapping(value = "/addreviewer", method = RequestMethod.POST)
+    public Message<String> addReview(@RequestBody Add_ReviewerDto addReviewerDto) {
+        PcMember pc = memberService.getPcMemberFromId(addReviewerDto.getPc_id());
+        if (pc == null) return new Message<>(null, "error");
+        Paper paper = this.paperService.getPaperFromAbstractId(addReviewerDto.getAbstract_id());
+        if (paper == null) return new Message<>(null, "error");
+        try {
+            this.evaluationService.addReview(pc.getId(), paper.getId());
+            return new Message<>(null, "success");
+        } catch (Exception e) { }
+        return new Message<>(null,"error");
+    }
+
+
+
 }

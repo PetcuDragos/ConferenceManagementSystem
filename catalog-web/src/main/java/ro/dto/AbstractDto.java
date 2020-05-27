@@ -14,4 +14,5 @@ public class AbstractDto implements Serializable {
     private boolean bidded;
     private boolean reviewed;
     private String url;
+    private boolean canReview;
 }
