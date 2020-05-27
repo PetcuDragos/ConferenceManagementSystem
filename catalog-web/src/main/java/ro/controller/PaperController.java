@@ -81,26 +81,49 @@ public class PaperController {
                         if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c ->
                                 c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) canReview=true;
                     }catch (Exception e){}
+                    List<String> reviewers = evaluationService.getReviewerNamesForPaper(p.getId());
+                    List<Section> sections = this.conferenceService.getSectionsFromConference(conference.getId());
+                    List<SectionDto> my_sections = new ArrayList<>();
+                    sections.forEach(s->my_sections.add(new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())));
 
-                    if(conference.getReviewDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+
+                    if(conference.getSubmissionDate().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+                        int review_result = evaluationService.checkPaperStatusReview(conference.getId(),p.getId());
+                        if(review_result == 1) {
+                            paperService.addPublishedPaper(p.getId(),null, user);
+                        }
+                        PublishedPaper publishedPaper = paperService.getPublishedPapers().stream().filter(pp -> pp.getPaper_id().equals(p.getId())).findAny().orElse(null);
+                        if(publishedPaper!= null)
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
+                    }
+                    else if(conference.getReEvalDate().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
+                        int review_result = evaluationService.checkPaperStatusReReview(conference.getId(),p.getId());
+                        if(review_result == 1) {
+                            paperService.addPublishedPaper(p.getId(),null, user);
+                        }
+                        else if(review_result==0)
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
+                    }
+                    else if(conference.getReviewDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
                        int review_result = evaluationService.checkPaperStatusReview(conference.getId(),p.getId());
-                        if(review_result == 1) {//todo:make a function to send people email accepted paper
+                        if(review_result == 1) {
+                            paperService.addPublishedPaper(p.getId(),null, user);
                         }
                         if(review_result==0)
-                           abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                           abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
                     }
                     else if(conference.getBidDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
                         int bid_result = evaluationService.checkPaperStatusBidding(conference.getId(),p.getId());
                         if(bid_result == 0)
-                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
                     }
                     else if(conference.getPaperDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
                         int callforpaper_result = evaluationService.checkPaperStatusCallForPaper(p.getId());
                         if(callforpaper_result==0)
-                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                            abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
                     }
                     else
-                        abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview));
+                        abstracts.add(new AbstractDto(p,user.getUsername(),bidded,reviewed,paperService.getUrl(p.getId()),canReview,reviewers,my_sections));
 
 
                 }
@@ -120,7 +143,7 @@ public class PaperController {
             try{
                 Abstract a = this.paperService.addAbstract(abstractDto.getKeywords(),abstractDto.getTopics(),abstractDto.getTitle(),abstractDto.getAdditional_authors(),abstractDto.getContent(),author.getId(),conference.getId());
                 if(abstractDto.getUrl()!=null){
-                    paperService.addPaper(abstractDto.getId(),abstractDto.getUrl(),conference.getId(),author.getId());
+                    paperService.addPaper(a.getId(),abstractDto.getUrl(),conference.getId(),author.getId());
                 }
                 return new Message<String>(null,"success");
             }
@@ -198,4 +221,19 @@ public class PaperController {
         File f = new File("/resources/"+fileName);
         return new FileSystemResource(f);
     }
+
+
+    // todo: link to web
+    @RequestMapping(value = "/addpublishedpaper", method = RequestMethod.POST)
+    public Message<String> addPublishedPaper(@RequestBody AddPublishedPaperDto publishedPaperDto){
+        Paper p = paperService.getPaperFromAbstractId(publishedPaperDto.getAbstract_id());
+        Author author = memberService.getAuthorById(publishedPaperDto.getAuthor_id());
+        if(p!=null && author!= null){
+            MyUser u = memberService.getMemberFromId(author.getUser_id());
+            this.paperService.addPublishedPaper(p.getId(),null,u);
+            return new Message<>(null,"success");
+        }
+        return new Message<>(null,"error");
+    }
+
 }

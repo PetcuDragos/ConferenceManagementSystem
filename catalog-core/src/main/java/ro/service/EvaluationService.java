@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.domain.*;
 import ro.repository.*;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,11 @@ public class EvaluationService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private PublishedPaperRepository publishedPaperRepository;
+    @Autowired
+    private MyUserRepository myUserRepository;
 
     public EvaluationService() {
     }
@@ -127,19 +133,29 @@ public class EvaluationService {
 
 
     public List<ReviewEvaluation> getEvaluationsForPaper(Long paper_id) {
-        return this.reviewEvaluationRepository.findAll().stream().filter(p -> p.getPaper_id().equals(paper_id) && p.getDate() != null).collect(Collectors.toList());
+        return this.reviewEvaluationRepository.findAll().stream().filter(p -> p.getPaper_id().equals(paper_id)).collect(Collectors.toList());
     }
 
     public Paper getPaperFromAbstractId(Long abstract_id) {
         return this.paperRepository.findAll().stream().filter(p -> p.getAbstract_id().equals(abstract_id)).findAny().orElse(null);
     }
 
+
     public int checkPaperStatusReview(Long conference_id,Long abstract_id) {
         if(checkPaperStatusBidding(conference_id,abstract_id) == -1) return -1;
-        int min = getEvaluationsForPaper(getPaperFromAbstractId(abstract_id).getId()).stream().mapToInt(ReviewEvaluation::getResult).min().getAsInt();
-        int max = getEvaluationsForPaper(getPaperFromAbstractId(abstract_id).getId()).stream().mapToInt(ReviewEvaluation::getResult).max().getAsInt();
-        if (min >= 0) return 1;
-        if (max <= 0) return -1;
+        Paper p = getPaperFromAbstractId(abstract_id);
+        PublishedPaper publishedPaper = publishedPaperRepository.findAll().stream().filter(pp -> pp.getPaper_id().equals(p.getId())).findAny().orElse(null);
+        if(publishedPaper!= null) return -1;
+        int minim = 0;
+        int maxim = 0;
+        List<ReviewEvaluation> evaluationsForPaper = getEvaluationsForPaper(p.getId());
+        for(ReviewEvaluation r: evaluationsForPaper){
+            if(r.getResult()<minim) minim = r.getResult();
+            if(r.getResult()>maxim) maxim = r.getResult();
+        }
+        if(minim == maxim && minim == 0) return 0;
+        if (minim >= 0) return 1;
+        if (maxim <= 0) return -1;
         return 0;
     }
 
@@ -158,4 +174,66 @@ public class EvaluationService {
         return 0;
     }
 
+    public List<String> getReviewerNamesForPaper(Long abstract_id){
+        List<String> reviewers = new ArrayList<>();
+        Paper paper = getPaperFromAbstractId(abstract_id);
+        if(paper==null) return reviewers;
+        reviewEvaluationRepository.findAll().stream().filter(r->r.getPaper_id().equals(paper.getId())).forEach(p->{
+            PcMember pc = pcMemberRepository.findById(p.getPc_id()).orElse(null);
+            if(pc!=null) {
+                MyUser user = myUserRepository.findById(pc.getUser_id()).orElse(null);
+                if(user!= null ) reviewers.add(user.getUsername());
+            }
+        });
+        return reviewers;
+    }
+
+    @Transactional
+    public void reEvaluate(Long abstract_id) {
+        Paper p = getPaperFromAbstractId(abstract_id);
+        if(p!=null){
+            p.setReEvaluated(1);
+            getEvaluationsForPaper(p.getId()).forEach(ev->{
+                ev.setDate(null);
+            });
+        }
+    }
+
+    public void acceptPaper(Long abstract_id) {
+        Paper p = getPaperFromAbstractId(abstract_id);
+        if(p!=null){
+            Author a = getAuthorById(p.getAuthor_id());
+            if(a!=null) {
+                MyUser u = myUserRepository.findById(a.getUser_id()).orElse(null);
+                if(u!=null){
+                    publishedPaperRepository.save(new PublishedPaper(p.getId(), null));
+                    try {
+                        MemberService.sendMailPaperAccepted(u.getEmail(),u.getFullName());
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Transactional
+    public void declinePaper(Long abstract_id) {
+        Paper paper = getPaperFromAbstractId(abstract_id);
+        if(paper!=null){
+            paper.setDocument(null);
+        }
+    }
+
+    public int checkPaperStatusReReview(Long conference_id,Long abstract_id) {
+        Paper p = getPaperFromAbstractId(abstract_id);
+
+        if(p!=null){
+            if(p.getReEvaluated()==1) {
+                return checkPaperStatusReview(conference_id,abstract_id);
+            }
+        }
+        return -1;
+    }
 }

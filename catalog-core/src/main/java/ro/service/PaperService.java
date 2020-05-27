@@ -2,9 +2,11 @@ package ro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ro.domain.*;
 import ro.repository.*;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -75,5 +77,26 @@ public class PaperService {
         Paper p = getPaperFromAbstractId(abstract_id);
         if(p == null || p.getDocument()==null) return null;
         else return p.getDocument();
+    }
+
+    public void addPublishedPaper(Long paper_id, Long section_id, MyUser user){
+        PublishedPaper pu =  publishedPaperRepository.findAll().stream().filter(p->p.getPaper_id().equals(paper_id)).findAny().orElse(null);
+        if(pu == null){
+            publishedPaperRepository.save(new PublishedPaper(paper_id, section_id));
+            try {
+                MemberService.sendMailPaperAccepted(user.getEmail(),user.getFullName());
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Transactional
+    public void updatePublishedPaperSection(Long paper_id, Long section_id) {
+        PublishedPaper publishedPaper = this.getPublishedPapers().stream().filter(p -> p.getPaper_id().equals(paper_id)).findAny().orElse(null);
+        if(publishedPaper != null){
+            publishedPaper.setSection_id(section_id);
+        }
+
     }
 }

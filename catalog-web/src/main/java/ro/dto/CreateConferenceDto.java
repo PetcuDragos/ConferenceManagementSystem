@@ -19,4 +19,6 @@ public class CreateConferenceDto implements Serializable {
     private Date paper_deadline;
     private Date bidding_deadline;
     private Date review_deadline;
+    private Date reEval_deadline;
+    private Date submissionDate;
 }

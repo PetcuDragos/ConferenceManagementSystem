@@ -5,6 +5,7 @@ import lombok.Data;
 import ro.domain.Abstract;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +16,6 @@ public class AbstractDto implements Serializable {
     private boolean reviewed;
     private String url;
     private boolean canReview;
+    private List<String> reviewers;
+    private List<SectionDto> sections;
 }

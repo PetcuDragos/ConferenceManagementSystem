@@ -17,4 +17,5 @@ public class ConferenceDescriptionDto implements Serializable {
     MyConferenceDto conference;
     String chairName;
     String co_chairName;
+    boolean joined;
 }

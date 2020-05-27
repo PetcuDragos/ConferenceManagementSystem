@@ -19,7 +19,7 @@ export class CreateAbstractService {
       var username = localStorage.getItem("username");
       ext = file.name.split('.').pop();
       let urltitle = title.trim().toLocaleLowerCase().replace(" ",'_');
-      var c = new CreateAbstractModel(username,conference_name,title,content,keywords,topics,additional_authors,urltitle+ext);
+      var c = new CreateAbstractModel(username,conference_name,title,content,keywords,topics,additional_authors,urltitle+'.'+ext);
       this.httpClient.post<any>("http://localhost:8080/api/createabstract",c as CreateAbstractModel).subscribe(m=>{
         this.httpClient.post<any>("http://localhost:8080/api/upload", formData)
           .subscribe(m => {

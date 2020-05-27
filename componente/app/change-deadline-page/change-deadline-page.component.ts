@@ -30,10 +30,10 @@ export class ChangeDeadlinePageComponent implements OnInit {
   }
 
 
-  save(abstract_deadline: Date, paper_deadline: Date, bidding_deadline: Date, review_deadline: Date, ending_date: Date): void {
+  save(abstract_deadline: Date, paper_deadline: Date, bidding_deadline: Date, review_deadline: Date, reEval_deadline:Date, submissionDate:Date, ending_date: Date): void {
     console.log("change deadline components.ts");
-    if(this.check(abstract_deadline, paper_deadline) && this.check(paper_deadline, bidding_deadline) && this.check(bidding_deadline,review_deadline) && this.check(review_deadline, ending_date)) {
-      this.service.update(abstract_deadline, paper_deadline, bidding_deadline, review_deadline, ending_date);
+    if(this.check(abstract_deadline, paper_deadline) && this.check(paper_deadline, bidding_deadline) && this.check(bidding_deadline,review_deadline) && this.check(review_deadline, reEval_deadline) && this.check(reEval_deadline,submissionDate) && this.check(submissionDate,ending_date)) {
+      this.service.update(abstract_deadline, paper_deadline, bidding_deadline, review_deadline, reEval_deadline, submissionDate, ending_date);
       document.getElementById("error").innerHTML="";
       this.back();
     }

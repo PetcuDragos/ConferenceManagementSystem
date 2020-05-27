@@ -14,9 +14,10 @@ public class PublishedPaperDto extends BaseDto {
     private Long conf_id;
     private Long author_id;
     private Long abstract_id;
-    private Long section_id;
+    private String section_name;
     private String paper_name;
     private String abstract_content;
     private String author_name;
+
 }
 

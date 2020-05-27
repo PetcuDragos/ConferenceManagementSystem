@@ -65,13 +65,23 @@
           </div>
 
           <div class="inputContainer">
+            <label>Re-evaluation deadline:</label>
+            <input type="date" #reEval_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Submission deadline:</label>
+            <input type="date" #submission_deadline>
+          </div>
+
+          <div class="inputContainer">
             <label>Ending date:</label>
             <input type="date" #ending_date>
           </div>
 
           <hr>
 
-          <div class="saveButton" (click)="save(abstract_deadline.valueAsDate,paper_deadline.valueAsDate,bidding_deadline.valueAsDate,review_deadline.valueAsDate, ending_date.valueAsDate)" style="float: right">Save</div>
+          <div class="saveButton" (click)="save(abstract_deadline.valueAsDate,paper_deadline.valueAsDate,bidding_deadline.valueAsDate,review_deadline.valueAsDate, reEval_deadline.valueAsDate, submission_deadline.valueAsDate, ending_date.valueAsDate)" style="float: right">Save</div>
           <div id="error"></div>
         </form>
 

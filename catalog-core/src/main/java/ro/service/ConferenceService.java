@@ -24,6 +24,8 @@ public class ConferenceService {
     private PcMemberRepository pcMemberRepository;
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private MyUserRepository userRepository;
 
     @Autowired
     private UserConferenceRepository userConferenceRepository;
@@ -40,13 +42,16 @@ public class ConferenceService {
     public List<UserConference> getUserConferences(){return this.userConferenceRepository.findAll();}
 
     @Transactional
-    public void changeDeadlines(Long conferenceId, Date abstractDeadline, Date paperDeadline, Date bidDeadline, Date reviewDeadline, Date endDeadline){
+    public void changeDeadlines(Long conferenceId, Date abstractDeadline, Date paperDeadline, Date bidDeadline, Date reviewDeadline, Date endDeadline, Date reEvalDate, Date submissionDate){
         this.conferenceRepository.findById(conferenceId).ifPresent(
                 c -> {c.setAbstractDeadline(java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-'+abstractDeadline.getDay().toString()));
                     c.setPaperDeadline(java.sql.Date.valueOf(paperDeadline.getYear().toString()+'-'+paperDeadline.getMonth().toString()+'-'+paperDeadline.getDay().toString()));
                     c.setBidDeadline(java.sql.Date.valueOf(bidDeadline.getYear().toString()+'-'+bidDeadline.getMonth().toString()+'-'+bidDeadline.getDay().toString()));
                     c.setReviewDeadline(java.sql.Date.valueOf(reviewDeadline.getYear().toString()+'-'+reviewDeadline.getMonth().toString()+'-'+reviewDeadline.getDay().toString()));
-                    c.setEndingDate(java.sql.Date.valueOf(endDeadline.getYear().toString()+'-'+endDeadline.getMonth().toString()+'-'+endDeadline.getDay().toString()));}
+                    c.setEndingDate(java.sql.Date.valueOf(endDeadline.getYear().toString()+'-'+endDeadline.getMonth().toString()+'-'+endDeadline.getDay().toString()));
+                    c.setReEvalDate(java.sql.Date.valueOf(reEvalDate.getYear().toString()+'-'+reEvalDate.getMonth().toString()+'-'+reEvalDate.getDay().toString()));
+                    c.setSubmissionDate(java.sql.Date.valueOf(submissionDate.getYear().toString()+'-'+submissionDate.getMonth().toString()+'-'+submissionDate.getDay().toString()));
+                }
         );
     }
 
@@ -68,7 +73,7 @@ public class ConferenceService {
         return conferenceRepository.findById(id).orElse(null);
     }
 
-    public Conference addConference(String name, Long chair_id, Long co_chair_id, Date startingDate, Date endingDate, Date abstractDeadline, Date paperDeadline,Date bidDeadline, Date reviewDeadline){
+    public Conference addConference(String name, Long chair_id, Long co_chair_id, Date startingDate, Date endingDate, Date abstractDeadline, Date paperDeadline,Date bidDeadline, Date reviewDeadline, Date reEvalDeadline, Date submissionDate){
         //
         return this.conferenceRepository.save(new Conference(name,
            java.sql.Date.valueOf(abstractDeadline.getYear().toString()+'-'+abstractDeadline.getMonth().toString()+'-' + abstractDeadline.getDay().toString()),
@@ -77,6 +82,8 @@ public class ConferenceService {
            java.sql.Date.valueOf(reviewDeadline.getYear().toString()+'-'+reviewDeadline.getMonth().toString()+'-' + reviewDeadline.getDay().toString()),
            java.sql.Date.valueOf(startingDate.getYear().toString()+'-'+startingDate.getMonth().toString()+'-' + startingDate.getDay().toString()),
            java.sql.Date.valueOf(endingDate.getYear().toString()+'-'+endingDate.getMonth().toString()+'-' + endingDate.getDay().toString()),
+           java.sql.Date.valueOf(reEvalDeadline.getYear().toString()+'-'+reEvalDeadline.getMonth().toString()+'-' + reEvalDeadline.getDay().toString()),
+           java.sql.Date.valueOf(submissionDate.getYear().toString()+'-'+submissionDate.getMonth().toString()+'-' + submissionDate.getDay().toString()),
            chair_id,co_chair_id));
 
     }
@@ -112,5 +119,22 @@ public class ConferenceService {
             return null;
         }
         return authors.get(0);
+    }
+
+
+    public Section addSection(Long conference_id, String username, String section_name) {
+        if(conference_id==null) return null;
+        MyUser user = userRepository.findAll().stream().filter(p->p.getUsername().equals(username)).findAny().orElse(null);
+        if(user == null) return null;
+        PcMember pcMember = pcMemberRepository.findAll().stream().filter(p->p.getUser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
+        CChair chair = cChairRepository.findAll().stream().filter(p->p.getUser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
+        if(pcMember == null && chair==null) return null;
+        if(sectionRepository.findAll().stream().filter(s->s.getUser_id().equals(user.getId())&&s.getConference_id().equals(conference_id)).findAny().orElse(null)!=null)return null;
+        return sectionRepository.save(new Section(user.getId(),conference_id,section_name));
+
+    }
+
+    public List<Section> getSectionsFromConference(Long conference_id){
+        return sectionRepository.findAll().stream().filter(s->s.getConference_id().equals(conference_id)).collect(Collectors.toList());
     }
 }

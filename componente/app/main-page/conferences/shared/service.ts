@@ -10,9 +10,7 @@ export class ConferenceService {
   constructor(private httpClient: HttpClient, private memberService: MemberService) {
   }
 
-  getConferences(): Observable<Conference[]> {
-    return this.httpClient.get<Array<Conference>>("http://localhost:8080/api/conferences");
-  }
+
   getConferencesFromUser(): Observable<ConferenceUser[]> {
     if(localStorage.getItem("username") != null) {
       let user = localStorage.getItem("username");
@@ -21,7 +19,7 @@ export class ConferenceService {
     return null;
   }
   getConferencesChairCoChair(): Observable<ConferenceDescription[]> {
-    return this.httpClient.get<Array<ConferenceDescription>>("http://localhost:8080/api/conferencest/");
+    return this.httpClient.get<Array<ConferenceDescription>>("http://localhost:8080/api/conferencest/",{params:{username:localStorage.getItem("username")}});
   }
 
   joinConference(conference_id:number):Observable<any>{

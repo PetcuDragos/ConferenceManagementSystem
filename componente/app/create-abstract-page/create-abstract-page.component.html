@@ -71,14 +71,9 @@
           <div class="inputContainer">
             <label>Upload paper:</label>
             <div>
-              <input
-                hidden
-                type="file"
-                #uploader
-                (change)="uploadFile($event)"
-              />
+              <input type="file" name="files" (change)="uploadFile($event)" placeholder="Upload file" accept=".pdf">
+
             </div>
-              <div (click)="uploader.click()">Upload paper.</div>
           </div>
           <hr>
 
