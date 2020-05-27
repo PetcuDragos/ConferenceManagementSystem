@@ -110,4 +110,33 @@ export class AbstractService {
       pc_id:pc_id.toString()
     })
   }
+
+  askForReEval(abstract_id:number):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/askforreeval",abstract_id);
+  }
+
+  acceptPaper(abstract_id:number):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/acceptpaper",abstract_id);
+  }
+
+  declinePaper(abstract_id:number):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/declinepaper",abstract_id);
+  }
+
+  addSection(pc_username:string, section_name:string):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/addsection",{
+      conference_name: localStorage.getItem("selected_conference_id"),
+       pc_username:pc_username,
+    section_name:section_name
+    });
+  }
+
+  joinSectionPaper(abstract_id:number, section_name:string):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/api/joinsectionpaper",{
+      conference_name: localStorage.getItem("selected_conference_id"),
+      abstract_id:abstract_id,
+    section_name:section_name,
+    username:localStorage.getItem("username")
+    });
+  }
 }

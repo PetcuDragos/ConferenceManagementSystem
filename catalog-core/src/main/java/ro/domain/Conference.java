@@ -20,6 +20,8 @@ public class Conference extends BaseEntity {
     private java.sql.Date reviewDeadline;
     private java.sql.Date startingDate;
     private java.sql.Date endingDate;
+    private java.sql.Date reEvalDate;
+    private java.sql.Date submissionDate;
     private Long chair_id;
     private Long co_chair_id;
 

@@ -8,7 +8,7 @@ export class CreateConferenceService{
   constructor(private httpClient: HttpClient) {
   }
 
-  add(conference_name :string,chair_username: string,co_chair_username:string ,starting_date: Date,ending_date: Date,abstract_deadline: Date,paper_deadline: Date,bidding_deadline : Date,review_deadline:Date): void{
+  add(conference_name :string,chair_username: string,co_chair_username:string ,starting_date: Date,ending_date: Date,abstract_deadline: Date,paper_deadline: Date,bidding_deadline : Date,review_deadline:Date, reEval_deadline:Date, submissionDate:Date): void{
     var c = new createConferenceModel();
     // month is between 0 and 11
     c.conference_name = conference_name;
@@ -20,6 +20,8 @@ export class CreateConferenceService{
     c.paper_deadline = new MyDate(paper_deadline.getDate(),paper_deadline.getMonth()+1,paper_deadline.getFullYear());
     c.bidding_deadline = new MyDate(bidding_deadline.getDate(),bidding_deadline.getMonth()+1,bidding_deadline.getFullYear());
     c.review_deadline = new MyDate(review_deadline.getDate(),review_deadline.getMonth()+1,review_deadline.getFullYear());
+    c.reEval_deadline = new MyDate(reEval_deadline.getDate(),reEval_deadline.getMonth()+1,reEval_deadline.getFullYear());
+    c.submissionDate = new MyDate(submissionDate.getDate(),submissionDate.getMonth()+1,submissionDate.getFullYear());
     console.log("createConference_Service_Web: entered web service");
     this.httpClient.post<createConferenceMessage>("http://localhost:8080/api/add_conference",c).subscribe(response=>
     {

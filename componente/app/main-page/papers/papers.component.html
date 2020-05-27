@@ -2,7 +2,7 @@
   <div class="paper-name">{{paper.paper_name}}</div>
   <div class="paper-author"><em>{{paper.author_name}}</em></div>
   <div class="paper-abstract">{{paper.abstract_content}}</div>
-  <button class="paper-button"><a href=" https://youtu.be/dQw4w9WgXcQ" class="paper-download">Download full paper</a></button>
+  <button class="paper-button" (click)="download(paper.content)">Download full paper</button>
 
   <!-- schimba la loc lol <button><a href="{{paper.content}}" class="paper-download">Download full paper</a></button> -->
 </article>

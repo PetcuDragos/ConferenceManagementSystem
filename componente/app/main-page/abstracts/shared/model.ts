@@ -1,4 +1,5 @@
 import {MyDate} from "../../../create-conference-page/shared/createConference.model";
+import {Section} from "../../conferences/shared/model";
 
 export class Abstract{
   abstract_id: number;
@@ -25,6 +26,12 @@ export class AbstractAuthorDto{
   url:string;
   show_reviewers:boolean;
   canReview:boolean;
+  reviewers: string[];
+  sections: Section[];
+  askForReEval:boolean;
+  acceptAbstractButton:boolean;
+  addSectionButton:boolean;
+  joinSection:boolean;
 }
 
 export class CreateBidDto{

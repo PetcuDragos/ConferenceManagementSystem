@@ -21,6 +21,8 @@ export class createConferenceModel{
   paper_deadline: MyDate;
   bidding_deadline : MyDate;
   review_deadline:MyDate;
+  reEval_deadline:MyDate;
+  submissionDate:MyDate;
   constructor(){};
 }
 

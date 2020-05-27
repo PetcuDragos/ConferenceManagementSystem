@@ -53,7 +53,12 @@ public class ConferenceController {
             conferences.add(new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
                     conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
                     conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                    conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(), memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList())));
+                    conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),conferenceService.transformSQLDateIntoMyDate(c.getReEvalDate()),
+                    conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()),
+                    c.getChair_id(), c.getCo_chair_id(),
+                    memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
+                    conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList())
+                    ));
         });
         return conferences;
     }
@@ -91,8 +96,8 @@ public class ConferenceController {
     }
 
     //GLORIOUS way to access users from any id ref
-    @RequestMapping(value = "/conferencest", method = RequestMethod.GET)
-    public List<ConferenceDescriptionDto> getConferencesWithChairs() {
+    @RequestMapping(value = "/conferencest", method = RequestMethod.GET, params = {"username"})
+    public List<ConferenceDescriptionDto> getConferencesWithChairs(@RequestParam("username") String username) {
         List<ConferenceDescriptionDto> conferenceDtoList = new ArrayList<>();
         List<Conference> conferences = conferenceService.getConferences();
         log.trace("size: {}", conferences.size());
@@ -107,8 +112,22 @@ public class ConferenceController {
                     MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
                             conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
                             conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(), memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()));
-                    conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName()));
+                            conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),conferenceService.transformSQLDateIntoMyDate(c.getReEvalDate()),
+                            conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()),
+
+                            c.getChair_id(), c.getCo_chair_id(),
+                            memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
+                            conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList())
+                            );
+                    if(username == null || username.equals(""))
+                        conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),false));
+                    else{
+                        if(getConferencesFromUser(username).stream().anyMatch(p -> p.getConferenceName().equals(c.getName())))
+                            conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),true));
+                        else
+                            conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),false));
+                    }
+
                 }
             }
         });
@@ -142,7 +161,7 @@ public class ConferenceController {
         try {
             createdConference = conferenceService.addConference(createConferenceDto.getConference_name(), chair.getId(), co_chair.getId(),
                     createConferenceDto.getStarting_date(), createConferenceDto.getEnding_date(), createConferenceDto.getAbstract_deadline(),
-                    createConferenceDto.getPaper_deadline(), createConferenceDto.getBidding_deadline(), createConferenceDto.getReview_deadline());
+                    createConferenceDto.getPaper_deadline(), createConferenceDto.getBidding_deadline(), createConferenceDto.getReview_deadline(),createConferenceDto.getReEval_deadline(),createConferenceDto.getSubmissionDate());
             chair.setConference_id(createdConference.getId());
             co_chair.setConference_id(createdConference.getId());
             memberService.getChairFromId(chair.getId()).setConference_id(createdConference.getId());
@@ -159,7 +178,10 @@ public class ConferenceController {
         MyConferenceDto co = new MyConferenceDto(c.getId(), c.getName(), conferenceService.transformSQLDateIntoMyDate(c.getAbstractDeadline()),
                 conferenceService.transformSQLDateIntoMyDate(c.getPaperDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getBidDeadline()),
                 conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
-                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()), c.getChair_id(), c.getCo_chair_id(), null);
+                conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),conferenceService.transformSQLDateIntoMyDate(c.getReEvalDate()),
+                conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()), c.getChair_id(), c.getCo_chair_id(),
+                memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
+                conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList()));
         return co;
     }
 
@@ -216,7 +238,7 @@ public class ConferenceController {
                             .getConferenceFromName(changeDeadlineDto.getConference()).getId(),
                     changeDeadlineDto.getAbstract_deadline(), changeDeadlineDto.getPaper_deadline(),
                     changeDeadlineDto.getBidding_deadline(), changeDeadlineDto.getReview_deadline(),
-                    changeDeadlineDto.getEnding_date());
+                    changeDeadlineDto.getEnding_date(),changeDeadlineDto.getReEval_date(),changeDeadlineDto.getSubmissionDate());
         } catch (Exception e) {
             log.trace("i-o dat eroare la fraier");
             return new Message<ChangeDeadlineDto>(null, e.toString());
@@ -292,6 +314,49 @@ public class ConferenceController {
         } catch (Exception e) { }
         return new Message<>(null,"error");
     }
+
+    //todo:add to web
+    @RequestMapping(value = "/addsection", method = RequestMethod.POST)
+    public Message<String> addSection(@RequestBody AddSectionDto addSectionDto){
+        Conference c = conferenceService.getConferenceFromName(addSectionDto.getConference_name());
+        if(c == null) return new Message<>(null,"error");
+        Section s = this.conferenceService.addSection(c.getId(), addSectionDto.getPc_username(), addSectionDto.getSection_name());
+        if(s==null) return new Message<>(null,"error");
+        return new Message<>(null,"success");
+    }
+
+    @RequestMapping(value = "/joinsectionpaper", method = RequestMethod.POST)
+    public Message<String> joinSectionPaper(@RequestBody JoinSectionPaperDto joinSectionPaperDto){
+        Conference c = conferenceService.getConferenceFromName(joinSectionPaperDto.getConference_name());
+        if(c == null) return new Message<>(null,"error");
+        MyUser u = memberService.getUserFromUsername(joinSectionPaperDto.getUsername());
+        Section section = this.conferenceService.getSections().stream().filter(s->s.getName().equals(joinSectionPaperDto.getSection_name())&&s.getConference_id().equals(c.getId()) && !s.getUser_id().equals(u.getId())).findAny().orElse(null);
+        if(section == null) return new Message<>(null,"error");
+        Paper p = paperService.getPaperFromAbstractId(joinSectionPaperDto.getAbstract_id());
+        if(p == null) return new Message<>(null,"error");
+        paperService.updatePublishedPaperSection(p.getId(),section.getId());
+        return new Message<>(null,"success");
+    }
+
+    @RequestMapping(value = "/askforreeval", method = RequestMethod.POST)
+    public Message<String> askForReEval(@RequestBody Long abstract_id){
+        this.evaluationService.reEvaluate(abstract_id);
+        return new Message<>(null,"success");
+    }
+
+    @RequestMapping(value = "/acceptpaper", method = RequestMethod.POST)
+    public Message<String> acceptPaper(@RequestBody Long abstract_id){
+        this.evaluationService.acceptPaper(abstract_id);
+        return new Message<>(null,"success");
+    }
+
+    @RequestMapping(value = "/declinepaper", method = RequestMethod.POST)
+    public Message<String> declinePaper(@RequestBody Long abstract_id){
+        this.evaluationService.declinePaper(abstract_id);
+        return new Message<>(null,"success");
+    }
+
+
 
 
 

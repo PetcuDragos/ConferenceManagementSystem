@@ -17,4 +17,6 @@ public class ChangeDeadlineDto implements Serializable {
     private Date bidding_deadline;
     private Date review_deadline;
     private Date ending_date;
+    private Date reEval_date;
+    private Date submissionDate;
 }

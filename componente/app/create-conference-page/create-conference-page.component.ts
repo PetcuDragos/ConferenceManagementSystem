@@ -15,9 +15,9 @@ export class CreateConferencePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(conference_name: string, chair_username: string, co_chair_username: string, starting_date: Date, ending_date: Date, abstract_deadline: Date, paper_deadline: Date, bidding_deadline: Date, review_deadline: Date): void {
-    if (this.check(starting_date, abstract_deadline) && this.check(abstract_deadline, paper_deadline) && this.check(paper_deadline, bidding_deadline) && this.check(bidding_deadline, review_deadline) && this.check(review_deadline, ending_date)) {
-      this.createConferenceService.add(conference_name, chair_username, co_chair_username, starting_date, ending_date, abstract_deadline, paper_deadline, bidding_deadline, review_deadline);
+  save(conference_name: string, chair_username: string, co_chair_username: string, starting_date: Date, ending_date: Date, abstract_deadline: Date, paper_deadline: Date, bidding_deadline: Date, reEval_Date:Date, submissionDate:Date, review_deadline: Date): void {
+    if (this.check(starting_date, abstract_deadline) && this.check(abstract_deadline, paper_deadline) && this.check(paper_deadline, bidding_deadline) && this.check(bidding_deadline, review_deadline) && this.check(review_deadline, reEval_Date) && this.check(reEval_Date,submissionDate)&& this.check(submissionDate,ending_date)) {
+      this.createConferenceService.add(conference_name, chair_username, co_chair_username, starting_date, ending_date, abstract_deadline, paper_deadline, bidding_deadline, review_deadline, reEval_Date, submissionDate);
       this.back();
     } else {
       document.getElementById("error").innerHTML = "The dates should be chronological.";

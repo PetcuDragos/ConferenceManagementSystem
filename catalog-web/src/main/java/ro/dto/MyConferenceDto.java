@@ -20,7 +20,10 @@ public class MyConferenceDto implements Serializable {
     private Date reviewDeadline;
     private Date startingDate;
     private Date endingDate;
+    private Date reEvalDate;
+    private Date submissionDate;
     private Long chair_id;
     private Long co_chair_id;
     private List<String> pc_members;
+    private List<SectionDto> sections;
 }
