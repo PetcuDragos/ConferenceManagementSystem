@@ -149,12 +149,42 @@ public class ConferenceController {
     @RequestMapping(value = "/add_conference", method = RequestMethod.POST)
     public Message<CreateConferenceDto> createConference(@RequestBody CreateConferenceDto createConferenceDto) {
         //todo validation
+        String errorString = "";
+        if(createConferenceDto.getChair_username().equals(""))
+            errorString += "Chair username cannot be empty\n";
+        if(createConferenceDto.getCo_chair_username().equals(""))
+            errorString +="CoChair username cannot be empty\n";
+        if(createConferenceDto.getConference_name().equals(""))
+            errorString += "Conference name cannot be empty\n";
+
+        if(!errorString.equals(""))
+            return new Message<>(null, errorString);
+        if(createConferenceDto.getConference_name().equals(""))
+            errorString += "Conference name cannot be empty\n";
+
+        List<CChair> cChairs = this.conferenceService.getCChairs();
+        boolean cChairValidated = false;
+        boolean chairValidated = false;
+        for (CChair currentCChair : cChairs)
+        {
+            if(currentCChair.getId().equals(createConferenceDto.getCo_chair_username()))
+                cChairValidated = true;
+            if(currentCChair.getId().equals(createConferenceDto.getChair_username()))
+                chairValidated = true;
+        }
+        if(!cChairValidated)
+            errorString += "Given Co_Chair username does not exist\n";
+
+        if(!chairValidated)
+            errorString += "Given Chair username does not exist\n";
+        if (!errorString.equals(""))
+            return new Message<>(null, errorString);
         MyUser chair_user = this.memberService.getUserFromUsername(createConferenceDto.getChair_username());
         MyUser co_chair_user = this.memberService.getUserFromUsername(createConferenceDto.getCo_chair_username());
         if (chair_user == null)
-            return new Message<>(null, "chair username doesnt match with any user");
+            return new Message<>(null, "Chair username doesnt match with any user");
         if (co_chair_user == null)
-            return new Message<>(null, "co_chair username doesnt match with any user");
+            return new Message<>(null, "Co_Chair username doesnt match with any user");
         CChair chair = memberService.addCChair(chair_user.getId(), null);
         CChair co_chair = memberService.addCChair(co_chair_user.getId(), null);
         Conference createdConference = null;
@@ -169,8 +199,9 @@ public class ConferenceController {
         } catch (Exception e) {
             return new Message<>(null, e.toString());
         }
-        return new Message<>(createConferenceDto, "conference creation was successful");
+        return new Message<>(createConferenceDto, "Conference creation was successful");
     }
+
 
     @RequestMapping(value = "/conference", method = RequestMethod.POST)
     public MyConferenceDto getConferenceByName(@RequestBody String conference_name) {
