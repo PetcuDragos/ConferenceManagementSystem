@@ -13,6 +13,6 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @ToString
 public class CChair extends BaseEntity{
-    private Long user_id;
+    private Long myuser_id;
     private Long conference_id;
 }

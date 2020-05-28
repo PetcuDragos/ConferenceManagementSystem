@@ -10,7 +10,6 @@ import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 public class EvaluationService {
@@ -100,7 +99,7 @@ public class EvaluationService {
         List<ReviewEvaluation> rev = this.reviewEvaluationRepository.findAll();
         if (rev.stream().filter(r -> r.getPaper_id().equals(p.getId())).count() >= 4) return pc_members;
         this.pcMemberRepository.findAll().forEach(pc -> {
-            if (pc.getConference_id().equals(conference_id) && !pc.getUser_id().equals(a.getUser_id())) {
+            if (pc.getConference_id().equals(conference_id) && !pc.getMyuser_id().equals(a.getMyuser_id())) {
                 BidEvaluation bid = bids.stream().filter(b -> b.getPc_id().equals(pc.getId()) && b.getAbstract_id().equals(p.getAbstract_id())).findFirst().orElse(null);
                 ReviewEvaluation rew = rev.stream().filter(r -> r.getPc_id().equals(pc.getId()) && r.getPaper_id().equals(p.getId())).findAny().orElse(null);
                 if (rew == null) {
@@ -120,7 +119,7 @@ public class EvaluationService {
         if (a == null) return pc_members;
         List<BidEvaluation> bids = this.bidEvaluationRepository.findAll();
         this.pcMemberRepository.findAll().forEach(pc -> {
-            if (pc.getConference_id().equals(conference_id) && !pc.getUser_id().equals(a.getUser_id())) {
+            if (pc.getConference_id().equals(conference_id) && !pc.getMyuser_id().equals(a.getMyuser_id())) {
                 BidEvaluation bid = bids.stream().filter(b -> b.getPc_id().equals(pc.getId()) && b.getAbstract_id().equals(p.getAbstract_id())).findFirst().orElse(null);
                 if (bid == null) pc_members.add(pc);
                 else if (bid.getResult() >= 0) {
@@ -181,7 +180,7 @@ public class EvaluationService {
         reviewEvaluationRepository.findAll().stream().filter(r->r.getPaper_id().equals(paper.getId())).forEach(p->{
             PcMember pc = pcMemberRepository.findById(p.getPc_id()).orElse(null);
             if(pc!=null) {
-                MyUser user = myUserRepository.findById(pc.getUser_id()).orElse(null);
+                MyUser user = myUserRepository.findById(pc.getMyuser_id()).orElse(null);
                 if(user!= null ) reviewers.add(user.getUsername());
             }
         });
@@ -204,7 +203,7 @@ public class EvaluationService {
         if(p!=null){
             Author a = getAuthorById(p.getAuthor_id());
             if(a!=null) {
-                MyUser u = myUserRepository.findById(a.getUser_id()).orElse(null);
+                MyUser u = myUserRepository.findById(a.getMyuser_id()).orElse(null);
                 if(u!=null){
                     publishedPaperRepository.save(new PublishedPaper(p.getId(), null));
                     try {

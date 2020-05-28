@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ro.converter.PaperConverter;
 import ro.converter.PublishedPaperConverter;
 import ro.domain.*;
@@ -19,12 +18,6 @@ import ro.utils.Message;
 
 import javax.mail.MessagingException;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,21 +63,21 @@ public class PaperController {
             paperService.getAbstracts().stream().filter(a-> a.getConference_id().equals(conference.getId())).forEach(p->{
                 Author author = memberService.getAuthorById(p.getAuthor_id());
                 if(author!= null) {
-                    MyUser user = memberService.getMemberFromId(author.getUser_id());
+                    MyUser user = memberService.getMemberFromId(author.getMyuser_id());
                     boolean bidded = false;
                     boolean reviewed = false;
                     boolean canReview = false;
                     try{
-                        if(this.evaluationService.getBidEvaluations().stream().anyMatch(c -> c.getAbstract_id().equals(p.getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) bidded= true;
+                        if(this.evaluationService.getBidEvaluations().stream().anyMatch(c -> c.getAbstract_id().equals(p.getId()) && memberService.getPcMemberFromId(c.getPc_id()).getMyuser_id().equals(memberService.getUserFromUsername(username).getId()))) bidded= true;
                         if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c ->
-                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId())&&c.getDate()!=null)) reviewed=true;
+                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getMyuser_id().equals(memberService.getUserFromUsername(username).getId())&&c.getDate()!=null)) reviewed=true;
                         if(this.evaluationService.getReviewEvaluations().stream().anyMatch(c ->
-                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getUser_id().equals(memberService.getUserFromUsername(username).getId()))) canReview=true;
+                                c.getPaper_id().equals(paperService.getPaperFromAbstractId(p.getId()).getId()) && memberService.getPcMemberFromId(c.getPc_id()).getMyuser_id().equals(memberService.getUserFromUsername(username).getId()))) canReview=true;
                     }catch (Exception e){}
                     List<String> reviewers = evaluationService.getReviewerNamesForPaper(p.getId());
                     List<Section> sections = this.conferenceService.getSectionsFromConference(conference.getId());
                     List<SectionDto> my_sections = new ArrayList<>();
-                    sections.forEach(s->my_sections.add(new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())));
+                    sections.forEach(s->my_sections.add(new SectionDto(s.getName(),memberService.getMemberFromId(s.getMyuser_id()).getUsername())));
 
 
                     if(conference.getSubmissionDate().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))){
@@ -160,7 +153,7 @@ public class PaperController {
         Conference conference = conferenceService.getConferenceFromName(abstractDto.getConference_name());
         if (user!=null && conference!=null){
             try{
-                Abstract abs = paperService.getAbstracts().stream().filter(a-> memberService.getAuthorById(a.getAuthor_id()).getUser_id().equals(user.getId()) && a.getConference_id().equals(conference.getId())).findFirst().orElse(null);
+                Abstract abs = paperService.getAbstracts().stream().filter(a-> memberService.getAuthorById(a.getAuthor_id()).getMyuser_id().equals(user.getId()) && a.getConference_id().equals(conference.getId())).findFirst().orElse(null);
                 if(abs!=null) {
                     Abstract abstract_change = paperService.getAbstractById(abs.getId());
                     abstract_change.setContent(abstractDto.getContent());
@@ -196,7 +189,7 @@ public class PaperController {
 
             ///MAJOR warning: if pcMember belongs to more than one conference this is going to fail
             MyUser userId = memberService.getUserFromUsername(bidDto.getPc_name());
-            PcMember pcMember = memberService.getPcMembers().stream().filter(p -> p.getUser_id().equals(userId.getId())).findAny().orElse(null);
+            PcMember pcMember = memberService.getPcMembers().stream().filter(p -> p.getMyuser_id().equals(userId.getId())).findAny().orElse(null);
             if(pcMember!= null) {
                 Conference conference = conferenceService.getConferenceFromId(pcMember.getConference_id());
 
@@ -229,7 +222,7 @@ public class PaperController {
         Paper p = paperService.getPaperFromAbstractId(publishedPaperDto.getAbstract_id());
         Author author = memberService.getAuthorById(publishedPaperDto.getAuthor_id());
         if(p!=null && author!= null){
-            MyUser u = memberService.getMemberFromId(author.getUser_id());
+            MyUser u = memberService.getMemberFromId(author.getMyuser_id());
             this.paperService.addPublishedPaper(p.getId(),null,u);
             return new Message<>(null,"success");
         }

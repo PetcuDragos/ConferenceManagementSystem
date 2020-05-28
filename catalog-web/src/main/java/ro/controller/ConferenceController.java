@@ -56,8 +56,8 @@ public class ConferenceController {
                     conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),conferenceService.transformSQLDateIntoMyDate(c.getReEvalDate()),
                     conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()),
                     c.getChair_id(), c.getCo_chair_id(),
-                    memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
-                    conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList())
+                    memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getMyuser_id()).getUsername()).collect(Collectors.toList()),
+                    conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getMyuser_id()).getUsername())).collect(Collectors.toList())
                     ));
         });
         return conferences;
@@ -66,10 +66,10 @@ public class ConferenceController {
     @RequestMapping(value = "/conferences", method = RequestMethod.POST)
     public List<ConferenceDto> getConferencesFromUser(@RequestBody String username) {
         MyUser user = memberService.getUserFromUsername(username);
-        List<PcMember> pcMemberList = memberService.getPcMembers().stream().filter(p -> p.getUser_id().equals(user.getId())).collect(Collectors.toList());
-        List<CChair> cChairList = memberService.getCChairs().stream().filter(p -> p.getUser_id().equals(user.getId())).collect(Collectors.toList());
-        List<Author> authorList = memberService.getAuthors().stream().filter(p -> p.getUser_id().equals(user.getId())).collect(Collectors.toList());
-        List<UserConference> userList = conferenceService.getUserConferences().stream().filter(p -> p.getUser_id().equals(user.getId())).collect(Collectors.toList());
+        List<PcMember> pcMemberList = memberService.getPcMembers().stream().filter(p -> p.getMyuser_id().equals(user.getId())).collect(Collectors.toList());
+        List<CChair> cChairList = memberService.getCChairs().stream().filter(p -> p.getMyuser_id().equals(user.getId())).collect(Collectors.toList());
+        List<Author> authorList = memberService.getAuthors().stream().filter(p -> p.getMyuser_id().equals(user.getId())).collect(Collectors.toList());
+        List<UserConference> userList = conferenceService.getUserConferences().stream().filter(p -> p.getMyuser_id().equals(user.getId())).collect(Collectors.toList());
         List<ConferenceDto> conferenceDtoList = new ArrayList<>();
         pcMemberList.forEach(p -> {
             Conference conference = conferenceService.getConferenceFromId(p.getConference_id());
@@ -103,8 +103,8 @@ public class ConferenceController {
         log.trace("size: {}", conferences.size());
         conferences.forEach(c -> {
             if (c.getChair_id() != null && c.getCo_chair_id() != null) {
-                MyUser user1 = memberService.getMemberFromId(memberService.getChairFromId(c.getChair_id()).getUser_id());
-                MyUser user2 = memberService.getMemberFromId(memberService.getChairFromId(c.getCo_chair_id()).getUser_id());
+                MyUser user1 = memberService.getMemberFromId(memberService.getChairFromId(c.getChair_id()).getMyuser_id());
+                MyUser user2 = memberService.getMemberFromId(memberService.getChairFromId(c.getCo_chair_id()).getMyuser_id());
                 if (user1 != null && user2 != null) {
                     log.trace(" controller: {}", user1.getFullName());
                     log.trace(" controller: {}", user2.getFullName());
@@ -116,8 +116,8 @@ public class ConferenceController {
                             conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()),
 
                             c.getChair_id(), c.getCo_chair_id(),
-                            memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
-                            conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList())
+                            memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getMyuser_id()).getUsername()).collect(Collectors.toList()),
+                            conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getMyuser_id()).getUsername())).collect(Collectors.toList())
                             );
                     if(username == null || username.equals(""))
                         conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),false));
@@ -180,8 +180,8 @@ public class ConferenceController {
                 conferenceService.transformSQLDateIntoMyDate(c.getReviewDeadline()), conferenceService.transformSQLDateIntoMyDate(c.getStartingDate()),
                 conferenceService.transformSQLDateIntoMyDate(c.getEndingDate()),conferenceService.transformSQLDateIntoMyDate(c.getReEvalDate()),
                 conferenceService.transformSQLDateIntoMyDate(c.getSubmissionDate()), c.getChair_id(), c.getCo_chair_id(),
-                memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
-                conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList()));
+                memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getMyuser_id()).getUsername()).collect(Collectors.toList()),
+                conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getMyuser_id()).getUsername())).collect(Collectors.toList()));
         return co;
     }
 
@@ -190,7 +190,7 @@ public class ConferenceController {
         MyUser user = memberService.getUserFromUsername(rank.getUsername());
         Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
         if (user != null && conference != null) {
-            return memberService.getPcMembers().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
+            return memberService.getPcMembers().stream().anyMatch(p -> p.getMyuser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
         }
         return false;
     }
@@ -200,7 +200,7 @@ public class ConferenceController {
         MyUser user = memberService.getUserFromUsername(rank.getUsername());
         Conference conference = conferenceService.getConferenceFromName(rank.getConference_name());
         if (user != null && conference != null) {
-            return memberService.getCChairs().stream().anyMatch(p -> p.getUser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
+            return memberService.getCChairs().stream().anyMatch(p -> p.getMyuser_id().equals(user.getId()) && p.getConference_id().equals(conference.getId()));
         }
         return false;
     }
@@ -254,7 +254,7 @@ public class ConferenceController {
         Long user_id = user.getId();
         Conference c = conferenceService.getConferenceFromName(review.getConference_name());
         if (c == null) return new Message<String>(null, "error");
-        PcMember pc = memberService.getPcMembers().stream().filter(p -> p.getUser_id().equals(user_id) && p.getConference_id().equals(c.getId())).findFirst().orElse(null);
+        PcMember pc = memberService.getPcMembers().stream().filter(p -> p.getMyuser_id().equals(user_id) && p.getConference_id().equals(c.getId())).findFirst().orElse(null);
         if (pc == null) return new Message<String>(null, "error");
         Paper paper = this.paperService.getPaperFromAbstractId(review.getAbstract_id());
         if (paper == null) return new Message<String>(null, "error");
@@ -275,7 +275,7 @@ public class ConferenceController {
         Paper paper = this.paperService.getPaperFromAbstractId(abstract_id);
         evaluationService.getReviewEvaluations().forEach(r -> {
             if (r.getPaper_id().equals(paper.getId()))
-                reviews.add(new ReviewDto(memberService.getMemberFromId(memberService.getPcMemberFromId(r.getPc_id()).getUser_id()).getUsername(), r.getContent(), r.getResult()));
+                reviews.add(new ReviewDto(memberService.getMemberFromId(memberService.getPcMemberFromId(r.getPc_id()).getMyuser_id()).getUsername(), r.getContent(), r.getResult()));
         });
         return reviews;
     }
@@ -298,7 +298,7 @@ public class ConferenceController {
         List<PCMemberDto> pcMembers = new ArrayList<>();
         if (c == null || p == null) return pcMembers;
         List<PcMember> pc = this.evaluationService.getPCMembersAvailableForPaper(c.getId(), p);
-        pc.forEach(a -> pcMembers.add(new PCMemberDto(memberService.getMemberFromId(a.getUser_id()).getUsername(), a.getId())));
+        pc.forEach(a -> pcMembers.add(new PCMemberDto(memberService.getMemberFromId(a.getMyuser_id()).getUsername(), a.getId())));
         return pcMembers;
     }
 
@@ -330,7 +330,7 @@ public class ConferenceController {
         Conference c = conferenceService.getConferenceFromName(joinSectionPaperDto.getConference_name());
         if(c == null) return new Message<>(null,"error");
         MyUser u = memberService.getUserFromUsername(joinSectionPaperDto.getUsername());
-        Section section = this.conferenceService.getSections().stream().filter(s->s.getName().equals(joinSectionPaperDto.getSection_name())&&s.getConference_id().equals(c.getId()) && !s.getUser_id().equals(u.getId())).findAny().orElse(null);
+        Section section = this.conferenceService.getSections().stream().filter(s->s.getName().equals(joinSectionPaperDto.getSection_name())&&s.getConference_id().equals(c.getId()) && !s.getMyuser_id().equals(u.getId())).findAny().orElse(null);
         if(section == null) return new Message<>(null,"error");
         Paper p = paperService.getPaperFromAbstractId(joinSectionPaperDto.getAbstract_id());
         if(p == null) return new Message<>(null,"error");

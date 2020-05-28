@@ -12,8 +12,8 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @ToString
 @EqualsAndHashCode(callSuper = true)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames={"conference_id","user_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames={"conference_id","myuser_id"}))
 public class UserConference extends BaseEntity{
     private Long conference_id;
-    private Long user_id;
+    private Long myuser_id;
 }

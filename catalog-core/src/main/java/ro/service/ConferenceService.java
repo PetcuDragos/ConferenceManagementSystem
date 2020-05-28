@@ -59,14 +59,14 @@ public class ConferenceService {
         //toDo: check if the conference exists
         Conference conference = this.conferenceRepository.getOne(conferenceId);
         return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getChair_id())
-                .get().getUser_id()).get().getUser_id().equals(userId);
+                .get().getMyuser_id()).get().getMyuser_id().equals(userId);
     }
 
     public boolean isConferenceCoChair(Long conferenceId, Long userId) {
         //toDo: check if the conference exists
         Conference conference = this.conferenceRepository.getOne(conferenceId);
         return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getCo_chair_id())
-                .get().getUser_id()).get().getUser_id().equals(userId);
+                .get().getMyuser_id()).get().getMyuser_id().equals(userId);
     }
 
     public Conference getConferenceFromId(Long id){
@@ -113,7 +113,7 @@ public class ConferenceService {
     // TODO: A
     public Author getAuthor(Long conferenceId, Long userId) {
         List<Author> authors = this.authorRepository.findAll().stream()
-                .filter(author -> author.getConference_id().equals(conferenceId) && author.getUser_id().equals(userId))
+                .filter(author -> author.getConference_id().equals(conferenceId) && author.getMyuser_id().equals(userId))
                 .collect(Collectors.toList());
         if (authors.isEmpty()) {
             return null;
@@ -126,10 +126,10 @@ public class ConferenceService {
         if(conference_id==null) return null;
         MyUser user = userRepository.findAll().stream().filter(p->p.getUsername().equals(username)).findAny().orElse(null);
         if(user == null) return null;
-        PcMember pcMember = pcMemberRepository.findAll().stream().filter(p->p.getUser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
-        CChair chair = cChairRepository.findAll().stream().filter(p->p.getUser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
+        PcMember pcMember = pcMemberRepository.findAll().stream().filter(p->p.getMyuser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
+        CChair chair = cChairRepository.findAll().stream().filter(p->p.getMyuser_id().equals(user.getId())&&p.getConference_id().equals(conference_id)).findAny().orElse(null);
         if(pcMember == null && chair==null) return null;
-        if(sectionRepository.findAll().stream().filter(s->s.getUser_id().equals(user.getId())&&s.getConference_id().equals(conference_id)).findAny().orElse(null)!=null)return null;
+        if(sectionRepository.findAll().stream().filter(s->s.getMyuser_id().equals(user.getId())&&s.getConference_id().equals(conference_id)).findAny().orElse(null)!=null)return null;
         return sectionRepository.save(new Section(user.getId(),conference_id,section_name));
 
     }

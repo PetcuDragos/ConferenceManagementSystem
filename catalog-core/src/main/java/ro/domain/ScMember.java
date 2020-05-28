@@ -9,14 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames={"user_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames={"myuser_id"}))
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ScMember extends BaseEntity {
 
-    @Column(name="user_id")
-    private Long user_id;
+    @Column(name="myuser_id")
+    private Long myuser_id;
 
 }

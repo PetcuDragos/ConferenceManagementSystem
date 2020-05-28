@@ -5,14 +5,14 @@ import javax.persistence.*;
 @Entity
 public class PcMember extends BaseEntity{
     private Long conference_id;
-    private Long user_id;
+    private Long myuser_id;
 
     public PcMember() {
     }
 
-    public PcMember(Long user_id, Long conference_id){
+    public PcMember(Long myuser_id, Long conference_id){
         this.conference_id = conference_id;
-        this.user_id = user_id;
+        this.myuser_id = myuser_id;
     }
 
     public Long getConference_id() {
@@ -23,19 +23,19 @@ public class PcMember extends BaseEntity{
         this.conference_id = conference_id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getMyuser_id() {
+        return myuser_id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setMyuser_id(Long user_id) {
+        this.myuser_id = user_id;
     }
 
     @Override
     public String toString() {
         return "PcMember{" +
                 "conference_id=" + conference_id +
-                ", user_id=" + user_id +
+                ", user_id=" + myuser_id +
                 '}';
     }
 }

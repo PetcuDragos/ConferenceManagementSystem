@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Section extends BaseEntity {
-    private Long user_id;
+    private Long myuser_id;
     private Long conference_id;
     private String name;
 

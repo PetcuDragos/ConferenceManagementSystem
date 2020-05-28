@@ -88,7 +88,7 @@ public class AuthController {
         MyUser user = serviceMember.getUserFromUsername(username);
         if (user!=null) {
             Long user_id = user.getId();
-            return this.serviceMember.getScMembers().stream().anyMatch(t -> user_id.equals(t.getUser_id()));
+            return this.serviceMember.getScMembers().stream().anyMatch(t -> user_id.equals(t.getMyuser_id()));
         }
         return false;
     }

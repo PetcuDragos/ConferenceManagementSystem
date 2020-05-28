@@ -29,7 +29,7 @@ public class PublishedPaperConverter extends BaseConverter<PublishedPaper, Publi
     public PublishedPaperDto convertModelToDto(PublishedPaper publishedPaper) {
         // todo: make it less taranesque
         Paper paper = paperRepository.findById(publishedPaper.getPaper_id()).get();
-        Long userID = authorRepository.findById(paper.getAuthor_id()).get().getUser_id();
+        Long userID = authorRepository.findById(paper.getAuthor_id()).get().getMyuser_id();
         Section section = sectionRepository.findById(publishedPaper.getSection_id()).orElse(null);
         String section_name = null;
         if(section!=null) section_name = section.getName();

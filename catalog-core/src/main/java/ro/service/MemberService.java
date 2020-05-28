@@ -11,8 +11,6 @@ import ro.utils.Message;
 
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -67,7 +65,7 @@ public class MemberService {
     public Message<PcMember> addPcMember(Long conferenceId, Long userId) {
         List<PcMember> pcMembers = this.pcMemberRepository.findAll();
         for (PcMember pcMember : pcMembers)
-            if (pcMember.getConference_id().equals(conferenceId) && pcMember.getUser_id().equals(userId))
+            if (pcMember.getConference_id().equals(conferenceId) && pcMember.getMyuser_id().equals(userId))
                 return new Message<>(null, "You are already a pcMember at this conference");
         PcMember pcMember = new PcMember(userId,conferenceId);
         this.pcMemberRepository.save(pcMember);
@@ -77,7 +75,7 @@ public class MemberService {
     public Message<ScMember> addScMember(Long userId) {
         List<ScMember> scMembers = this.scMemberRepository.findAll();
         for (ScMember scMember : scMembers)
-            if (scMember.getUser_id().equals(userId))
+            if (scMember.getMyuser_id().equals(userId))
                 return new Message<>(null, "You are already a ScMember!");
         ScMember scMember = new ScMember(userId);
         this.scMemberRepository.save(scMember);
