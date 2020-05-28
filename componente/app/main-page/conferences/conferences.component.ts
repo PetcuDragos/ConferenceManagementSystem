@@ -19,8 +19,9 @@ export class ConferencesComponent implements OnInit {
     );
   }
 
-  joinConference(conference_id: number): void {
+  joinConference(conferencel: ConferenceDescription, conference_id: number): void {
     this.conferenceService.joinConference(conference_id).subscribe(m=>{
+      conferencel.joined=true;
     this.someEvent.next("");});
   }
 
