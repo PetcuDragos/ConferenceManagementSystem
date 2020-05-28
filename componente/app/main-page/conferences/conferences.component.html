@@ -3,38 +3,38 @@
   <div class="conference_name"> {{conferencel.name}}</div>
 
   <div class="conference-chairs-container">
-    <div class="conference-chairs">Chair: {{conferencel.chairName}} </div>
-    <div class="conference-chairs">Co-Chair: {{conferencel.co_chairName}}</div>
+    <div class="conference-chairs"><span><img src="assets/chair.png" width="24px">Chair</span> <span style="font-weight: 600;">{{conferencel.chairName}}</span> </div>
+    <div class="conference-chairs"><span><img src="assets/cochair.png" width="24px">Co-chair</span> <span style="font-weight: 600;">{{conferencel.co_chairName}}</span></div>
   </div>
 
 <div class="conference-dates">
   <div class="conference-dates-chunk">
-    <p class="dates-title">Conference date:</p>
-    <div class="conference-date">Starting date: {{conferencel.conference.startingDate.day}}/{{conferencel.conference.startingDate.month}}/{{conferencel.conference.startingDate.year}}</div>
-    <div class="conference-date">Ending date: {{conferencel.conference.endingDate.day}}/{{conferencel.conference.endingDate.month}}/{{conferencel.conference.endingDate.year}}</div>
+    <p class="dates-title">Conference dates</p>
+    <div class="conference-date">Starting date:  {{conferencel.conference.startingDate.day}}/{{conferencel.conference.startingDate.month}}/{{conferencel.conference.startingDate.year}}</div>
+    <div class="conference-date">Ending date:  {{conferencel.conference.endingDate.day}}/{{conferencel.conference.endingDate.month}}/{{conferencel.conference.endingDate.year}}</div>
   </div>
   <br>
   <div class="conference-dates-chunk">
-    <p class="dates-title">Submission deadlines:</p>
-    <div class="conference-date">Abstract deadline: {{conferencel.conference.abstractDeadline.day}}/{{conferencel.conference.abstractDeadline.month}}/{{conferencel.conference.abstractDeadline.year}}</div>
-    <div class="conference-date">Paper deadline: {{conferencel.conference.paperDeadline.day}}/{{conferencel.conference.paperDeadline.month}}/{{conferencel.conference.paperDeadline.year}}</div>
+    <p class="dates-title">Submission deadlines</p>
+    <div class="conference-date">Abstract deadline:  {{conferencel.conference.abstractDeadline.day}}/{{conferencel.conference.abstractDeadline.month}}/{{conferencel.conference.abstractDeadline.year}}</div>
+    <div class="conference-date">Paper deadline:  {{conferencel.conference.paperDeadline.day}}/{{conferencel.conference.paperDeadline.month}}/{{conferencel.conference.paperDeadline.year}}</div>
   </div>
   <br>
   <div class="conference-dates-chunk">
-    <p class="dates-title">Evaluation deadlines:</p>
-    <div class="conference-date">Bidding deadline:{{conferencel.conference.bidDeadline.day}}/{{conferencel.conference.bidDeadline.month}}/{{conferencel.conference.bidDeadline.year}}</div>
-    <div class="conference-date">Review deadline:{{conferencel.conference.reviewDeadline.day}}/{{conferencel.conference.reviewDeadline.month}}/{{conferencel.conference.reviewDeadline.year}}</div>
-    <div class="conference-date">Re-evaluation deadline: {{conferencel.conference.reEvalDate.day}}/{{conferencel.conference.reEvalDate.month}}/{{conferencel.conference.reEvalDate.year}}</div>
-    <div class="conference-date">Final result on: {{conferencel.conference.submissionDate.day}}/{{conferencel.conference.submissionDate.month}}/{{conferencel.conference.submissionDate.year}}</div>
+    <p class="dates-title">Evaluation deadlines</p>
+    <div class="conference-date">Bidding deadline:  {{conferencel.conference.bidDeadline.day}}/{{conferencel.conference.bidDeadline.month}}/{{conferencel.conference.bidDeadline.year}}</div>
+    <div class="conference-date">Review deadline:  {{conferencel.conference.reviewDeadline.day}}/{{conferencel.conference.reviewDeadline.month}}/{{conferencel.conference.reviewDeadline.year}}</div>
+    <div class="conference-date">Re-evaluation deadline:  {{conferencel.conference.reEvalDate.day}}/{{conferencel.conference.reEvalDate.month}}/{{conferencel.conference.reEvalDate.year}}</div>
+    <div class="conference-date">Final result on:  {{conferencel.conference.submissionDate.day}}/{{conferencel.conference.submissionDate.month}}/{{conferencel.conference.submissionDate.year}}</div>
   </div>
 </div>
   <br>
   <div class="pc">
-    <p class="pc-title">Program committee:</p>
-    <div *ngFor="let pc of conferencel.conference.pc_members">{{pc}},  </div>
+    <p class="pc-title">Program committee</p>
+    <div *ngFor="let pc of conferencel.conference.pc_members" class="pcmembers"><img src="assets/pcmember.png"><span>{{pc}}</span></div>
     <div *ngIf="conferencel.conference.sections.length>0">
-      <br>Sections:
-      <div *ngFor="let section of conferencel.conference.sections">{{section.name}} supervised by {{section.sc_name}}</div>
+      <br><span id="sections">Sections</span>
+      <div id="sectiondiv" *ngFor="let section of conferencel.conference.sections"><img height="24px" src="assets/section.png"><span id="section">{{section.name}}</span> <span id="supervised">supervised by </span> <span id="sc_name">{{section.sc_name}}</span></div>
     </div>
   </div>
 

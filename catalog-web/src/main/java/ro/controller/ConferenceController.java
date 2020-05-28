@@ -119,8 +119,8 @@ public class ConferenceController {
                             memberService.getPcMembers().stream().filter(p -> p.getConference_id().equals(c.getId())).map(pi -> memberService.getMemberFromId(pi.getUser_id()).getUsername()).collect(Collectors.toList()),
                             conferenceService.getSectionsFromConference(c.getId()).stream().map(s->new SectionDto(s.getName(),memberService.getMemberFromId(s.getUser_id()).getUsername())).collect(Collectors.toList())
                             );
-                    if(username == null || username.equals(""))
-                        conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),false));
+                    if(username == null || username.equals("") || username.equals("null"))
+                        conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),true));
                     else{
                         if(getConferencesFromUser(username).stream().anyMatch(p -> p.getConferenceName().equals(c.getName())))
                             conferenceDtoList.add(new ConferenceDescriptionDto(c.getName(), co, user1.getFullName(), user2.getFullName(),true));

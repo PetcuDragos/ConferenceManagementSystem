@@ -28,10 +28,39 @@
 }
 .conference-chairs{
   font-family: Helvetica, sans-serif;
-  font-size: 20px;
-  color: #202020;
-  padding: 20px;
-  margin: 5px;
+  font-size: 18px;
+  padding: 15px;
+  margin: 5px 20px;
+  min-width:200px;
+  text-align: center;
+  background-color:dodgerblue;
+  border-radius: 10px;
+  color:white;
+}
+
+.pcmembers{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  padding-left: 5px;
+  padding-right:5px;
+  display:inline-block;
+}
+.pcmembers img{
+  padding-left:3px;
+  padding-right: 3px;
+}
+.conference-chairs img{
+  padding-left:10px;
+  padding-right:10px;
+  line-height: 30px;
+  padding-bottom: 0px;
+}
+
+.conference-chairs span{
+  height:18px;
+  display:block;
+  margin-top: auto;
+  margin-bottom:10px;
 }
 
 .conference-chairs-container{
@@ -59,10 +88,42 @@
   font-family: Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 500;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
 }
 
 .pc-title{
   font-family: Helvetica, sans-serif;
   font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+#sections{
+  font-family: Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+#section{
+  font-family: Helvetica, sans-serif;
   font-weight: 500;
+  padding-right:10px;
+}
+
+#supervised{
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  padding-right:10px;
+}
+
+#sc_name{
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+  padding-right:10px;
+}
+#sectiondiv{
+  margin-top: 10px;
 }
