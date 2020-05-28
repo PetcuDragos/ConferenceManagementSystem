@@ -54,6 +54,11 @@ export class AbstractsComponent implements OnInit {
     this.router.navigate(['create-abstract']);
   }
 
+  //TODO: A4
+  alreadyPostedAbstract(): boolean {
+    return this.abstracts.length > 0;
+  }
+
   changeDeadlines():void{
     this.router.navigate(['change-deadline']);
     console.log("not made yet.")
@@ -269,5 +274,4 @@ export class AbstractsComponent implements OnInit {
   joinSectionPaper(abstract_entity: AbstractAuthorDto, abstract_id:number, section_name:string):void{
     this.abstractService.joinSectionPaper(abstract_id, section_name).subscribe(m=>{abstract_entity.joinSection = true;});
   }
-
 }
