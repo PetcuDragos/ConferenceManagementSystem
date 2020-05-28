@@ -17,6 +17,9 @@ export class CreateAbstractPageComponent implements OnInit {
 
   save(title:string,content:string,keywords:string, topics:string,additional_authors:string): void{
     this.serviceCreateAbstract.addAbstract(title,content,keywords,topics,additional_authors, this.paper);
+    //TODO: A4
+    alert("Abstract paper has been saved!");
+    setTimeout(() => this.router.navigate(['']), 1000);
   }
 
   back() :void {

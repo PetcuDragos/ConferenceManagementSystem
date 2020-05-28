@@ -1,6 +1,6 @@
 <div *ngIf="hasAnyConference()">
 
-<div class="option" *ngIf="canPostAbstract()" (click)="addAbstract()"> Start your own paper</div>
+<div class="option" *ngIf="canPostAbstract() && alreadyPostedAbstract() == false" (click)="addAbstract()"> Start your own paper</div>
 <div class="option" (click)="changeDeadlines()" *ngIf="isUserChairForConference()">Change deadlines</div>
 <div class="option" (click)="addPCMemberOption()" *ngIf="isUserChairForConference()">Add PC Member</div>
 <div class="addpcmember" *ngIf="pcmember_option">
