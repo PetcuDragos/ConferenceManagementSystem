@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="change-deadline-page.component.css" rel="stylesheet" type="text/css">
+  <base href="/">
+  <title>CMS</title>
+</head>
+<body>
+<header>
+  <div class="backtop">
+    <div class="top">
+
+      <div class="brand">
+        <img src="assets/logo.png"(click)="mainpage()">
+      </div>
+
+      <div class="searchbox" (click)="mainpage()">
+        <input type="search">
+        <button type="submit" id="buton_cautare">
+          <svg width="24" style="stroke:#fff;stroke-width:0;vertical-align:bottom" height="24"
+               viewBox="0 0 24 24" data-icon="search">
+            <path d="M9 3C5.686 3 3 5.686 3 9c0 3.313 2.686 6 6 6s6-2.687 6-6c0-3.314-2.686-6-6-6m13.713 19.713c-.387.388-1.016.388-1.404 0l-7.404-7.404C12.55 16.364 10.85 17 9 17c-4.418 0-8-3.582-8-8 0-4.42 3.582-8 8-8s8 3.58 8 8c0 1.85-.634 3.55-1.69 4.905l7.403 7.404c.39.386.39 1.015 0 1.403">
+            </path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="top_bar_buttons">
+        <div class="back"(click)="back()">
+          <span> Back </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="mainDiv">
+  <main>
+    <div class="userContainer">
+      <div id="userTitle">
+        <span>Change deadlines</span>
+      </div>
+
+      <div class="formContainer">
+        <form>
+
+          <div class="inputContainer">
+            <label>Abstract deadline:</label>
+            <input type="date" #abstract_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Paper deadline:</label>
+            <input type="date" #paper_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Bidding deadline:</label>
+            <input type="date" #bidding_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Review deadline:</label>
+            <input type="date" #review_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Re-evaluation deadline:</label>
+            <input type="date" #reEval_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Submission deadline:</label>
+            <input type="date" #submission_deadline>
+          </div>
+
+          <div class="inputContainer">
+            <label>Ending date:</label>
+            <input type="date" #ending_date>
+          </div>
+
+          <hr>
+
+          <div class="saveButton" (click)="save(abstract_deadline.valueAsDate,paper_deadline.valueAsDate,bidding_deadline.valueAsDate,review_deadline.valueAsDate, reEval_deadline.valueAsDate, submission_deadline.valueAsDate, ending_date.valueAsDate)" style="float: right">Save</div>
+          <div id="error"></div>
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+</body>
+</html>

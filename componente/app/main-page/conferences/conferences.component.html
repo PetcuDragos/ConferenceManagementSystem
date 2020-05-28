@@ -1,0 +1,21 @@
+
+<div *ngFor="let conferencel of conferences" class="panel conference-panel">
+  <div class="conference_name"> {{conferencel.name}}</div>
+  <div class="conference_chair">Chair: {{conferencel.chairName}} </div>
+  <div class="conference_co_chair">Co-Chair: {{conferencel.co_chairName}}</div>
+  <br class="conference_co_chair"> Starting date: {{conferencel.conference.startingDate.day}}/{{conferencel.conference.startingDate.month}}/{{conferencel.conference.startingDate.year}}
+    <br class="conference_co_chair"> Abstract deadline: {{conferencel.conference.abstractDeadline.day}}/{{conferencel.conference.abstractDeadline.month}}/{{conferencel.conference.abstractDeadline.year}}
+    <br class="conference_co_chair"> Paper deadline: {{conferencel.conference.paperDeadline.day}}/{{conferencel.conference.paperDeadline.month}}/{{conferencel.conference.paperDeadline.year}}
+    <br class="conference_co_chair"> Bidding deadline: {{conferencel.conference.bidDeadline.day}}/{{conferencel.conference.bidDeadline.month}}/{{conferencel.conference.bidDeadline.year}}
+    <br class="conference_co_chair"> Review deadline: {{conferencel.conference.reviewDeadline.day}}/{{conferencel.conference.reviewDeadline.month}}/{{conferencel.conference.reviewDeadline.year}}
+    <br class="conference_co_chair"> Re-evaluation deadline: {{conferencel.conference.reEvalDate.day}}/{{conferencel.conference.reEvalDate.month}}/{{conferencel.conference.reEvalDate.year}}
+    <br class="conference_co_chair"> Submission deadline: {{conferencel.conference.reEvalDate.day}}/{{conferencel.conference.reEvalDate.month}}/{{conferencel.conference.reEvalDate.year}}
+    <br class="conference_co_chair"> Ending date: {{conferencel.conference.endingDate.day}}/{{conferencel.conference.endingDate.month}}/{{conferencel.conference.endingDate.year}}
+  <br>Program committee:
+  <div *ngFor="let pc of conferencel.conference.pc_members">{{pc}},  </div>
+  <div *ngIf="conferencel.conference.sections.length>0">
+  <br>Sections:
+  <div *ngFor="let section of conferencel.conference.sections">{{section.name}} supervised by {{section.sc_name}}</div>
+  </div>
+  <br><button class="conference_button" *ngIf="!conferencel.joined" (click)="joinConference(conferencel.conference.id)">Join conference</button>
+</div>

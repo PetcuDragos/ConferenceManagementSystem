@@ -1,2 +1,4 @@
-rootProject.name = 'project2'
+rootProject.name = 'ISS_Project'
+include 'catalog-core'
+include 'catalog-web'
 

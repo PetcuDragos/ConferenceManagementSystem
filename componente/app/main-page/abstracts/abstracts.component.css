@@ -1,0 +1,39 @@
+.option {
+  display: inline-block;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  color: whitesmoke;
+  border-radius: 1px;
+  text-align: center;
+  background-color: dodgerblue;
+  margin-top: 10px;
+  margin-right: 30px;
+  position:relative;
+}
+.deadline{
+  display:block;
+  position:relative;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  max-width:95%;
+  text-align: center;
+  color:crimson;
+  background: rgba(160,30,30,0.1);
+  padding:8px;
+}
+.addpcmember{
+  display: inline-block;
+}
+.addpcmember input{
+  display: inline-block;
+  padding: 15px 15px 15px 15px;
+  color: black;
+  border-radius: 16px;
+  margin-top: 10px;
+  margin-right: 30px;
+  position:relative;
+  height:30px;
+  box-sizing: border-box;
+  font-size: 17px;
+  border: none;
+}

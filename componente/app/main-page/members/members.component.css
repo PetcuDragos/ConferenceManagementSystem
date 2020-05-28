@@ -1,0 +1,41 @@
+
+.member-name{
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  color: #202020;
+  background: rgba(0, 138, 230, 0.3);
+  padding: 10px;
+}
+
+.member-username {
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding-left: 10px;
+}
+
+.member-email{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.member-aff{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.member-site{
+  text-decoration: none;
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.paper-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}

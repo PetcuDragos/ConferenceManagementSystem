@@ -1,0 +1,45 @@
+.container input[type=text], .container input[type=password]{
+  width: 40%;
+  display:block;
+  margin: 10px auto;
+  border: 2px solid rgba(70,160,250,1);
+  border-radius: 10px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+}
+.loginButton{
+  width: 20%;
+  height:50px;
+  display:block;
+  padding: 15px;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+
+  text-align: center;
+  border-radius:3px;
+  line-height: 10px;
+  color:whitesmoke;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.loginButton{
+  cursor:pointer;
+  border-color:dodgerblue;
+  transition-duration: 1s;
+  background: linear-gradient(0deg, rgba(70,160,250,0.9), rgba(70,160,250,1) 20%, rgba(70,160,250,0.9));
+}
+.loginButton:hover{
+  transition-duration: 1s;
+  background: linear-gradient(0deg, rgba(65,155,250,0.9), rgba(65,155,250,1) 20%, rgba(65,155,250,0.9));
+  border-bottom-color:white;
+}
+
+.registerText{
+  text-align: center;
+  display: block;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+
+}
+
+
