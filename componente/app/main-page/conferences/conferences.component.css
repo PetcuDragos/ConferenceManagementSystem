@@ -26,17 +26,43 @@
 .conference-panel:hover{
   background: rgba(0, 138, 230, 0.1);
 }
-.conference_chair{
+.conference-chairs{
   font-family: Helvetica, sans-serif;
-  font-size: 17px;
+  font-size: 20px;
   color: #202020;
-  padding: 10px;
-  margin-left:20px;
+  padding: 20px;
+  margin: 5px;
 }
-.conference_co_chair{
+
+.conference-chairs-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.conference-dates-chunk{
+  display: flex;
+  flex-direction: column;
+}
+
+.conference-dates{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.pc{
+  margin-left: 20px;
+}
+
+.dates-title{
   font-family: Helvetica, sans-serif;
-  font-size: 15px;
-  color: #202020;
-  padding: 10px;
-  margin-left:20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.pc-title{
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
 }
