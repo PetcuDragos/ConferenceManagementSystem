@@ -358,6 +358,29 @@ public class ConferenceController {
 
 
 
-
+    @RequestMapping(value = "/getdeadlines", method = RequestMethod.GET, params = {"conference"})
+    public ChangeDeadlineDto sendDeadlines(@RequestParam("conference") String conferenceName){
+        log.trace("Controller - send Conference - {}", conferenceName);
+        try{
+            Conference conference = conferenceService.getConferenceFromName(conferenceName);
+            if (conference != null)
+            {
+                return new ChangeDeadlineDto(conferenceName,
+                        conferenceService.transformSQLDateIntoMyDate(conference.getAbstractDeadline()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getPaperDeadline()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getBidDeadline()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getReviewDeadline()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getEndingDate()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getReEvalDate()),
+                        conferenceService.transformSQLDateIntoMyDate(conference.getSubmissionDate()));
+            }
+            else
+                return null;
+        }
+        catch (Exception e){
+            log.trace("Controller - send Deadlines failed. Error: \n {}", e.toString());
+        }
+        return null;
+    }
 
 }

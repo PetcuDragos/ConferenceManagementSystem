@@ -186,6 +186,25 @@ public class PaperController {
         return new Message<String>(null,"error");
     }
 
+    @RequestMapping(value = "/getabstract", method = RequestMethod.GET, params = {"username","conference"})
+    public CreateAbstractDto getAbstract(@RequestParam("username") String username,@RequestParam("conference") String conferenceName) {
+        MyUser user = memberService.getUserFromUsername(username);
+        Conference conference = conferenceService.getConferenceFromName(conferenceName);
+        if (user!=null && conference!=null){
+            try{
+                Abstract abs = paperService.getAbstracts().stream().filter(a-> memberService.getAuthorById(a.getAuthor_id()).getUser_id().equals(user.getId()) && a.getConference_id().equals(conference.getId())).findFirst().orElse(null);
+                if(abs!=null) {
+
+                    return new CreateAbstractDto(username,conferenceName,abs.getName(),abs.getContent(),abs.getKeywords(),abs.getTopics(),abs.getAdditionalAuthors(),(long)0,"");
+                }
+            }
+            catch(Exception e){
+                return null;
+            }
+        }
+        return null;
+    }
+
 
 
     @RequestMapping(value = "/createbid", method = RequestMethod.POST)
