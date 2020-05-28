@@ -103,10 +103,10 @@ public class MemberService {
         if (user != null) {
 
             this.myUserRepository.findById(user.getId()).ifPresent(u->{
-                u.setEmail(email);
-                u.setAffiliation(affiliation);
-                u.setWeb_page(webpage);
-                u.setFullName(fullname);
+                if (email!=null && !email.equals("")) u.setEmail(email);
+                if (affiliation!=null && !affiliation.equals("")) u.setAffiliation(affiliation);
+                if (webpage!=null && !webpage.equals("")) u.setWeb_page(webpage);
+                if (fullname!=null && !fullname.equals("")) u.setFullName(fullname);
             });
 
             log.trace("Service - updateProfile - finished - {}", user);

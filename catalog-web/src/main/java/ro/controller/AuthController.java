@@ -83,6 +83,24 @@ public class AuthController {
         return new Message<MyUser>(null,"error");
     }
 
+    @RequestMapping(value = "/profile", method = RequestMethod.GET, params = {"username"})
+    public ProfilePageDto sendProfile(@RequestParam("username") String username){
+        log.trace("Controller - saveProfile - {}", username);
+        try{
+            MyUser userFromUsername = serviceMember.getUserFromUsername(username);
+            if (userFromUsername != null)
+            {
+                return new ProfilePageDto(userFromUsername.getUsername(),userFromUsername.getFullName(),userFromUsername.getEmail(),userFromUsername.getAffiliation(),userFromUsername.getWeb_page());
+            }
+            else
+                return null;
+        }
+        catch (Exception e){
+            log.trace("Controller - saveProfile failed. Error: \n {}", e.toString());
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/scmembers", method = RequestMethod.GET, params = {"username"})
     public boolean checkIfScMember(@RequestParam("username") String username) {
         MyUser user = serviceMember.getUserFromUsername(username);
