@@ -152,17 +152,18 @@ public class ConferenceController {
         boolean cChairValidated = false;
         boolean chairValidated = false;
 
-        for (CChair currentCChair : cChairs) {
-            if (memberService.getMemberFromId(currentCChair.getUser_id()).getUsername().equals(createConferenceDto.getCo_chair_username()))
-                cChairValidated = true;
-            if (memberService.getMemberFromId(currentCChair.getUser_id()).getUsername().equals(createConferenceDto.getChair_username()))
-                chairValidated = true;
-        }
+        if (memberService.getUserFromUsername(createConferenceDto.getCo_chair_username())!=null)
+            cChairValidated = true;
+        if (memberService.getUserFromUsername(createConferenceDto.getChair_username())!=null)
+            chairValidated = true;
         if (!cChairValidated)
             errorString += "Given Co_Chair username does not exist\n";
 
         if (!chairValidated)
             errorString += "Given Chair username does not exist\n";
+        if(createConferenceDto.getCo_chair_username().equals(createConferenceDto.getChair_username()))
+            errorString += "The chair and co-chair must be different\n";
+
         if (!errorString.equals(""))
             return new Message<>(null, errorString);
         MyUser chair_user = this.memberService.getUserFromUsername(createConferenceDto.getChair_username());

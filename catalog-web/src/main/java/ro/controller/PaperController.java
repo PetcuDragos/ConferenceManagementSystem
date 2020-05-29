@@ -80,8 +80,12 @@ public class PaperController {
                     List<String> reviewers = evaluationService.getReviewerNamesForPaper(p.getId());
                     List<Section> sections = this.conferenceService.getSectionsFromConference(conference.getId());
                     List<SectionDto> my_sections = new ArrayList<>();
-                    sections.forEach(s -> my_sections.add(new SectionDto(s.getName(), memberService.getMemberFromId(s.getUser_id()).getUsername())));
-
+                    Paper paper = paperService.getPaperFromAbstractId(p.getId());
+                    if(paper!= null) {
+                        PublishedPaper publishedPaper = paperService.getPublishedPapers().stream().filter(pub -> pub.getPaper_id().equals(paper.getId()) && pub.getSection_id() != null).findFirst().orElse(null);
+                        if(publishedPaper==null)
+                            sections.forEach(s -> my_sections.add(new SectionDto(s.getName(), memberService.getMemberFromId(s.getUser_id()).getUsername())));
+                    }
 
                     if (conference.getSubmissionDate().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))) {
                         int review_result = evaluationService.checkPaperStatusReview(conference.getId(), p.getId());
