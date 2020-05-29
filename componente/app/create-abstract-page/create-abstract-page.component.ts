@@ -9,10 +9,15 @@ import {CreateAbstractService} from "./shared/create.abstract.service";
 })
 export class CreateAbstractPageComponent implements OnInit {
 
+
   constructor(private router: Router, private serviceCreateAbstract: CreateAbstractService) { }
 
   ngOnInit(): void {
     this.paper = null;
+  }
+
+  getDetails(): void{
+
   }
 
   save(title:string,content:string,keywords:string, topics:string,additional_authors:string): void{

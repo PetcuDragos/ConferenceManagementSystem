@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 public class ConferenceTest extends TestCase {
 
+
     public void setUp() throws Exception {
         super.setUp();
     }

@@ -48,10 +48,6 @@ public class PaperService {
         return abstractRepository.save(new Abstract(keywords, topics, name, additionalAuthors, content, author_id, conference_id));
     }
 
-    public Abstract getAbstractById(Long id) {
-        return this.abstractRepository.findById(id).orElse(null);
-    }
-
     public Paper getPaperFromAbstractId(Long abstract_id) {
         return this.paperRepository.findAll().stream().filter(p -> p.getAbstract_id().equals(abstract_id)).findAny().orElse(null);
     }

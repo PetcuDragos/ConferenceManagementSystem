@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ProfilePageService} from "./shared/service";
+import {ProfilePage} from "./shared/model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-profile-page',
@@ -8,13 +10,21 @@ import {ProfilePageService} from "./shared/service";
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
-
+  userData: ProfilePage;
   constructor(private profilePageService: ProfilePageService, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.fillData();
   }
 
   @Input() error:string;
+
+  fillData(): void{
+    //get Data from user
+    this.profilePageService.getUserData().subscribe(m => this.userData = m);
+
+  }
 
   save(fullname, email, affiliation, webpage): void{
     this.profilePageService.save({username: localStorage.getItem("username"), fullName: fullname,

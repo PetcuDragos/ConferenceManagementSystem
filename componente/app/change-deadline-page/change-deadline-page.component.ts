@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ChangeDeadlineService} from "./shared/changeDeadline.service";
+import {ChangeDeadlineModel, MyDate} from "./shared/changeDeadline.model";
 
 @Component({
   selector: 'app-change-deadline-page',
@@ -10,10 +11,44 @@ import {ChangeDeadlineService} from "./shared/changeDeadline.service";
 
 export class ChangeDeadlinePageComponent implements OnInit {
 
+  curentDates: ChangeDeadlineModel;
+  private ending_date: MyDate;
+  private submissionDate: MyDate;
+  private reEval_deadline: MyDate;
+  private review_deadline: MyDate;
+  private bidding_deadline: MyDate;
+  private paper_deadline: MyDate;
+  private abstract_deadline: MyDate;
+  private starting_date: MyDate;
+
+
   constructor(private router: Router, private service: ChangeDeadlineService) {
   }
 
   ngOnInit(): void {
+    this.getCurentDates();
+
+    //(<HTMLInputElement>document.getElementById("ending_date")).valueAsDate=this.MyDateToDate(this.curentDates.ending_date);
+  }
+
+  MyDateToDate(date: MyDate): Date{
+    return new Date(date.year,date.month,date.day);
+  }
+
+  getCurentDates(): void{
+    this.service.getCurentDates().subscribe(m => {
+      this.curentDates = m;
+      console.log(this.curentDates);
+      (<HTMLInputElement>document.getElementById("abstract_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.abstract_deadline);
+      (<HTMLInputElement>document.getElementById("paper_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.paper_deadline);
+      (<HTMLInputElement>document.getElementById("bidding_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.bidding_deadline);
+      (<HTMLInputElement>document.getElementById("review_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.review_deadline);
+      (<HTMLInputElement>document.getElementById("reEval_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.reEval_date);
+      (<HTMLInputElement>document.getElementById("submission_deadline")).valueAsDate=this.MyDateToDate(this.curentDates.submissionDate);
+      (<HTMLInputElement>document.getElementById("ending_date")).valueAsDate=this.MyDateToDate(this.curentDates.ending_date);
+
+    });
+
   }
 
   check(date1: Date, date2: Date): boolean{

@@ -80,7 +80,7 @@ main {
   align-items: center;
 }
 
-form input[type=submit]{
+form input[type=submit], textarea[type=submit]{
   background-color: dodgerblue;
   color: white;
   border: none;
@@ -88,7 +88,7 @@ form input[type=submit]{
   height:35px;
 }
 
-form input[type=submit]:hover{
+form input[type=submit]:hover , textarea{
   opacity:0.8;
 }
 
@@ -97,7 +97,7 @@ form label {
   width: 20%;
 }
 
-form input[type=text] {
+form input[type=text] , textarea[type=text]{
   border: 2px solid rgba(70,160,250,1);
   border-radius: 10px;
   padding: 10px 10px;

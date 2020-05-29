@@ -32,6 +32,7 @@ import {EditAbstractService} from "./edit-abstract-page/shared/service";
 import {ReviewAbstractService} from "./review-abstract-page/shared/service";
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
 import {ReviewService} from "./reviews-page/shared/service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {ReviewService} from "./reviews-page/shared/service";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [LoginService, RegisterService, MemberService, PaperService, ConferenceService, AbstractService, ProfilePageService, CreateConferenceService, CreateAbstractService, ChangeDeadlineService, EditAbstractService, ReviewAbstractService, ReviewService],
   bootstrap: [AppComponent]

@@ -13,4 +13,8 @@ export class ProfilePageService{
     console.log("profile page saving");
     return this.httpClient.post<Message>("http://localhost:8080/api/profile", profilePage);
   }
+
+  getUserData(): Observable<any> {
+    return this.httpClient.get<ProfilePage>("http://localhost:8080/api/profile", {params: {username : localStorage.getItem("username")}})
+  }
 }

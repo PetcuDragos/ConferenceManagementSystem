@@ -1,13 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CreateAbstractModel} from "../../create-abstract-page/shared/create.abstract.model";
+import {Observable} from "rxjs";
 
 
 @Injectable()
 export class EditAbstractService {
   id:number;
+
   constructor(private httpClient: HttpClient) {
     this.id = null;
+  }
+
+  getAbstract(): Observable<any>{
+    return this.httpClient.get<any>("http://localhost:8080/api/getabstract",{params: {username: localStorage.getItem("username"), conference: localStorage.getItem("selected_conference_id")}})
   }
 
   editAbstract(title: string, content: string, keywords: string, topics: string, additional_authors: string, paper: File): void {
