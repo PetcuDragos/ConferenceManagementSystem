@@ -3,7 +3,6 @@ package ro.config;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import ro.config.JPAConfig;
 
 @Configuration
 @ComponentScan({"ro"})

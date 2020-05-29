@@ -8,6 +8,7 @@ public class Abstract extends BaseEntity{
     private String topics;
     private String name;
     private String additionalAuthors;
+    @Column(length=3000)
     private String content;
     private Long author_id;
     private Long conference_id;

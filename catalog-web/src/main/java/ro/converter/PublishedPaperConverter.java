@@ -2,7 +2,9 @@ package ro.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.domain.*;
+import ro.domain.Paper;
+import ro.domain.PublishedPaper;
+import ro.domain.Section;
 import ro.dto.PublishedPaperDto;
 import ro.repository.*;
 
@@ -21,18 +23,13 @@ public class PublishedPaperConverter extends BaseConverter<PublishedPaper, Publi
     SectionRepository sectionRepository;
 
     @Override
-    public PublishedPaper convertDtoToModel(PublishedPaperDto dto) {
-        return null;
-    }
-
-    @Override
     public PublishedPaperDto convertModelToDto(PublishedPaper publishedPaper) {
         // todo: make it less taranesque
         Paper paper = paperRepository.findById(publishedPaper.getPaper_id()).get();
         Long userID = authorRepository.findById(paper.getAuthor_id()).get().getUser_id();
         Section section = sectionRepository.findById(publishedPaper.getSection_id()).orElse(null);
         String section_name = null;
-        if(section!=null) section_name = section.getName();
+        if (section != null) section_name = section.getName();
         PublishedPaperDto publishedPaperDto = new PublishedPaperDto(paper.getDocument(),
                 paper.getConference_id(),
                 paper.getAuthor_id(),

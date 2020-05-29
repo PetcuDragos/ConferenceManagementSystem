@@ -1,6 +1,10 @@
 <div class="panel member-panel" *ngFor="let member of members">
-  <div class="member-name">{{member.fullname}}</div>
-  <div class="member-username"><em>{{member.username}}</em></div>
+  <div class="member-name">
+    <img src="assets/user.png" height="24px">
+    <span>{{member.fullname}}</span>
+    <span class="member-username">#{{member.username}}</span>
+  </div>
+
   <div class="member-email">Email: {{member.email}}</div>
   <div class="member-aff">Affiliation: {{member.affiliation}}</div>
   <a href="{{member.webpage}}" class="member-site">{{member.webpage}}</a>

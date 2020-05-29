@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import ro.domain.Date;
 
 import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

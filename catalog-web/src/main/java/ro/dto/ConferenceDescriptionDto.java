@@ -1,8 +1,8 @@
 package ro.dto;
-import lombok.NoArgsConstructor;
-import ro.domain.Conference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;

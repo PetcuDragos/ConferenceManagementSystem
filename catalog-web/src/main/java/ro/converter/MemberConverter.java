@@ -6,14 +6,10 @@ import ro.dto.MemberDto;
 
 @Component
 public class MemberConverter extends BaseConverter<MyUser, MemberDto> {
-    @Override
-    public MyUser convertDtoToModel(MemberDto dto) {
-        return null;
-    }
 
     @Override
     public MemberDto convertModelToDto(MyUser myUser) {
-        MemberDto member = new MemberDto(myUser.getFullName(),myUser.getUsername(),myUser.getEmail(),myUser.getAffiliation(),myUser.getWeb_page());
+        MemberDto member = new MemberDto(myUser.getFullName(), myUser.getUsername(), myUser.getEmail(), myUser.getAffiliation(), myUser.getWeb_page());
         member.setId(myUser.getId());
         return member;
     }

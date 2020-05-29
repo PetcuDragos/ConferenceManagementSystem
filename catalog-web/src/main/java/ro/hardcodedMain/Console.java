@@ -2,7 +2,7 @@ package ro.hardcodedMain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.domain.*;
+import ro.domain.MyUser;
 import ro.service.ConferenceService;
 import ro.service.EvaluationService;
 import ro.service.MemberService;
@@ -13,27 +13,19 @@ public class Console {
 
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private ConferenceService conferenceService;
-    @Autowired
-    private PaperService paperService;
-    @Autowired
-    private EvaluationService evaluationService;
 
-    public void runConsole(){
+    public void runConsole() {
 
-        try{
-            MyUser m = memberService.addUser("admin","admin","admin@yahoo.com","Kosmo Polis","Supergeil","www.supergeil.de");
-        }
-        catch(Exception e){
+        try {
+            memberService.addUser("admin", "admin", "admin@yahoo.com", "Kosmo Polis", "Supergeil", "www.supergeil.de");
+        } catch (Exception e) {
             System.out.println("error");
         }
-        try{
+        try {
             MyUser user = memberService.getUserFromUsername("admin");
-            if(user!=null)
+            if (user != null)
                 memberService.addScMember(user.getId());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("error");
         }
     }

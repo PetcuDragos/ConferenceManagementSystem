@@ -55,20 +55,6 @@ public class ConferenceService {
         );
     }
 
-    public boolean isConferenceChair(Long conferenceId, Long userId) {
-        //toDo: check if the conference exists
-        Conference conference = this.conferenceRepository.getOne(conferenceId);
-        return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getChair_id())
-                .get().getUser_id()).get().getUser_id().equals(userId);
-    }
-
-    public boolean isConferenceCoChair(Long conferenceId, Long userId) {
-        //toDo: check if the conference exists
-        Conference conference = this.conferenceRepository.getOne(conferenceId);
-        return this.pcMemberRepository.findById(this.cChairRepository.findById(conference.getCo_chair_id())
-                .get().getUser_id()).get().getUser_id().equals(userId);
-    }
-
     public Conference getConferenceFromId(Long id){
         return conferenceRepository.findById(id).orElse(null);
     }
@@ -88,9 +74,6 @@ public class ConferenceService {
 
     }
 
-    public java.sql.Date transformMyDateIntoSQLDate(Date myDate){
-        return java.sql.Date.valueOf(myDate.getYear().toString()+'-'+myDate.getMonth().toString()+'-' + myDate.getDay().toString());
-    }
 
     public Date transformSQLDateIntoMyDate(java.sql.Date sqlDate){
         Calendar cal = Calendar.getInstance();
@@ -106,11 +89,9 @@ public class ConferenceService {
     }
 
     public void joinConference(long userId, long conferenceId){
-        int x = 0;
         this.userConferenceRepository.save(new UserConference(conferenceId, userId));
     }
 
-    // TODO: A
     public Author getAuthor(Long conferenceId, Long userId) {
         List<Author> authors = this.authorRepository.findAll().stream()
                 .filter(author -> author.getConference_id().equals(conferenceId) && author.getUser_id().equals(userId))

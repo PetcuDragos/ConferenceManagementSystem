@@ -21,8 +21,14 @@ export class ConferencesComponent implements OnInit {
 
   joinConference(conferencel: ConferenceDescription, conference_id: number): void {
     this.conferenceService.joinConference(conference_id).subscribe(m=>{
+<<<<<<< Updated upstream
       conferencel.joined=true;
     this.someEvent.next("");});
+=======
+    this.someEvent.next("");
+
+    });
+>>>>>>> Stashed changes
   }
 
 

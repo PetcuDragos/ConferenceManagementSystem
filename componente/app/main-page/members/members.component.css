@@ -9,9 +9,13 @@
 
 .member-username {
   font-family: Helvetica, sans-serif;
-  font-size: 15px;
-  color: #202020;
-  padding-left: 10px;
+  font-size: 16px;
+  color: white;
+  font-style: italic;
+  margin-left: 20px;
+  padding:5px 10px;
+  background-color: dodgerblue;
+  border-radius: 2px;
 }
 
 .member-email{
@@ -38,4 +42,9 @@
 
 .paper-panel:hover{
   background: rgba(0, 138, 230, 0.1);
+}
+
+.member-name span{
+  line-height: 24px;
+  padding-left:15px;
 }

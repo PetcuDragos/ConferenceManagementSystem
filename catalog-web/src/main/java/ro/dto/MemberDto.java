@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Data
 @AllArgsConstructor
 @ToString(callSuper = true)
