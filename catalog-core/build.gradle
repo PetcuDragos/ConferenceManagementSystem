@@ -7,6 +7,8 @@ dependencies {
     compile(group: 'org.springframework.data', name: 'spring-data-jpa', version: "$springDataVersion")
 
     compile group: 'org.hibernate', name: 'hibernate-core', version: "$hibernateVersion"
+    compile group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: "$hibernateVersion"
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version:'1.0.0.Final'
 
     compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"
 //    compile group: 'postgresql', name: 'postgresql', version: "$jdbcpostgreSqlVersion"
@@ -23,5 +25,20 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: "$jaxbapiVersion"
     // https://mvnrepository.com/artifact/javax.mail/mail
     compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+
+// https://mvnrepository.com/artifact/org.springframework/spring-aop
+    compile group: 'org.springframework', name: 'spring-aop', version: '5.2.5.RELEASE'
+// https://mvnrepository.com/artifact/org.hsqldb/hsqldb
+    testCompile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.3'
+// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.10.Final'
+
+    //dbUnitTesting
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.0'
+    compile group: 'org.dbunit', name: 'dbunit', version: '2.5.3'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.193'
+    compile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version: '1.3.0'
+    // https://mvnrepository.com/artifact/org.springframework/spring-test
+    testCompile group: 'org.springframework', name: 'spring-test', version: '5.2.5.RELEASE'
 
 }
