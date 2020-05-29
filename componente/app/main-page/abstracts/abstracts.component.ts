@@ -56,7 +56,8 @@ export class AbstractsComponent implements OnInit {
 
   //TODO: A4
   alreadyPostedAbstract(): boolean {
-    return this.abstracts.length > 0;
+    var username = localStorage.getItem("username");
+    return this.abstracts.filter(p=>p.authorName==username).length > 0;
   }
 
   changeDeadlines():void{
@@ -115,16 +116,16 @@ export class AbstractsComponent implements OnInit {
     return this.abstractService.chair;
   }
 
-  isUserAuthor() {
-    return this.abstractService.author;
-  }
 
   addPCMemberOption():void{
     this.pcmember_option = true;
   }
 
   addPCMember(username:string):void{
-    this.abstractService.addPCMember(username).subscribe(m=>{console.log(m);});
+    this.abstractService.addPCMember(username).subscribe(m=>{
+      if(m==true) alert("Success!");
+      else alert("There has been an error, are you sure he/she is a member?");
+      console.log(m);});
   }
 
   getUsername():string{

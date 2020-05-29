@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,26 +43,26 @@
         <span>Review paper</span>
       </div>
 
-
+      <div id="cont"><span>Content</span></div>
       <div class="inputContainer">
-        <label>Content:</label>
-        <input type="text" #content>
-
-
-        <select #result>
-          Bid:
-          <option value="3">Strong accept</option>
-          <option value="2">Accept</option>
-          <option value="1">Weak accept</option>
-          <option value="0">Borderline paper</option>
-          <option value="-1">Weak reject</option>
-          <option value="-2">Reject</option>
-          <option value="-3">Strong reject</option>
-        </select>
+        <textarea #content></textarea>
       </div>
 
+      <hr>
 
-      <div class="save" (click)="save(content.value,result.value)" >Save</div>
+      <select #result>
+        Bid:
+        <option value="3">Strong accept</option>
+        <option value="2">Accept</option>
+        <option value="1">Weak accept</option>
+        <option value="0">Borderline paper</option>
+        <option value="-1">Weak reject</option>
+        <option value="-2">Reject</option>
+        <option value="-3">Strong reject</option>
+      </select>
+
+
+      <div id="saveButton" (click)="save(content.value,result.value)" style="float: right">Save</div>
 
     </div>
 

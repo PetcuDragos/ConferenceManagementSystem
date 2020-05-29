@@ -31,6 +31,7 @@ export class ProfilePageComponent implements OnInit {
       email: email, affiliation: affiliation, webpage: webpage}).subscribe(t=>{
       if (t.entity != null){
         alert("Saved");
+        this.router.navigate(['']);
       }
       else{
         alert(t.error);

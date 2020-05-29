@@ -105,3 +105,9 @@ form input[type=text] {
   align-items: center;
   margin-bottom: 5px;
 }
+#SaveProfileButton{
+  color:white;
+  background-color: dodgerblue;
+  padding:10px;
+  cursor: pointer;
+}

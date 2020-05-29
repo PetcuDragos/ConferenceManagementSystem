@@ -1,9 +1,9 @@
 <body>
 <div *ngIf="hasAnyConference()">
 
-<div class="option" *ngIf="canPostAbstract() && alreadyPostedAbstract() == false" (click)="addAbstract()"> Start your own paper</div>
+<div class="option" *ngIf="canPostAbstract() && alreadyPostedAbstract() == false && !isUserChairForConference()" (click)="addAbstract()"> Start your own paper</div>
 <div class="option" (click)="changeDeadlines()" *ngIf="isUserChairForConference()">Change deadlines</div>
-<div class="option" (click)="addPCMemberOption()" *ngIf="isUserChairForConference()">Add PC Member</div>
+<div class="option" (click)="addPCMemberOption()" *ngIf="isUserChairForConference() && canBid()">Add PC Member</div>
 <div class="addpcmember" *ngIf="pcmember_option">
   <input type="text" #username placeholder="username">
   <button (click)="addPCMember(username.value)">Add</button>
@@ -24,10 +24,11 @@
   <div class="deadline">Submission Deadline is {{getSubmissionDeadline()}}</div>
 
 <div *ngFor="let abstract of abstracts" class="panel">
- <h4>{{abstract.entity.name}}</h4> by <h5>{{abstract.authorName}}</h5>
-  <br>
-  <h6>{{abstract.entity.content}}</h6>
-  <h5>Authors that contributed: {{abstract.entity.additionalAuthors}}</h5>
+
+  <br><div id="absDivName"><img src="assets/paper.png" height="24px"><span id="abstractName">{{abstract.entity.name}}</span></div>
+  <br><div><img src="assets/user.png" height="24px"><span id="absAuthorName">{{abstract.authorName}}</span></div>
+  <br><div id="absDivContent"><span id="abstractContent">{{abstract.entity.content}}</span></div>
+  <br><div><span id="abstractAuthors">Authors that contributed - {{abstract.entity.additionalAuthors}}</span></div>
 
 <div *ngIf="canSubmission()">
   <div *ngIf="isUserPCMemberForConference() && abstract.authorName!=getUsername() && canBid() && !canChangePaper() && !abstract.bidded">
@@ -37,37 +38,44 @@
     <option value="0">Don't care for review</option>
     <option value="-1">Refuse for review</option>
   </select>
-  <button (click)="bidAbstract(abstract,choice.value)" >Bid</button>
+  <div id="bidButton"  (click)="bidAbstract(abstract,choice.value)" >Bid</div>
   </div>
 
-  <br><button (click)="reviewPaper(abstract.entity.id)" *ngIf="abstract.canReview && abstract.authorName!=getUsername() && (canReview() || canReEval()) && !canBid() && !abstract.reviewed">Review</button>
+  <br><div id="absButton" (click)="reviewPaper(abstract.entity.id)" *ngIf="abstract.canReview && abstract.authorName!=getUsername() && (canReview() || canReEval()) && !canBid() && !abstract.reviewed">Review</div>
   <br>
   <div *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canBid()" >
-    <button (click)="getPCMembers(abstract, abstract.entity.id)">Assign Reviewers</button>
+    <div id="absButton" (click)="getPCMembers(abstract, abstract.entity.id)">Assign Reviewers</div>
     <div *ngIf="abstract.show_reviewers">
-      <div *ngFor="let pcmember of pcmembers" (click)="assignReviewer(abstract, abstract.entity.id,pcmember.pc_id)">{{pcmember.username}}</div>
+      <div id="pcmember" *ngFor="let pcmember of pcmembers" (click)="assignReviewer(abstract, abstract.entity.id,pcmember.pc_id)">
+        <img src="assets/pcmember.png" width="24px">
+        <span id="pc">{{pcmember.username}}</span>
+      </div>
     </div>
 
     <div> Reviewers assigned:
-      <div *ngFor="let reviewer of abstract.reviewers">{{reviewer}}</div>
+      <div *ngFor="let reviewer of abstract.reviewers">
+        <img src="assets/pcmember.png"  width="24px">
+        <span id="reviewer">{{reviewer}}</span>
+      </div>
     </div>
 
 
   </div>
 
-  <br><button *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canReview() && !abstract.askForReEval" (click)="askForReEval(abstract, abstract.entity.id)">Ask for re-evaluation</button>
-  <button *ngIf="isUserChairForConference() && !canReEval()" (click)="acceptPaper(abstract, abstract.entity.id)">Accept paper</button>
-  <button *ngIf="isUserChairForConference() && !canReEval()" (click)="declinePaper(abstract, abstract.entity.id)">Decline paper</button>
-  <br><button (click)="seeReviews(abstract.entity.id)" *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && abstract.authorName!=getUsername() && !canBid() && abstract.reviewed"> See other reviewers evaluation</button>
+  <br><div id="absButton" *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canReview() && canReEval() && !abstract.askForReEval" (click)="askForReEval(abstract, abstract.entity.id)">Ask for re-evaluation</div>
+  <div id="absButton" *ngIf="isUserChairForConference() && !canReEval() && !abstract.acceptAbstractButton" (click)="acceptPaper(abstract, abstract.entity.id)">Accept paper</div>
+  <div id="absButton" *ngIf="isUserChairForConference() && !canReEval() && !abstract.acceptAbstractButton" (click)="declinePaper(abstract, abstract.entity.id)">Decline paper</div>
+  <br><div id="absButton" (click)="seeReviews(abstract.entity.id)" *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && abstract.authorName!=getUsername() && !canBid() && abstract.reviewed"> See other reviewers evaluation</div>
 </div>
-  <div *ngIf="getUsername()==abstract.authorName && (canChangePaper() || !canReEval()) && notEnded()" (click)="editAbstract(abstract.entity.id)">Edit abstract</div>
-  <div *ngIf="abstract.url!=null" (click)="downloadPaper(abstract.url)"> Download Paper</div>
+  <div id="absButton" *ngIf="getUsername()==abstract.authorName && (canChangePaper() || !canReEval()) && notEnded()" (click)="editAbstract(abstract.entity.id)">Edit abstract</div>
+  <div class="paper-button" *ngIf="abstract.url!=null" (click)="downloadPaper(abstract.url)"> Download Paper</div>
 
-  <div *ngIf="!canSubmission()"> Choose section
-    <select #the_section>
+  <div id="sections" *ngIf="!canSubmission() && abstract.sections.length>0"> <span>Choose section</span>
+    <div id="the_section"><select #the_section>
     <option *ngFor="let section of conference.sections">{{section.name}}</option>
     </select>
-    <div (click)="joinSectionPaper(abstract,abstract.entity.id,the_section.value)">Join section</div>
+    </div>
+    <div id="joinButton" (click)="joinSectionPaper(abstract,abstract.entity.id,the_section.value)">Join</div>
   </div>
 
 </div>

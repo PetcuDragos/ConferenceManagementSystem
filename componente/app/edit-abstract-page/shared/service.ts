@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CreateAbstractModel} from "../../create-abstract-page/shared/create.abstract.model";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 
 @Injectable()
 export class EditAbstractService {
   id:number;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router:Router) {
     this.id = null;
   }
 
@@ -30,7 +31,11 @@ export class EditAbstractService {
       this.id = null;
       this.httpClient.post<any>("http://localhost:8080/api/editabstract", c as CreateAbstractModel).subscribe(m => {
         this.httpClient.post<any>("http://localhost:8080/api/upload", formData).subscribe(m => {
+          if(m=="success") alert("Upload was successful!");
+          if(m=="error") alert("There has been an error with uploading the file.");
+          this.router.navigate(['']);
         });
+
       });
     } else {
       console.log("upload file failed");

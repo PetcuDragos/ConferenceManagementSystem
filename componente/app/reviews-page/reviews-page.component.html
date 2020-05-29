@@ -39,12 +39,13 @@
 <div class="mainDiv">
   <main>
     <div class="userContainer">
-
+    <div id="reviewDiv">
       <div *ngFor="let review of reviews" class="panel conference-panel">
         <div class="conference_name"> Reviewer: {{review.username}}</div>
         <div class="conference_chair">Evaluation: {{review.content}} </div>
-        <div class="conference_co_chair">Result: {{review.result}}</div>
+        <div class="conference_co_chair">Result: {{transformResult(review.result)}}</div>
       </div>
+    </div>
     </div>
   </main>
 </div>

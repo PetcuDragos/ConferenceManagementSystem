@@ -32,7 +32,7 @@ export class ChangeDeadlinePageComponent implements OnInit {
   }
 
   MyDateToDate(date: MyDate): Date{
-    return new Date(date.year,date.month,date.day);
+    return new Date(date.year,date.month-1,date.day);
   }
 
   getCurentDates(): void{
