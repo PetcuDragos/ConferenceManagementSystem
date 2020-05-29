@@ -18,7 +18,7 @@ html{
   overflow-y: hidden;
 }
 body {
-  animation: transitionPage 0.45s;
+  animation: transitionPage 0.65s;
   background-color: #e9ebee;
   left:0;
   top:0;
@@ -420,4 +420,12 @@ button.evaluate {
   padding:15px;
   padding-left:30px;
   line-height: 30px;
+}
+
+#group_list:focus, #group_list:active{
+  border: 0;
+  transition: all 0.2s linear 0s;
+}
+#group_list li{
+  transition: all 0.2s linear 0s;
 }

@@ -30,7 +30,9 @@ export class MainPageComponent implements OnInit {
   }
 
   mainpage(): void {
-    this.option = 1;
+    if(sessionStorage.getItem("username") != null)
+      this.option = 1;
+    else this.option = -1;
   }
 
   login() {

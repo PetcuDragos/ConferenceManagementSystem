@@ -1,8 +1,11 @@
-<article class="panel paper-panel" *ngFor="let paper of papers">
-  <div class="paper-name">{{paper.paper_name}}</div>
-  <div class="paper-author"><em>{{paper.author_name}}</em></div>
-  <div class="paper-abstract">{{paper.abstract_content}}</div>
-  <button class="paper-button" (click)="download(paper.content)">Download full paper</button>
 
-  <!-- schimba la loc lol <button><a href="{{paper.content}}" class="paper-download">Download full paper</a></button> -->
+<body>
+<article class="panel paper-panel" *ngFor="let paper of papers">
+  <div class="paper-name"><img src="assets/paper.png">{{paper.paper_name}}</div>
+  <div class="paper-author"><em><img src="assets/user.png">{{paper.author_name}}</em></div>
+  <div class="paper-abstract">{{paper.abstract_content}}</div>
+  <div class="paper-section"><img src="assets/section.png" width="24px">{{paper.section_name}}</div>
+  <div class="paper-button" (click)="download(paper.content)">Download full paper</div>
+
 </article>
+</body>
