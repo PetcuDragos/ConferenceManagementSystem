@@ -21,7 +21,8 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.populateAll();
-    localStorage.setItem("selected_conference_id", "");
+    if(sessionStorage.getItem("selected_conference_id") == null)
+      localStorage.setItem("selected_conference_id", "");
     this.option = -1;
   }
 
@@ -30,8 +31,9 @@ export class MainPageComponent implements OnInit {
   }
 
   mainpage(): void {
-    if(sessionStorage.getItem("username") != null)
-      this.option = 1;
+    if(sessionStorage.getItem("selected_conference_id") != null)
+      if(this.option == 1) this.option = 0;
+      else this.option = 1;
     else this.option = -1;
   }
 

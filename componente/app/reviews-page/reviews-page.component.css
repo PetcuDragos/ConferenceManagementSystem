@@ -4,6 +4,8 @@
   height: calc(100% - 65px);
 }
 
+
+
 .back {
   position: relative;
   display: inline-block;
@@ -39,9 +41,9 @@ main {
 }
 
 .userContainer {
-  width: 40%;
   max-width: 80%;
-  min-width: 400px;
+  min-width: 300px;
+  min-height: 100px;
   padding: 0;
   position: relative;
   background-color: #FFFFFF;
@@ -110,4 +112,7 @@ form input[type=text] {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+}
+.panel{
+  margin-top:30px;
 }

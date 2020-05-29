@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ChangeDeadlineMessage, ChangeDeadlineModel} from "./changeDeadline.model";
 import {MyDate} from "../../create-conference-page/shared/createConference.model";
+import {Observable} from "rxjs";
+import {ProfilePage} from "../../profile-page/shared/model";
 
 @Injectable()
 export class ChangeDeadlineService{
@@ -27,6 +29,7 @@ export class ChangeDeadlineService{
       console.log("changeDeadline: ", response.entity);
     });
   }
-
-
+  getCurentDates(): Observable<any>{
+    return this.httpClient.get<any>("http://localhost:8080/api/getdeadlines", {params: {conference : localStorage.getItem("selected_conference_id")}})
+  }
 }

@@ -43,11 +43,12 @@
         <span>Review paper</span>
       </div>
 
-
+      <div id="cont"><span>Content</span></div>
       <div class="inputContainer">
-        <label>Content:</label>
-        <input type="text" #content>
+        <textarea #content></textarea>
       </div>
+
+      <hr>
 
       <select #result>
         Bid:
@@ -59,9 +60,9 @@
         <option value="-2">Reject</option>
         <option value="-3">Strong reject</option>
       </select>
-      <hr>
 
-      <div (click)="save(content.value,result.value)" style="float: right">Save</div>
+
+      <div id="saveButton" (click)="save(content.value,result.value)" style="float: right">Save</div>
 
     </div>
 

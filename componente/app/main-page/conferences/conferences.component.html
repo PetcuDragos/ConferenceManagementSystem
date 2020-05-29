@@ -1,4 +1,3 @@
-<html>
 <body>
 <div *ngFor="let conferencel of conferences" class="panel conference-panel">
   <div class="conference_name"> {{conferencel.name}}</div>
@@ -42,4 +41,3 @@
   <br><button class="conference_button" *ngIf="!conferencel.joined" (click)="joinConference(conferencel,conferencel.conference.id)">Join conference</button>
 </div>
 </body>
-</html>

@@ -421,11 +421,11 @@ button.evaluate {
   padding-left:30px;
   line-height: 30px;
 }
-
-#group_list:focus, #group_list:active{
+#group_list{
+  box-shadow: #444444;
+}
+#group_list:active{
+  box-shadow: none;
   border: 0;
-  transition: all 0.2s linear 0s;
 }
-#group_list li{
-  transition: all 0.2s linear 0s;
-}
+

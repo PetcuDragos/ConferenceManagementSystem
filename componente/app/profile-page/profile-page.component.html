@@ -46,27 +46,27 @@
         <form>
           <div class="inputContainer">
             <label>Full Name:</label>
-            <input type="text" #fullname placeholder="Your full name..">
+            <input type="text" #fullname placeholder="{{userData.fullName}}">
           </div>
 
           <div class="inputContainer">
             <label>Email:</label>
-            <input type="text" #email placeholder="Your email..">
+            <input type="text" #email placeholder="{{userData.email}}">
           </div>
 
           <div class="inputContainer">
             <label>Affiliation:</label>
-            <input type="text" #affiliation placeholder="Affiliation you're in..">
+            <input type="text" #affiliation placeholder="{{userData.affiliation}}">
           </div>
 
           <div class="inputContainer">
             <label>Webpage:</label>
-            <input type="text" #webpage placeholder="Your webpage..">
+            <input type="text" #webpage placeholder="{{userData.webpage}}">
           </div>
 
           <hr>
 
-          <div (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">Save</div>
+          <div id="SaveProfileButton" (click)="save(fullname.value, email.value, affiliation.value, webpage.value)" style="float: right">Save</div>
 
         </form>
 

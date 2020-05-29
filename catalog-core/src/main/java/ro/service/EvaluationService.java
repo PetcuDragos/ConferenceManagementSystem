@@ -121,6 +121,7 @@ public class EvaluationService {
     public int checkPaperStatusReview(Long conference_id, Long abstract_id) {
         if (checkPaperStatusBidding(conference_id, abstract_id) == -1) return -1;
         Paper p = getPaperFromAbstractId(abstract_id);
+        if(p.getReEvaluated()==1) return 0;
         PublishedPaper publishedPaper = publishedPaperRepository.findAll().stream().filter(pp -> pp.getPaper_id().equals(p.getId())).findAny().orElse(null);
         if (publishedPaper != null) return -1;
         int minim = 0;

@@ -28,5 +28,15 @@ export class ReviewsPageComponent implements OnInit {
   mainpage():void{
     this.router.navigate(['']);
   }
+  transformResult(result: number){
+    if(result == 3) return "Strong accept";
+    if(result == 2) return "Accept";
+    if(result == 1) return "Weak accept";
+    if(result == 0) return "Borderline paper";
+    if(result == -1) return "Weak reject";
+    if(result == -2) return "Reject";
+    if(result == -3) return "Strong reject";
+
+  }
 
 }

@@ -106,8 +106,35 @@ form input[type=text] {
 
 .inputContainer {
   width: 100%;
-  display: flex;
+  display: block;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+}
+.inputContainer textarea{
+  width:90%;
+  height:300px;
+  display: inline-block;
+  position:relative;
+  margin-left:20px;
+  margin-right: 20px;
+
+}
+.inputContainer label{
+  display: block;
+
+}
+#saveButton{
+  color:white;
+  background-color: dodgerblue;
+  padding:10px;
+  cursor: pointer;
+  margin:20px;
+}
+#cont{
+  margin-top:10px;
+  margin-bottom:10px;
+  margin-left: 20px;
+  padding-top:10px;
+  padding-bottom: 10px;
 }
