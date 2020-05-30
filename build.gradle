@@ -1,23 +1,84 @@
-plugins {
-    id 'java'
+
+
+allprojects {
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        springVersion = '5.0.3.RELEASE'
+        postgresqlVersion = '42.2.1'
+//        jdbcpostgreSqlVersion = '9.1-901.jdbc4'
+        dbcpVersion = '2.2.0'
+
+        slf4jVersion = '1.7.25'
+        log4jVersion = '2.10.0'
+
+        springDataVersion = '2.0.3.RELEASE'
+//        hibernateVersion = '5.2.10.Final'
+//        hibernateVersion = '5.2.13.Final'
+        hibernateVersion = '5.2.6.Final'
+        caffeineVersion = '2.6.1'
+        hikariVersion = '2.7.7'
+        jaxbapiVersion = '2.3.0'
+
+        javaxValidationVersion = '2.0.0.Final'
+        hibernateValidatorVersion = '6.0.6.Final'
+        javaxElApiVersion = '3.0.1-b04'
+        glassfishJavaxElVersion = '3.0.1-b08'
+
+        lombokVersion = '1.18.12'
+
+        jacksonDatabindVersion = '2.9.4'
+//        javaxServeletApiVersion = '3.1.0'
+        javaxServeletApiVersion = '4.0.1'
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+
+        compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
+
+        //jdbctemplate
+        compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"
+//        compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"
+        compile group: 'org.apache.commons', name: 'commons-dbcp2', version: "$dbcpVersion"
+
+        //logging
+        compile group: 'org.slf4j', name: 'slf4j-api', version: "$slf4jVersion"
+        testCompile group: 'org.slf4j', name: 'slf4j-simple', version: "$slf4jVersion"
+
+        compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "$log4jVersion"
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "$log4jVersion"
+        compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "$log4jVersion"
+
+        //validation
+//        compile group: 'javax.validation', name: 'validation-api', version: "$javaxValidationVersion"
+//        compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "$hibernateValidatorVersion"
+//        compile group: 'javax.el', name: 'javax.el-api', version: "$javaxElApiVersion"
+//        compile group: 'org.glassfish', name: 'javax.el', version: "$glassfishJavaxElVersion"
+
+        //lombok
+        //compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        //newsletter
+        // https://mvnrepository.com/artifact/javax.mail/mail
+        compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+
+
+        //testing
+        // https://mvnrepository.com/artifact/junit/junit
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+
+        testCompile group: 'org.springframework', name: 'spring-test', version: "$springVersion"
+    }
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
-
-    // https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc
-    compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '6.1.0.jre7'
-
-}

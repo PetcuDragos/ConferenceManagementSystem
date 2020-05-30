@@ -1,0 +1,129 @@
+.conference_name{
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  color: #202020;
+  background: rgba(0, 138, 230, 0.3);
+  padding: 10px;
+}
+.conference_button{
+  cursor: pointer;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.0;
+  color: whitesmoke;
+  text-align: center;
+  background-color: dodgerblue;
+  box-sizing: content-box;
+  position: relative;
+  display: inline;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid dodgerblue;
+  border-radius: 3px;
+  margin: 10px 0px 0px 20px;
+}
+.conference-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}
+.conference-chairs{
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  padding: 15px;
+  margin: 5px 20px;
+  min-width:200px;
+  text-align: center;
+  background-color:dodgerblue;
+  border-radius: 10px;
+  color:white;
+}
+
+.pcmembers{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  padding-left: 5px;
+  padding-right:5px;
+  display:inline-block;
+}
+.pcmembers img{
+  padding-left:3px;
+  padding-right: 3px;
+}
+.conference-chairs img{
+  padding-left:10px;
+  padding-right:10px;
+  line-height: 30px;
+  padding-bottom: 0px;
+}
+
+.conference-chairs span{
+  height:18px;
+  display:block;
+  margin-top: auto;
+  margin-bottom:10px;
+}
+
+.conference-chairs-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.conference-dates-chunk{
+  display: flex;
+  flex-direction: column;
+}
+
+.conference-dates{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.pc{
+  margin-left: 20px;
+}
+
+.dates-title{
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
+}
+
+.pc-title{
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+#sections{
+  font-family: Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+#section{
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+  padding-right:10px;
+}
+
+#supervised{
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  padding-right:10px;
+}
+
+#sc_name{
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+  padding-right:10px;
+}
+#sectiondiv{
+  margin-top: 10px;
+}

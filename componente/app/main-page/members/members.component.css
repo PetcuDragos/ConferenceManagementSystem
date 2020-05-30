@@ -1,0 +1,53 @@
+
+.member-name{
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  color: #202020;
+  background: rgba(0, 138, 230, 0.3);
+  padding: 10px;
+}
+
+.member-username {
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  color: white;
+  font-style: italic;
+  margin-left: 20px;
+  padding:5px 10px;
+  background-color: dodgerblue;
+  border-radius: 2px;
+}
+
+.member-email{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.member-aff{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.member-site{
+  text-decoration: none;
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.paper-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}
+
+.member-name span{
+  line-height: 24px;
+  padding-left:15px;
+}
+.member-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}
