@@ -94,30 +94,30 @@ public class PaperController {
                         }
                         PublishedPaper publishedPaper = paperService.getPublishedPapers().stream().filter(pp -> pp.getPaper_id().equals(p.getId())).findAny().orElse(null);
                         if (publishedPaper != null)
-                            abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                            abstracts.add(new AbstractDto(p.getId(), p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
                     } else if (conference.getReEvalDate().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))) {
                         int review_result = evaluationService.checkPaperStatusReReview(conference.getId(), p.getId());
                         if (review_result == 1) {
                             paperService.addPublishedPaper(p.getId(), null, user);
                         } else if (review_result == 0)
-                            abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                            abstracts.add(new AbstractDto(p.getId(),p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
                     } else if (conference.getReviewDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))) {
                         int review_result = evaluationService.checkPaperStatusReview(conference.getId(), p.getId());
                         if (review_result == 1) {
                             paperService.addPublishedPaper(p.getId(), null, user);
                         }
                         if (review_result == 0)
-                            abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                            abstracts.add(new AbstractDto(p.getId(),p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
                     } else if (conference.getBidDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))) {
                         int bid_result = evaluationService.checkPaperStatusBidding(conference.getId(), p.getId());
                         if (bid_result == 0)
-                            abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                            abstracts.add(new AbstractDto(p.getId(),p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
                     } else if (conference.getPaperDeadline().before(new java.sql.Date(Calendar.getInstance().getTime().getTime()))) {
                         int callforpaper_result = evaluationService.checkPaperStatusCallForPaper(p.getId());
                         if (callforpaper_result == 0)
-                            abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                            abstracts.add(new AbstractDto(p.getId(),p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
                     } else
-                        abstracts.add(new AbstractDto(p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
+                        abstracts.add(new AbstractDto(p.getId(),p, user.getUsername(), bidded, reviewed, paperService.getUrl(p.getId()), canReview, reviewers, my_sections));
 
 
                 }

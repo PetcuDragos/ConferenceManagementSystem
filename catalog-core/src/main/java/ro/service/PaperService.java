@@ -48,10 +48,6 @@ public class PaperService {
         return abstractRepository.save(new Abstract(keywords, topics, name, additionalAuthors, content, author_id, conference_id));
     }
 
-    public Abstract getAbstractById(Long id) {
-        return this.abstractRepository.findById(id).orElse(null);
-    }
-
     public Paper getPaperFromAbstractId(Long abstract_id) {
         return this.paperRepository.findAll().stream().filter(p -> p.getAbstract_id().equals(abstract_id)).findAny().orElse(null);
     }
@@ -92,5 +88,9 @@ public class PaperService {
     public void updatePublishedPaperSection(Long paper_id, Long section_id) {
         this.getPublishedPapers().stream().filter(p -> p.getPaper_id().equals(paper_id)).findAny().ifPresent(publishedPaper -> publishedPaper.setSection_id(section_id));
 
+    }
+
+    public Abstract getAbstractById(Long id) {
+        return this.abstractRepository.findById(id).orElse(null);
     }
 }

@@ -20,6 +20,9 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.mail/mail
     compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
 
+    // https://mvnrepository.com/artifact/javax.mail/mail
+    compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+
     // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
