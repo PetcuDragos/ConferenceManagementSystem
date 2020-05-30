@@ -1,0 +1,87 @@
+<body>
+<div *ngIf="hasAnyConference()">
+
+<div class="option" *ngIf="canPostAbstract() && alreadyPostedAbstract() == false && !isUserChairForConference()" (click)="addAbstract()"> Start your own paper</div>
+<div class="option" (click)="changeDeadlines()" *ngIf="isUserChairForConference()">Change deadlines</div>
+<div class="option" (click)="addPCMemberOption()" *ngIf="isUserChairForConference() && canBid()">Add PC Member</div>
+<div class="addpcmember" *ngIf="pcmember_option">
+  <input type="text" #username placeholder="username">
+  <button (click)="addPCMember(username.value)">Add</button>
+</div>
+
+  <div class="option" (click)="addSubmissionOption()" *ngIf="!canSubmission() && isUserChairForConference()">Add Section</div>
+  <div class="addpcmember" *ngIf="addSection_option">
+    <input type="text" #section_name placeholder="Section name">
+    <input type="text" #sc_name placeholder="Name of section chair">
+    <button (click)="addSection(sc_name.value,section_name.value)">Add</button>
+  </div>
+
+<div class="deadline">Abstract Deadline is {{getAbstractDeadline()}}</div>
+<div class="deadline">'Call for papers' Deadline is {{getPaperDeadline()}}</div>
+<div class="deadline">Bidding Deadline is {{getBidDeadline()}}</div>
+<div class="deadline">Review Deadline is {{getReviewDeadline()}}</div>
+  <div class="deadline">Re-evaluation Deadline is {{getReEvalDeadline()}}</div>
+  <div class="deadline">Submission Deadline is {{getSubmissionDeadline()}}</div>
+
+<div *ngFor="let abstract of abstracts" class="panel">
+
+  <br><div id="absDivName"><img src="assets/paper.png" height="24px"><span id="abstractName">{{abstract.entity.name}}</span></div>
+  <br><div><img src="assets/user.png" height="24px"><span id="absAuthorName">{{abstract.authorName}}</span></div>
+  <br><div id="absDivContent"><span id="abstractContent">{{abstract.entity.content}}</span></div>
+  <br><div><span id="abstractAuthors">Authors that contributed - {{abstract.entity.additionalAuthors}}</span></div>
+
+<div *ngIf="canSubmission()">
+  <div *ngIf="isUserPCMemberForConference() && abstract.authorName!=getUsername() && canBid() && !canChangePaper() && !abstract.bidded">
+  <select #choice>
+    Bid:
+    <option value="1">Accept for review</option>
+    <option value="0">Don't care for review</option>
+    <option value="-1">Refuse for review</option>
+  </select>
+  <div id="bidButton"  (click)="bidAbstract(abstract,choice.value)" >Bid</div>
+  </div>
+
+  <br><div id="absButton" (click)="reviewPaper(abstract.entity.id)" *ngIf="abstract.canReview && abstract.authorName!=getUsername() && (canReview() || canReEval()) && !canBid() && !abstract.reviewed">Review</div>
+  <br>
+  <div *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canBid()" >
+    <div id="absButton" (click)="getPCMembers(abstract, abstract.entity.id)">Assign Reviewers</div>
+    <div *ngIf="abstract.show_reviewers">
+      <div id="pcmember" *ngFor="let pcmember of pcmembers" (click)="assignReviewer(abstract, abstract.entity.id,pcmember.pc_id)">
+        <img src="assets/pcmember.png" width="24px">
+        <span id="pc">{{pcmember.username}}</span>
+      </div>
+    </div>
+
+    <div> Reviewers assigned:
+      <div *ngFor="let reviewer of abstract.reviewers">
+        <img src="assets/pcmember.png"  width="24px">
+        <span id="reviewer">{{reviewer}}</span>
+      </div>
+    </div>
+
+
+  </div>
+
+  <br><div id="absButton" *ngIf="isUserChairForConference() && abstract.authorName!=getUsername() && !canReview() && canReEval() && !abstract.askForReEval" (click)="askForReEval(abstract, abstract.entity.id)">Ask for re-evaluation</div>
+  <div id="absButton" *ngIf="isUserChairForConference() && !canReEval() && !abstract.acceptAbstractButton" (click)="acceptPaper(abstract, abstract.entity.id)">Accept paper</div>
+  <div id="absButton" *ngIf="isUserChairForConference() && !canReEval() && !abstract.acceptAbstractButton" (click)="declinePaper(abstract, abstract.entity.id)">Decline paper</div>
+  <br><div id="absButton" (click)="seeReviews(abstract.entity.id)" *ngIf="( isUserChairForConference()||isUserPCMemberForConference() ) && abstract.authorName!=getUsername() && !canBid() && abstract.reviewed"> See other reviewers evaluation</div>
+</div>
+  <div id="absButton" *ngIf="getUsername()==abstract.authorName && (canChangePaper() || !canReEval()) && notEnded()" (click)="editAbstract(abstract.entity.id)">Edit abstract</div>
+  <div class="paper-button" *ngIf="abstract.url!=null" (click)="downloadPaper(abstract.url)"> Download Paper</div>
+  <div *ngIf="abstract.url!=null && !canSubmission()"> Upload presentation:
+  <input type="file"  name="files" (change)="uploadFile($event)" placeholder="Upload presentation" accept="application/vnd.ms-powerpoint,application/pdf">
+  </div>
+  <div id="sections" *ngIf="!canSubmission() && !abstract.sections.length>0"> <span>Choose section</span>
+    <div id="the_section"><select #the_section>
+    <option *ngFor="let section of conference.sections">{{section.name}}</option>
+    </select>
+    </div>
+    <div id="joinButton" (click)="joinSectionPaper(abstract,abstract.entity.id,the_section.value)">Join</div>
+  </div>
+
+</div>
+</div>
+</body>
+
+

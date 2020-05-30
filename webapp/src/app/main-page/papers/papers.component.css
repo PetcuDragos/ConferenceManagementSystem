@@ -1,0 +1,55 @@
+.paper-download{
+  text-decoration: none;
+  color: white;
+  background-color: dodgerblue;
+  padding:5px;
+  border-radius:15px;
+  cursor: pointer;
+}
+
+.paper-button{
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: dodgerblue;
+  padding-left:50px;
+  padding-top:10px;
+  padding-bottom:10px;
+  border-radius:15px;
+  cursor: pointer;
+  width:200px;
+}
+
+.paper-name{
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  color: #202020;
+  background: rgba(0, 138, 230, 0.3);
+  padding: 10px;
+}
+
+.paper-author{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 10px;
+}
+
+.paper-abstract{
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+  color: #202020;
+  padding: 20px;
+  font-style: italic;
+}
+.paper-panel{
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+}
+.paper-panel img{
+  padding-right: 10px;
+}
+
+.paper-panel:hover{
+  background: rgba(0, 138, 230, 0.1);
+}
