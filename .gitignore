@@ -28,4 +28,5 @@ gradle
 
 #diagrams
 Diagrams
-
+webapp/node_modules
+webapp/e2e
