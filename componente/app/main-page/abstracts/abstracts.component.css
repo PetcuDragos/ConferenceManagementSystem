@@ -96,6 +96,7 @@
   border-radius: 40px;
   margin-left:10px;
   background-color: dodgerblue;
+  cursor: pointer;
   color:white;
   padding:10px;
   display: inline-block;

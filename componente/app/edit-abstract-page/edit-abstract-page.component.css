@@ -25,6 +25,12 @@
   background: linear-gradient(0deg, rgba(65,155,250,0.9), rgba(65,155,250,1) 20%, rgba(65,155,250,0.9));
   border-bottom-color:white;
 }
+.saveButton{
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  color:whitesmoke;
+  background-color: dodgerblue;
+}
 
 main {
   position: relative;

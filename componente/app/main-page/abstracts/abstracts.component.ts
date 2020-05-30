@@ -275,4 +275,9 @@ export class AbstractsComponent implements OnInit {
   joinSectionPaper(abstract_entity: AbstractAuthorDto, abstract_id:number, section_name:string):void{
     this.abstractService.joinSectionPaper(abstract_id, section_name).subscribe(m=>{abstract_entity.joinSection = true;});
   }
+
+  uploadFile($event) {
+    console.log($event.target.files[0]); // outputs the first file
+    var paper = $event.target.files[0];
+  }
 }

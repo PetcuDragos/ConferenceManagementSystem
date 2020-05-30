@@ -69,7 +69,9 @@
 </div>
   <div id="absButton" *ngIf="getUsername()==abstract.authorName && (canChangePaper() || !canReEval()) && notEnded()" (click)="editAbstract(abstract.entity.id)">Edit abstract</div>
   <div class="paper-button" *ngIf="abstract.url!=null" (click)="downloadPaper(abstract.url)"> Download Paper</div>
-
+  <div *ngIf="abstract.url!=null && !canSubmission()"> Upload presentation:
+  <input type="file"  name="files" (change)="uploadFile($event)" placeholder="Upload presentation" accept="application/vnd.ms-powerpoint,application/pdf">
+  </div>
   <div id="sections" *ngIf="!canSubmission() && abstract.sections.length>0"> <span>Choose section</span>
     <div id="the_section"><select #the_section>
     <option *ngFor="let section of conference.sections">{{section.name}}</option>
